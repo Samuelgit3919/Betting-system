@@ -1,10 +1,10 @@
+import { Link } from "react-router-dom";
+import { Button } from "../ui/button";
 
 
 
 
 export default function HomeDashboard() {
-
-
     return (
         <div className="min-h-screen bg-gray-50 flex">
             {/* Left Sidebar */}
@@ -21,7 +21,10 @@ export default function HomeDashboard() {
                         <h1 className="text-3xl font-bold text-gray-900 mb-4">Welcome to the Dashboard</h1>
                         <p className="text-gray-600 mb-8">Click below to view the overall report for the week.</p>
                         <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-                            Show Weekly Report
+                            <Link to="/dashboard" className="flex items-center justify-center">
+
+                                Show Weekly Report
+                            </Link>
                         </Button>
                     </div>
                 </main>

@@ -8,6 +8,7 @@ import Shop from "./components/Dashboard/Shop/Shop"
 import Events from "./components/Dashboard/Events/Events"
 import Cashier from "./components/Dashboard/Cashier/Cashier"
 import BetSlip from "./components/Dashboard/BetSlip/BetSlip"
+import HomeDashboard from "./components/Dashboard/HomeDashboard"
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
 
         {/* Protected Dashboard Routes with Layout */}
         <Route path="/" element={<Layout />}>
+          <Route path="/" element={<HomeDashboard />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="shop" element={<Shop />} />
           <Route path="events" element={<Events />} />
