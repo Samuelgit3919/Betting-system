@@ -22,7 +22,6 @@ export default function HomeDashboard() {
                         <p className="text-gray-600 mb-8">Click below to view the overall report for the week.</p>
                         <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
                             <Link to="/dashboard" className="flex items-center justify-center">
-
                                 Show Weekly Report
                             </Link>
                         </Button>
