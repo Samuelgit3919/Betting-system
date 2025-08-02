@@ -22,11 +22,11 @@ export default function Login() {
         <div className="w-full h-screen mx-auto flex items-center justify-center ">
             <div className="flex min-h-[360px] max-w-[720px]  justify-center shadow-lg items-center ">
                 {/* Left Side - Welcome Section */}
-                <div className="flex-1 px-4 bg-gradient-to-br bg-[#3040D6] flex flex-col justify-center items-center min-h-90 text-white">
-                    <div className="ml-6  px-[15px] w-full ">
-                        <h1 className="text-3xl w-full font-light mb-2">Welcome to Kiron</h1>
+                <div className="hidden md:flex flex-1 px-4 bg-gradient-to-br bg-[#3040D6]  flex-col justify-center items-center min-h-90 text-white">
+                    <div className="ml-6 pt-2  px-[15px] w-full ">
+                        <h1 className="text-3xl w-full font-light">Welcome to Kiron</h1>
                         <h2 className="text-3xl font-light mb-8">Intercative</h2>
-                        <p className="text-xs mb-12 opacity-90">Please login to continue</p>
+                        <p className="text-xs mb-4 opacity-90">Please login to continue</p>
                     </div>
                     {/* Hexagonal Icons */}
                     <div className="flex flex-col justify-center items-center ">
@@ -93,14 +93,14 @@ export default function Login() {
                 </div>
 
                 {/* Right Side - Login Form */}
-                <div className="flex-1 h-90  bg-white flex flex-col justify-center items-center px-12">
+                <div className="flex flex-1 h-90  bg-white flex-col justify-center items-center px-12 pl-10">
 
                     <div className="w-full">
                         {/* Logo */}
-                        <div className="mb-12 text-center">
+                        <div className="mb-8 text-center">
                             <div className="text-3xl font-bold text-black mb-1">
                                 <span className="text-green-500">
-                                    <img src={logo} alt="" width={200} />
+                                    <img src={logo} alt="" width={160} />
                                 </span>
                             </div>
 
@@ -109,7 +109,7 @@ export default function Login() {
                         <form onSubmit={handleLogin} className="space-y-2 w-full max-w-lg mx-auto ">
                             <div>
                                 <Label htmlFor="username" className="text-sm text-gray-700">
-                                    <span className="text-[#5183E8] text-xs ">*</span><span className="text-[11px] font-[400] text-black -ml-1 mb-1.5">Username</span>
+                                    <span className="text-[#5183E8] text-xs relative -top-1">*</span><span className="text-[11px] font-[400] text-black -ml-1 mb-1.5">Username</span>
                                 </Label>
                                 <Input
                                     id="username"
@@ -120,16 +120,13 @@ export default function Login() {
                                     required
                                     className="placeholder:text-xs inline-block font-roboto text-[14px] font-normal  text-[#0c1e29] 
                                         h-[30px] w-[294px] p-[4px_8px] 
-                                        border-[#9eaab5] rounded-[2px] focus:border-[#5183E8]
-                                        focus:ring-[#5183E8]
-         
-        "
+                                        border-[#9eaab5] rounded-[2px] focus:outline-none focus:ring-0 focus:bg-transparent bg-white"
                                 />
                             </div>
 
                             <div>
                                 <Label htmlFor="password" className="text-sm">
-                                    <span className="text-[#5183E8] text-xs">*</span><span className="text-[11px] font-[400] -ml-1 text-black mb-1.5">Password</span>
+                                    <span className="text-[#5183E8] text-xs relative -top-1">*</span><span className="text-[11px] font-[400] -ml-1 text-black mb-1.5">Password</span>
                                 </Label>
                                 <Input
                                     id="password"
@@ -139,29 +136,32 @@ export default function Login() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                     className="placeholder:text-xs inline-block font-roboto text-[14px] font-normal leading-6 text-[#0c1e29] 
-         bg-transparent h-[30px] w-[294px] p-[4px_8px] m-0 
-         border border-[#9eaab5] rounded-[2px] 
-         max-w-none max-h-none min-w-0 min-h-0 
-         static top-auto bottom-auto left-auto right-auto 
-         float-none clear-none z-auto 
-         list-disc list-outside 
-         border-separate border-spacing-0 caption-top 
-         overflow-clip cursor-text visible 
-         transform-none transition-all box-border resize-none 
-         text-clip break-normal shadow-none "
+                                    bg-transparent h-[30px] w-[294px] p-[4px_8px] m-0 
+                                    border border-[#9eaab5] rounded-[2px] 
+                                    max-w-none max-h-none min-w-0 min-h-0 
+                                    static top-auto bottom-auto left-auto right-auto 
+                                    float-none clear-none z-auto 
+                                    list-disc list-outside 
+                                    border-separate border-spacing-0 caption-top 
+                                    overflow-clip cursor-text visible 
+                                    transform-none transition-all box-border resize-none 
+                                    text-clip break-normal shadow-none "
                                 />
                             </div>
 
                             <div className="flex justify-center">
-                                <button
-                                    type="submit"
-                                    className="text-[13px] flex justify-center rounded-[3px] items-center px-6 py-0.5 bg-[#263FE6] hover:bg-blue-900 text-white font-[100]"
-                                >
-                                    <Link to="/dashboard" className="text-white py-[-2px]">
 
+                                <Link to="/dashboard" className="text-white flex items-center justify-center ">
+                                    <button
+                                        type="submit"
+                                        className="font-roboto text-[14px] font-normal leading-6 tracking-normal text-center align-middle 
+                                        text-white bg-blue-700 border hover:bg-blue-800
+                                        h-[28px] w-[80px] rounded-[3px]
+                                        inline-block box-border cursor-pointer"
+                                    >
                                         Login
-                                    </Link>
-                                </button>
+                                    </button>
+                                </Link>
                             </div>
                         </form>
                     </div>
