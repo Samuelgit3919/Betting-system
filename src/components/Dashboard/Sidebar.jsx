@@ -17,21 +17,20 @@ const Sidebar = () => {
 
     const pageItems = [{ name: "Reports", icon: BarChart3 }]
     return (
-        <div className="w-74 bg-white shadow-sm border-r border-gray-200 flex flex-col">
+        <div className="w-60 bg-white shadow-sm border-gray-200 flex flex-col pb-10">
             {/* Logo */}
-            <div className="mb-0 flex justify-center items-center p-4">
+            <div className="mb-0 flex justify-center items-center p-3">
                 <div className="text-3xl font-bold text-black mb-1">
                     <span className="text-green-500">
-                        <img src={logo} alt="" width={170} />
+                        <img src={logo} alt="" width={135} />
                     </span>
                 </div>
-
             </div>
 
             {/* Navigation */}
             <div className="flex-1 py-6">
-                <div className="px-6 mb-0">
-                    <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">NAVIGATION</h3>
+                <div className="px-5">
+                    <h3 className="text-[10px] ml-3 font-[400] uppercase tracking-wider mb-2">NAVIGATION</h3>
                     <nav className="space-y-0">
                         {navigationItems.map((item) => {
                             const Icon = item.icon
@@ -40,14 +39,13 @@ const Sidebar = () => {
                                     to={item.link}
                                     key={item.name}
                                     onClick={() => setActiveNav(item.name)}
-                                    className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${activeNav === item.name
-                                        ? "bg-blue-50 text-blue-700 border-r-2 border-blue-700"
-                                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                                    className={`w-full flex items-center px-3 py-[7px] text-[11px] font-medium rounded-[3px] transition-colors ${activeNav === item.name
+                                        ? "bg-[#D6D9F7] text-blue-700"
+                                        : "text-gray-600 hover:text-gray-900 hover:bg-[#CED2D4]"
                                         }`}
                                 >
                                     <Link to={item.link} className="flex items-center w-full">
-
-                                        <Icon className="mr-3 h-5 w-5" />
+                                        <Icon className="mr-3 h-3 w-3" />
                                         {item.name}
                                     </Link>
                                 </NavLink>
@@ -60,17 +58,17 @@ const Sidebar = () => {
             </div>
 
             {/* Bottom Icons */}
-            <div className="px-6">
-                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">PAGES</h3>
-                <nav className="space-y-2">
+            <div className="px-8">
+                <h3 className="text-[10px] font-[400] uppercase mb-2">PAGES</h3>
+                <nav>
                     {pageItems.map((item) => {
                         const Icon = item.icon
                         return (
                             <button
                                 key={item.name}
-                                className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                                className="w-full flex items-center text-[12px] font-[Roboto] font-[400] text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50 transition-colors"
                             >
-                                <Icon className="mr-3 h-5 w-5" />
+                                {/* <Icon className="mr-3 h-5 w-5" /> */}
                                 {item.name}
                             </button>
                         )
