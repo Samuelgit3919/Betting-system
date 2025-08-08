@@ -1,512 +1,333 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { BarChart3, TrendingUp, DollarSign, Calendar, RefreshCw, User } from "lucide-react"
-import { Line, Doughnut } from "react-chartjs-2"
-import { motion } from "framer-motion"
+
+import { useState } from 'react';
+import { format } from 'date-fns';
 import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
+    CalendarIcon,
+    BarChart,
+    DollarSign,
+    RefreshCw,
+    Laptop,
+    UserX,
+} from 'lucide-react';
+import {
+    LineChart,
+    Line,
+    XAxis,
+    YAxis,
     Tooltip,
+    ResponsiveContainer,
+    PieChart,
+    Pie,
+    Cell,
     Legend,
-    ArcElement,
-} from "chart.js"
+    CartesianGrid,
+} from 'recharts';
 
-// Register ChartJS components
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement)
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
 
-export default function Dashboard() {
-    // Animation variants
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1,
-            },
-        },
+// Mock data for charts and tables
+const ggrTrendData = [
+    { name: 'Mon', ggr: 0 },
+    { name: 'Tue', ggr: 0 },
+    { name: 'Wed', ggr: 5000 },
+    { name: 'Thu', ggr: 3000 },
+    { name: 'Fri', ggr: 1800 },
+    { name: 'Sat', ggr: 0 },
+    { name: 'Sun', ggr: 0 },
+];
+
+const topShopsData = [
+    { name: 'Falco3', value: 400, color: '#6366F1' }, // Purple
+    { name: 'Volt15', value: 200, color: '#EC4899' }, // Pink
+    { name: 'Volt10', value: 150, color: '#22C55E' }, // Green
+    { name: 'Volt13', value: 100, color: '#000000' }, // Black
+    { name: 'Others', value: 50, color: '#F59E0B' }, // Yellow
+];
+
+const topPerformingShops = [
+    { shop: 'Falco3', ggr: 'ETB 3,810', tickets: 1591 },
+    { shop: 'Volt15', ggr: 'ETB 1,662', tickets: 290 },
+    { shop: 'Volt10', ggr: 'ETB 3,600', tickets: 248 },
+    { shop: 'Volt13', ggr: 'ETB -85', tickets: 18 },
+];
+
+const bannedCashiers = [
+    { cashier: 'Volt3.cashier9', shop: 'Volt3' },
+    { cashier: 'Volt4.cashier1', shop: 'Volt4' },
+    { cashier: 'Volt4.cashier3', shop: 'Volt4' },
+    { cashier: 'Volt4.cashier6', shop: 'Volt4' },
+];
+
+const CustomLineTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+        return (
+            <div className="p-2 bg-white border border-gray-200 rounded-md shadow-sm text-[12px]">
+                <p className="font-semibold">{`Day: ${label}`}</p>
+                <p className="text-purple-600">{`GGR: ${payload[0].value}`}</p>
+            </div>
+        );
     }
+    return null;
+};
 
-    const itemVariants = {
-        hidden: { y: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1,
-            transition: {
-                duration: 0.5,
-                ease: "easeOut",
-            },
-        },
+const CustomPieTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+        const data = payload[0].payload;
+        return (
+            <div className="p-2 bg-white border border-gray-200 rounded-md shadow-sm text-[12px]">
+                <p className="font-semibold" style={{ color: data.color }}>
+                    {`Shop: ${data.name}`}
+                </p>
+                <p>{`Value: ${data.value}`}</p>
+            </div>
+        );
     }
+    return null;
+};
 
-    const cardHoverVariants = {
-        hover: {
-            scale: 1.02,
-            transition: {
-                duration: 0.2,
-                ease: "easeInOut",
-            },
-        },
-    }
+const CustomPieChartLegend = ({ payload }) => {
+    if (!payload) return null;
+    return (
+        <ul className="space-y-0 text-[10px]">
+            {payload.map((entry, index) => (
+                <li key={`item-${index}`} className="flex items-center text-gray-700">
+                    <span
+                        className="inline-block w-3 h-3 rounded-full mr-2"
+                        style={{ backgroundColor: entry.color }}
+                    />
+                    {entry.value}
+                </li>
+            ))}
+        </ul>
+    );
+};
 
-    // Chart data
-    const lineChartData = {
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        datasets: [
-            {
-                label: "GGR Trend",
-                data: [25000, 50000, 10000, 8000, 5000, 3000, 2000],
-                borderColor: "#3b82f6",
-                backgroundColor: "rgba(59, 130, 246, 0.1)",
-                borderWidth: 3,
-                fill: true,
-                tension: 0.4,
-                pointBackgroundColor: "#3b82f6",
-                pointBorderColor: "#ffffff",
-                pointBorderWidth: 2,
-                pointRadius: 6,
-                pointHoverRadius: 8,
-            },
-        ],
-    }
-
-    const lineChartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false,
-            },
-            tooltip: {
-                backgroundColor: "rgba(0, 0, 0, 0.8)",
-                titleColor: "#ffffff",
-                bodyColor: "#ffffff",
-                borderColor: "#3b82f6",
-                borderWidth: 1,
-                cornerRadius: 8,
-                displayColors: false,
-                callbacks: {
-                    label: (context) => `ETB ${context.parsed.y.toLocaleString()}`,
-                },
-            },
-        },
-        scales: {
-            x: {
-                grid: {
-                    display: false,
-                },
-                border: {
-                    display: false,
-                },
-                ticks: {
-                    color: "#6b7280",
-                    font: {
-                        size: 12,
-                    },
-                },
-            },
-            y: {
-                grid: {
-                    color: "rgba(0, 0, 0, 0.1)",
-                },
-                border: {
-                    display: false,
-                },
-                ticks: {
-                    color: "#6b7280",
-                    font: {
-                        size: 12,
-                    },
-                    callback: (value) => (value >= 1000 ? value / 1000 + "K" : value),
-                },
-            },
-        },
-        interaction: {
-            intersect: false,
-            mode: "index",
-        },
-        animation: {
-            duration: 2000,
-            easing: "easeInOutQuart",
-        },
-    }
-
-    const doughnutData = {
-        labels: ["Volt3", "Falco8", "Falco6", "Falco3", "Others"],
-        datasets: [
-            {
-                data: [45, 25, 15, 10, 5],
-                backgroundColor: ["#3b82f6", "#ec4899", "#10b981", "#1f2937", "#eab308"],
-                borderWidth: 0,
-                hoverBorderWidth: 3,
-                hoverBorderColor: "#ffffff",
-            },
-        ],
-    }
-
-    const doughnutOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false,
-            },
-            tooltip: {
-                backgroundColor: "rgba(0, 0, 0, 0.8)",
-                titleColor: "#ffffff",
-                bodyColor: "#ffffff",
-                borderColor: "#3b82f6",
-                borderWidth: 1,
-                cornerRadius: 8,
-                displayColors: true,
-                callbacks: {
-                    label: (context) => `${context.label}: ${context.parsed}%`,
-                },
-            },
-        },
-        cutout: "60%",
-        animation: {
-            animateRotate: true,
-            animateScale: true,
-            duration: 2000,
-            easing: "easeInOutQuart",
-        },
-    }
-
-    // Sample data for tables
-    const topShopsData = [
-        { name: "Volt3", ggr: "ETB 61,268", tickets: "7274", color: "bg-blue-500" },
-        { name: "Falco8", ggr: "ETB 6,498", tickets: "3318", color: "bg-pink-500" },
-        { name: "Falco6", ggr: "ETB 344", tickets: "2793", color: "bg-green-500" },
-        { name: "Falco3", ggr: "ETB 6,102", tickets: "2204", color: "bg-gray-800" },
-    ]
-
-    const donutLegendData = [
-        { name: "Volt3", color: "bg-blue-500" },
-        { name: "Falco8", color: "bg-pink-500" },
-        { name: "Falco6", color: "bg-green-500" },
-        { name: "Falco3", color: "bg-gray-800" },
-        { name: "Others", color: "bg-yellow-500" },
-    ]
+export default function DashboardPage() {
+    const [date, setDate] = useState(
+        new Date('2025-08-08T10:50:00') // Updated to current time: 10:50 AM EAT
+    );
 
     return (
-        <motion.div className="p-6 space-y-6" variants={containerVariants} initial="hidden" animate="visible">
-            {/* Header */}
-            <motion.div className="flex justify-between items-center" variants={itemVariants}>
-                <h1 className="text-2xl font-bold text-gray-900">Overview</h1>
-                <div className="flex items-center text-sm text-gray-500">
-                    <Calendar className="w-4 h-4 mr-2" />
-                    Wednesday, July 16, 2025
-                </div>
-            </motion.div>
+        <div className="min-h-screen bg-gray-50 p-6 md:py-4 md:px-4 lg:py-6 lg:px-4 lg:pl-8">
+            <div className="flex items-center justify-between mb-6">
+                <h1 className="text-xl font-bold text-gray-900">Overview</h1>
+                <Popover>
+                    <PopoverTrigger asChild>
+                        <Button
+                            className={cn(
+                                "w-[150px] text-[12px] cursor-pointer justify-center text-left font-normal rounded-full  bg-transparent text-black  px-0 py-0 ",
+                                !date && "text-muted-foreground"
+                            )}
+                        >
+                            <CalendarIcon className="mr-1 h-2 w-2 text-indigo-700" />
+                            {date ? format(date, "PPP") : <span>Pick a date</span>}
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="end">
+                        <Calendar
+                            mode="single"
+                            selected={date}
+                            onSelect={setDate}
+                            initialFocus
+                        />
+                    </PopoverContent>
+                </Popover>
+            </div>
 
-            {/* Stats Cards */}
-            <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6" variants={containerVariants}>
-                {/* Active Shops */}
-                <motion.div variants={itemVariants} whileHover="hover">
-                    <motion.div variants={cardHoverVariants}>
-                        <Card className="cursor-pointer">
-                            <CardContent className="p-6">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <motion.div
-                                            className="text-3xl font-bold text-gray-900"
-                                            initial={{ scale: 0 }}
-                                            animate={{ scale: 1 }}
-                                            transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
-                                        >
-                                            1
-                                        </motion.div>
-                                        <div className="text-sm text-gray-600">Active Shops</div>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <motion.div
-                                            animate={{ rotate: 360 }}
-                                            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                                        >
-                                            <BarChart3 className="w-8 h-8 text-blue-500" />
-                                        </motion.div>
-                                    </div>
-                                </div>
-                                <div className="mt-2">
-                                    <motion.div
-                                        initial={{ x: -20, opacity: 0 }}
-                                        animate={{ x: 0, opacity: 1 }}
-                                        transition={{ delay: 0.7 }}
-                                    >
-                                        <Badge variant="secondary" className="text-blue-600 bg-blue-50">
-                                            4.8% of Total
-                                        </Badge>
-                                    </motion.div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </motion.div>
-                </motion.div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <Card className="px-2 h-[80px] flex items-center justify-between shadow-md bg-white rounded-lg border border-gray-100">
+                    <div className='flex items-center justify-between w-full'>
+                        <div className='flex gap-2  items-center justify-center'>
+                            <div className="p-2 rounded-full bg-[#EFEFFE] text-[#8A8CF5] mb-2">
+                                <BarChart className="w-4 h-4" />
+                            </div>
+                            <div className='flex flex-col mb-4 items-start justify-center'>
+                                <div className="text-sm font-bold text-gray-900">4</div>
+                                <div className="text-gray-500 text-[11px]">Active Shops</div>
+                            </div>
+                        </div>
+                        <div className='py-0.5 px-2 bg-[#F4F4FE] rounded-full'>
+                            <div className="flex items-center ">
+                                <span className="text-[9px] font-medium text-[#6366F1] bg-[#E5E5FD] px-2 py-0.5 rounded-full">
+                                    14.3% of Total
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </Card>
 
-                {/* GGR of the Day */}
-                <motion.div variants={itemVariants} whileHover="hover">
-                    <motion.div variants={cardHoverVariants}>
-                        <Card className="cursor-pointer">
-                            <CardContent className="p-6">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <motion.div
-                                            className="text-3xl font-bold text-gray-900"
-                                            initial={{ scale: 0 }}
-                                            animate={{ scale: 1 }}
-                                            transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
-                                        >
-                                            ETB 10
-                                        </motion.div>
-                                        <div className="text-sm text-gray-600">GGR of the Day</div>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <motion.div
-                                            animate={{ y: [0, -5, 0] }}
-                                            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                                        >
-                                            <DollarSign className="w-8 h-8 text-green-500" />
-                                        </motion.div>
-                                    </div>
-                                </div>
-                                <div className="mt-2">
-                                    <motion.div
-                                        initial={{ x: -20, opacity: 0 }}
-                                        animate={{ x: 0, opacity: 1 }}
-                                        transition={{ delay: 0.8 }}
-                                    >
-                                        <Badge variant="secondary" className="text-green-600 bg-green-50">
-                                            0.0% RTP
-                                        </Badge>
-                                    </motion.div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </motion.div>
-                </motion.div>
+                <Card className="px-2 h-[80px] flex items-center justify-between shadow-md bg-white rounded-lg border border-gray-100">
+                    <div className='flex items-center justify-between w-full'>
+                        <div className='flex gap-2  items-center justify-center'>
+                            <div className="p-2 rounded-full bg-[#E8F9EF] text-[#22C55E] mb-2">
+                                <DollarSign className="w-4 h-4" />
+                            </div>
+                            <div>
+                                <div className="text-[14px] font-bold text-gray-900">ETB 1,316</div>
+                                <div className="text-gray-500 text-[10px]">GGR of the Day</div>
+                            </div>
+                        </div>
+                        <div className='py-0.5 px-2 bg-[#F4F4FE] rounded-full'>
+                            <div className="flex items-center ">
+                                <span className="text-[9px] font-medium text-[#22C55E] bg-[#DEEFEE] px-2 py-0.5 rounded-full">
+                                    63.9% RTP
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </Card>
 
-                {/* GGR of the Week */}
-                <motion.div variants={itemVariants} whileHover="hover">
-                    <motion.div variants={cardHoverVariants}>
-                        <Card className="cursor-pointer">
-                            <CardContent className="p-6">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <motion.div
-                                            className="text-3xl font-bold text-gray-900"
-                                            initial={{ scale: 0 }}
-                                            animate={{ scale: 1 }}
-                                            transition={{ delay: 0.7, type: "spring", stiffness: 200 }}
-                                        >
-                                            ETB 91,510
-                                        </motion.div>
-                                        <div className="text-sm text-gray-600">GGR of the Week</div>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <motion.div
-                                            animate={{ rotate: [0, 10, -10, 0] }}
-                                            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                                        >
-                                            <TrendingUp className="w-8 h-8 text-yellow-500" />
-                                        </motion.div>
-                                    </div>
-                                </div>
-                                <div className="mt-2">
-                                    <motion.div
-                                        initial={{ x: -20, opacity: 0 }}
-                                        animate={{ x: 0, opacity: 1 }}
-                                        transition={{ delay: 0.9 }}
-                                    >
-                                        <Badge variant="secondary" className="text-green-600 bg-green-50">
-                                            94.7% RTP
-                                        </Badge>
-                                    </motion.div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </motion.div>
-                </motion.div>
-            </motion.div>
+                <Card className="px-2 h-[80px] flex items-center justify-between shadow-md bg-white rounded-lg border border-gray-100">
+                    <div className='flex items-center justify-between w-full'>
+                        <div className='flex gap-2  items-center justify-center'>
+                            <div className="p-2 rounded-full bg-[#FEF6D5] text-[#FACC15] mb-2">
+                                <DollarSign className="w-4 h-4" />
+                            </div>
+                            <div>
+                                <div className="text-[14px] font-bold text-gray-900">ETB 9,127</div>
+                                <div className="text-gray-500 text-[10px]">GGR of the Week</div>
+                            </div>
+                        </div>
+                        <div className="py-0.5 px-2 bg-[#F4F4FE] rounded-full">
+                            <div className='flex items-center'>
+                                <span className="text-[9px] font-medium text-[#22C55E] bg-[#DEEFEE] px-2 py-0.5 rounded-full">
+                                    88.4% RTP
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </Card>
+            </div>
 
-            {/* Charts Section */}
-            <motion.div className="grid grid-cols-1 lg:grid-cols-2 gap-6" variants={containerVariants}>
-                {/* GGR Trend Chart */}
-                <motion.div variants={itemVariants} whileHover="hover">
-                    <motion.div variants={cardHoverVariants}>
-                        <Card>
-                            <CardHeader className="flex flex-row items-center justify-between">
-                                <CardTitle className="text-lg font-semibold">GGR Trend (Weekly)</CardTitle>
-                                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                                    <Button variant="ghost" size="sm">
-                                        <RefreshCw className="w-4 h-4 mr-2" />
-                                        Refresh
-                                    </Button>
-                                </motion.div>
-                            </CardHeader>
-                            <CardContent>
-                                <motion.div
-                                    className="h-64"
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{ delay: 1, duration: 0.8 }}
+            <div className="flex flex-wrap gap-6 mb-6">
+                <Card className="px-2 w-full md:w-[62%] shadow-md h-[280px] bg-white rounded-lg border border-gray-100">
+                    <div className="flex items-center justify-between mb-0">
+                        <h2 className="text-[10px] pl-8 font-semibold text-gray-900">GGR Trend (Weekly)</h2>
+                        <button className="flex items-center text-gray-500 text-[12px]hover:text-gray-700">
+                            <RefreshCw className="w-3 h-3 mr-1" />
+                            <span className='text-[10px]'>
+                                Refresh
+                            </span>
+                        </button>
+                    </div>
+                    <div className="h-46 text-[9px]">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <LineChart data={ggrTrendData} margin={{ top: 4, right: 20, left: 0, bottom: 0, }}>
+                                <CartesianGrid strokeDasharray="3 3" vertical={true} horizontal={true} stroke="#e0e0e0" />
+                                <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                                <YAxis axisLine={false} tickLine={false} domain={[0, 6000]} ticks={[0, 1500, 3000, 4500, 6000]} />
+                                <Tooltip content={<CustomLineTooltip />} />
+                                <Line type="monotone" dataKey="ggr" stroke="#6366F1" strokeWidth={2} dot={{ r: 3, fill: '#6366F1' }} activeDot={{ r: 4 }} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </Card>
+
+                <Card className="px-6 w-full md:w-[36%] shadow-md h-[280px] bg-white rounded-lg border border-gray-100">
+                    <h2 className="text-[12px] font-semibold text-gray-900 mb-4">Top Shops</h2>
+                    <div className="flex justify-center items-center h-54">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <PieChart>
+                                <Pie
+                                    data={topShopsData}
+                                    cx="40%"
+                                    cy="50%"
+                                    innerRadius={30}
+                                    outerRadius={50}
+                                    fill="#8884d8"
+                                    paddingAngle={1}
+                                    dataKey="value"
                                 >
-                                    <Line data={lineChartData} options={lineChartOptions} />
-                                </motion.div>
-                            </CardContent>
-                        </Card>
-                    </motion.div>
-                </motion.div>
-
-                {/* Top Shops Donut Chart */}
-                <motion.div variants={itemVariants} whileHover="hover">
-                    <motion.div variants={cardHoverVariants}>
-                        <Card>
-                            <CardHeader>
-                                <CardTitle className="text-lg font-semibold">Top Shops</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="flex items-center justify-center">
-                                    {/* Donut Chart */}
-                                    <motion.div
-                                        className="relative w-48 h-48"
-                                        initial={{ opacity: 0, rotate: -180 }}
-                                        animate={{ opacity: 1, rotate: 0 }}
-                                        transition={{ delay: 1.2, duration: 1 }}
-                                    >
-                                        <Doughnut data={doughnutData} options={doughnutOptions} />
-                                    </motion.div>
-
-                                    {/* Legend */}
-                                    <motion.div
-                                        className="ml-8 space-y-2"
-                                        initial={{ opacity: 0, x: 20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: 1.5, staggerChildren: 0.1 }}
-                                    >
-                                        {donutLegendData.map((item, index) => (
-                                            <motion.div
-                                                key={item.name}
-                                                className="flex items-center space-x-2"
-                                                initial={{ opacity: 0, x: 20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: 1.5 + index * 0.1 }}
-                                                whileHover={{ scale: 1.05 }}
-                                            >
-                                                <div className={`w-3 h-3 rounded-full ${item.color}`}></div>
-                                                <span className="text-sm text-gray-600">{item.name}</span>
-                                            </motion.div>
-                                        ))}
-                                    </motion.div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </motion.div>
-                </motion.div>
-            </motion.div>
-
-            {/* Tables Section */}
-            <motion.div className="grid grid-cols-1 lg:grid-cols-2 gap-6" variants={containerVariants}>
-                {/* Top Performing Shops */}
-                <motion.div variants={itemVariants} whileHover="hover">
-                    <motion.div variants={cardHoverVariants}>
-                        <Card>
-                            <CardHeader className="flex flex-row items-center justify-between">
-                                <CardTitle className="text-lg font-semibold">Top Performing Shops</CardTitle>
-                                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                    <Button variant="link" className="text-blue-600 p-0">
-                                        See all
-                                    </Button>
-                                </motion.div>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="space-y-4">
-                                    <div className="grid grid-cols-3 gap-4 text-sm font-medium text-gray-500 border-b pb-2">
-                                        <div>Shop</div>
-                                        <div>GGR</div>
-                                        <div>Tickets</div>
-                                    </div>
-                                    {topShopsData.map((shop, index) => (
-                                        <motion.div
-                                            key={shop.name}
-                                            className="grid grid-cols-3 gap-4 text-sm"
-                                            initial={{ opacity: 0, y: 20 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: 2 + index * 0.1 }}
-                                            whileHover={{
-                                                backgroundColor: "rgba(59, 130, 246, 0.05)",
-                                                scale: 1.02,
-                                                transition: { duration: 0.2 },
-                                            }}
-                                        >
-                                            <div className="flex items-center space-x-2">
-                                                <motion.div
-                                                    className={`w-3 h-3 rounded ${shop.color}`}
-                                                    whileHover={{ scale: 1.2 }}
-                                                ></motion.div>
-                                                <span>{shop.name}</span>
-                                            </div>
-                                            <div className="font-medium">{shop.ggr}</div>
-                                            <div className="text-gray-600">{shop.tickets}</div>
-                                        </motion.div>
+                                    {topShopsData.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={entry.color} />
                                     ))}
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </motion.div>
-                </motion.div>
+                                </Pie>
+                                <Tooltip content={<CustomPieTooltip />} />
+                                <Legend
+                                    content={<CustomPieChartLegend />}
+                                    layout="vertical"
+                                    align="right"
+                                    verticalAlign="middle"
+                                    wrapperStyle={{ paddingLeft: '30px', width: '110px', }}
 
-                {/* Banned Cashiers */}
-                <motion.div variants={itemVariants} whileHover="hover">
-                    <motion.div variants={cardHoverVariants}>
-                        <Card>
-                            <CardHeader className="flex flex-row items-center justify-between">
-                                <CardTitle className="text-lg font-semibold">Banned Cashiers</CardTitle>
-                                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                    <Button variant="link" className="text-blue-600 p-0">
-                                        See all
-                                    </Button>
-                                </motion.div>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="space-y-4">
-                                    <div className="grid grid-cols-2 gap-4 text-sm font-medium text-gray-500 border-b pb-2">
-                                        <div>Cashier</div>
-                                        <div>Shop</div>
-                                    </div>
-                                    <motion.div
-                                        className="grid grid-cols-2 gap-4 text-sm"
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: 2.5 }}
-                                        whileHover={{
-                                            backgroundColor: "rgba(239, 68, 68, 0.05)",
-                                            scale: 1.02,
-                                            transition: { duration: 0.2 },
-                                        }}
-                                    >
-                                        <div className="flex items-center space-x-2">
-                                            <motion.div
-                                                animate={{ rotate: [0, 5, -5, 0] }}
-                                                transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                                            >
-                                                <User className="w-4 h-4 text-red-500" />
-                                            </motion.div>
-                                            <span>Volt3.cashier9</span>
-                                        </div>
-                                        <div className="text-gray-600">Volt3</div>
-                                    </motion.div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </motion.div>
-                </motion.div>
-            </motion.div>
-        </motion.div>
-    )
+                                />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </div>
+                </Card>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card className="py-6 px-4 h-[295px] shadow-md bg-white rounded-lg border border-gray-100 ">
+                    <div className="flex items-center justify-between">
+                        <h2 className="text-[12px] font-semibold text-gray-900">Top Performing Shops</h2>
+                        <a href="#" className="text-[12px] text-blue-600 hover:underline">
+                            See all
+                        </a>
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left table-auto border" >
+                            <thead bgcolor="#F9F9F9" className='hover:bg-[#F2F2F2]'>
+                                <tr className="text-gray-500 text-[12px] border">
+                                    <th className="py-2 px-4 font-normal">GGR</th>
+                                    <th className="py-2 px-4 font-normal">Tickets</th>
+                                    <th className="py-2 px-4 font-normal">Shop</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {topPerformingShops.map((shop, index) => (
+                                    <tr key={index} className="border-b last:border-b-0 hover:bg-[#FCFCFC]">
+                                        <td className="py-3 px-4 text-[11px] flex items-center text-gray-900">
+                                            <span className='mr-1'>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                                            </span>
+                                            {shop.shop}
+                                        </td>
+                                        <td className="py-3  text-[11px] px-4 text-gray-700">{shop.ggr}</td>
+                                        <td className="py-3 px-4 text-gray-700 text-[11px]">{shop.tickets}</td>
+
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </Card>
+
+                <Card className="py-6 px-4 h-[295px] shadow-md bg-white rounded-lg border border-gray-100 ">
+                    <div className="flex items-center justify-between">
+                        <h2 className="text-[12px] font-semibold text-gray-900">Banned Cashiers</h2>
+                        <a href="#" className="text-[12px] text-blue-600 hover:underline ">
+                            See all
+                        </a>
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left table-auto border">
+                            <thead bgcolor="#F9F9F9" className='hover:bg-[#F2F2F2]'>
+                                <tr className="text-gray-500 text-[12px] border-b">
+                                    <th className="py-2 text-[12px] px-4 font-normal">Cashier</th>
+                                    <th className="py-2 text-[12px] px-4 font-normal">Shop</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {bannedCashiers.map((cashier, index) => (
+                                    <tr key={index} className="border-b last:border-b-0 hover:bg-[#FCFCFC]">
+                                        <td className="py-3 px-4 text-[11px] flex items-center text-gray-900">
+                                            <UserX className="w-4 h-4 mr-2 text-red-500" />
+                                            {cashier.cashier}
+                                        </td>
+                                        <td className="py-3 px-4 text-[11px] text-gray-700">{cashier.shop}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </Card>
+            </div>
+        </div>
+    );
 }

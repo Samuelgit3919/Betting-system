@@ -6,10 +6,12 @@ import { Outlet } from 'react-router-dom'
 
 const Layout = () => {
     return (
-        <div className="flex h-screen">
-            <Sidebar />
+        <div className="flex h-screen w-full">
+            <div className='w-[15%] '>
+                <Sidebar />
+            </div>
 
-            <div className="flex flex-col flex-1">
+            <div className="flex flex-col flex-1 w-[100%]  md:w-[85%] ">
                 <Header />
                 <main className="">
                     <Outlet />

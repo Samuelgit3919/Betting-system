@@ -90,164 +90,93 @@ export default function Events() {
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
-            {/* Left Sidebar - Same as dashboard */}
-            {/* <div className="w-64 bg-white shadow-sm border-r border-gray-200 flex flex-col">
-                <div className="p-6 border-b border-gray-200">
-                    <div className="text-2xl font-bold text-black">
-                        <span className="text-green-500">//</span>KiRON<span className="text-green-500">.</span>
-                    </div>
-                    <div className="text-green-500 text-xs font-medium tracking-wider">interactive</div>
-                </div>
-
-                <div className="flex-1 py-6">
-                    <div className="px-6 mb-6">
-                        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">NAVIGATION</h3>
-                        <nav className="space-y-2">
-                            <button className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50 transition-colors">
-                                <Home className="mr-3 h-5 w-5" />
-                                Dashboard
-                            </button>
-                            <button className="w-full flex items-center px-3 py-2 text-sm font-medium bg-blue-50 text-blue-700 border-r-2 border-blue-700 rounded-md">
-                                <Calendar className="mr-3 h-5 w-5" />
-                                Events
-                            </button>
-                            <button className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50 transition-colors">
-                                <Store className="mr-3 h-5 w-5" />
-                                Shops
-                            </button>
-                            <button className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50 transition-colors">
-                                <Users className="mr-3 h-5 w-5" />
-                                Cashiers
-                            </button>
-                            <button className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50 transition-colors">
-                                <FileText className="mr-3 h-5 w-5" />
-                                Bet Slip
-                            </button>
-                        </nav>
-                    </div>
-
-                    <div className="px-6">
-                        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">PAGES</h3>
-                        <nav className="space-y-2">
-                            <button className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50 transition-colors">
-                                <BarChart3 className="mr-3 h-5 w-5" />
-                                Reports
-                            </button>
-                        </nav>
-                    </div>
-                </div>
-
-                <div className="p-6 border-t border-gray-200">
-                    <div className="flex space-x-3">
-                        <button className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center text-white hover:bg-gray-700 transition-colors">
-                            <Settings className="h-5 w-5" />
-                        </button>
-                        <button className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white hover:bg-indigo-700 transition-colors">
-                            <MessageCircle className="h-5 w-5" />
-                        </button>
-                    </div>
-                </div>
-            </div> */}
-
             {/* Main Content */}
             <div className="flex-1 flex flex-col">
-                {/* Header */}
-                {/* <header className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
-                    <div className="flex justify-end items-center">
-                        <div className="flex items-center space-x-3">
-                            <div className="text-right">
-                                <div className="text-sm font-medium text-gray-900">Bura</div>
-                                <div className="text-xs text-gray-500">Pa</div>
-                            </div>
-                            <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
-                                B
-                            </div>
-                        </div>
-                    </div>
-                </header> */}
 
                 {/* Page Content */}
                 <main className="flex-1 p-6">
                     {/* Breadcrumb */}
                     <div className="mb-6">
-                        <nav className="text-sm text-gray-500">
-                            <span>Dashboard</span>
-                            <span className="mx-2">/</span>
-                            <span className="text-gray-900">Events</span>
+                        <nav className="text-sm">
+                            <span className="text-[12px]">Dashboard</span>
+                            <span className="mx-2 text-gray-400">/</span>
+                            <span className="text-gray-900 text-[13px]">Events</span>
                         </nav>
                     </div>
 
                     {/* Page Header */}
                     <div className="flex justify-between items-center mb-6">
                         <div className="flex items-center space-x-3">
-                            <h1 className="text-2xl font-bold text-gray-900">List</h1>
-                            <span className="bg-gray-200 text-gray-600 px-3 py-1 rounded-full text-sm">100078</span>
+                            <h1 className="text-2xl font-[Sans-serif] text-gray-900">List</h1>
+                            <span className="border-2 border-gray-200 rounded-full px-2 text-gray-600 py-0.5 text-[11px]">100078</span>
                         </div>
-                        <div className="flex space-x-3">
-                            <Button variant="outline" className="flex items-center space-x-2 bg-transparent">
-                                <Plus className="h-4 w-4" />
+                        <div className="flex items-center justify-center space-x-5">
+                            <Button variant="outline" className="flex font-[Roboto] items-center text-[#3040D6] text-[12px] rounded-[3px] border-[#3040D6]  bg-transparent w-34 h-7.5">
+                                <Plus className="h-2 w-2" />
                                 <span>Create new</span>
                             </Button>
-                            <Button variant="outline" className="flex items-center space-x-2 bg-transparent">
-                                <Filter className="h-4 w-4" />
+                            <Button variant="outline" className="flex border-none shadow-none text-[#3040D6] text-[12px] font-[Roboto] items-center bg-transparent">
+                                <Filter className="h-2 w-2" />
                                 <span>Filter</span>
                             </Button>
                         </div>
                     </div>
 
                     {/* Data Table */}
-                    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div className="bg-white p-4 border-none rounded-lg shadow-sm border border-gray-200">
                         <div className="overflow-x-auto">
-                            <table className="w-full">
+                            <table className="w-full border">
                                 <thead className="bg-gray-50 border-b border-gray-200">
                                     <tr>
-                                        <th className="w-12 px-6 py-3 text-left">
+                                        <th className="w-12 px-4 py-3 text-left">
                                             <Checkbox
                                                 checked={selectedItems.length === eventsData.length}
                                                 onCheckedChange={handleSelectAll}
+                                                className={"border"}
                                             />
                                         </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            <div className="flex items-center space-x-1">
+                                        <th className="px-6 py-3 text-left text-[9px] font-[700] text-gray-500  tracking-wider">
+                                            <div className="flex items-center space-x-2">
                                                 <span>Id</span>
-                                                <ChevronDown className="h-4 w-4" />
+                                                <ChevronDown className="h-3 w-3 text-gray-400" />
                                             </div>
                                         </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th className="px-6 py-3 text-left text-[10px] font-[700]  tracking-wider">
                                             Event No
                                         </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th className="px-6 py-3 text-left text-[9px] font-[700]  tracking-wider">
                                             Name
                                         </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th className="px-6 py-3 text-left text-[9px] font-[700]  tracking-wider">
                                             Result
                                         </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th className="px-6 py-3 text-left text-[9px] font-[700]  tracking-wider">
                                             Created At
                                         </th>
                                         <th className="w-12 px-6 py-3"></th>
                                     </tr>
                                 </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
+                                <tbody className="bg-white divide-y divide-gray-200  font-[normal]">
                                     {eventsData.map((event) => (
                                         <tr key={event.id} className="hover:bg-gray-50">
-                                            <td className="px-6 py-4">
+                                            <td className="px-4 py-3">
                                                 <Checkbox
                                                     checked={selectedItems.includes(event.id)}
                                                     onCheckedChange={(checked) => handleSelectItem(event.id, checked)}
+                                                    className={"border"}
                                                 />
                                             </td>
-                                            <td className="px-6 py-4 text-sm text-gray-900">{event.id}</td>
-                                            <td className="px-6 py-4 text-sm text-gray-900">{event.eventNo}</td>
-                                            <td className="px-6 py-4 text-sm text-gray-900">{event.name}</td>
-                                            <td className="px-6 py-4 text-sm text-gray-900 max-w-md">
+                                            <td className="px-6 py-4 text-[12px] text-gray-900">{event.id}</td>
+                                            <td className="px-6 py-4 text-[12px] text-gray-900">{event.eventNo}</td>
+                                            <td className="px-6 py-4 text-[12px] text-gray-900">{event.name}</td>
+                                            <td className="px-6 py-4 text-[12px] text-gray-900 max-w-md">
                                                 {event.result === "pending" ? (
                                                     <span className="text-blue-600">pending</span>
                                                 ) : (
                                                     <span className="truncate block">{event.result}</span>
                                                 )}
                                             </td>
-                                            <td className="px-6 py-4 text-sm text-gray-900">{event.createdAt}</td>
+                                            <td className="px-6 py-4 text-[12px] text-gray-900">{event.createdAt}</td>
                                             <td className="px-6 py-4">
                                                 <button className="text-gray-400 hover:text-gray-600">
                                                     <MoreHorizontal className="h-5 w-5" />
@@ -261,12 +190,7 @@ export default function Events() {
                     </div>
                 </main>
 
-                {/* Floating Message Button */}
-                <div className="fixed bottom-6 right-6">
-                    <button className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg hover:bg-green-600 transition-colors">
-                        <span className="font-bold text-lg">M</span>
-                    </button>
-                </div>
+
             </div>
         </div>
     )

@@ -9,6 +9,7 @@ import Events from "./components/Dashboard/Events/Events"
 import Cashier from "./components/Dashboard/Cashier/Cashier"
 import BetSlip from "./components/Dashboard/BetSlip/BetSlip"
 import HomeDashboard from "./components/Dashboard/HomeDashboard"
+import Report from "./components/Dashboard/Report/Report"
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="events" element={<Events />} />
           <Route path="cashier" element={<Cashier />} />
           <Route path="betSlip" element={<BetSlip />} />
+          <Route path="reports" element={<Report />} />
         </Route>
       </Routes>
     </Router>
