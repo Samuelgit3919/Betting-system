@@ -1,4 +1,3 @@
-"use client"
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
@@ -7,6 +6,7 @@ import { Plus, Filter, MoreHorizontal, ChevronDown } from 'lucide-react'
 import { CreateNewForm } from './CreateNewForm'
 import { FilterPanel } from './FilterPanel'
 import { initialEvents } from './event' // Import initialEvents from the new JS file
+import { Link } from "react-router-dom"
 
 export default function Events() {
     const [allEvents, setAllEvents] = useState(initialEvents)
@@ -94,6 +94,8 @@ export default function Events() {
             setSelectedItems(selectedItems.filter((item) => item !== id))
         }
     }
+
+
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
@@ -224,17 +226,38 @@ function EventsListContent({
                                             className={"border"}
                                         />
                                     </td>
-                                    <td className="px-6 py-4 text-[12px] text-gray-900">{event.id}</td>
-                                    <td className="px-6 py-4 text-[12px] text-gray-900">{event.eventNo}</td>
-                                    <td className="px-6 py-4 text-[12px] text-gray-900">{event.name}</td>
-                                    <td className="px-6 py-4 text-[12px] text-gray-900 max-w-md">
-                                        {event.result === "pending" ? (
-                                            <span className="text-blue-600">pending</span>
-                                        ) : (
-                                            <span className="truncate block">{event.result}</span>
-                                        )}
+                                    <td className="px-6 py-4 text-[12px] text-gray-900">
+                                        <Link
+                                            to={`/events/${event.id}`}
+                                            className="block w-full h-full "
+                                        >
+                                            {event.id}
+                                        </Link>
                                     </td>
-                                    <td className="px-6 py-4 text-[12px] text-gray-900">{event.createdAt}</td>
+                                    <td className="px-6 py-4 text-[12px] text-gray-900">
+                                        <Link to={`/events/${event.id}`} className="">
+                                            {event.eventNo}
+                                        </Link>
+                                    </td>
+                                    <td className="px-6 py-4 text-[12px] text-gray-900">
+                                        <Link to={`/events/${event.id}`} className="">
+                                            {event.name}
+                                        </Link>
+                                    </td>
+                                    <td className="px-6 py-4 text-[12px] text-gray-900 max-w-md">
+                                        <Link to={`/events/${event.id}`} className="">
+                                            {event.result === "pending" ? (
+                                                <span className="text-blue-600">pending</span>
+                                            ) : (
+                                                <span className="truncate block">{event.result}</span>
+                                            )}
+                                        </Link>
+                                    </td>
+                                    <td className="px-6 py-4 text-[12px] text-gray-900">
+                                        <Link to={`/events/${event.id}`} className="">
+                                            {event.createdAt}
+                                        </Link>
+                                    </td>
                                     <td className="px-6 py-4">
                                         <button className="text-gray-400 hover:text-gray-600">
                                             <MoreHorizontal className="h-5 w-5" />
@@ -243,9 +266,10 @@ function EventsListContent({
                                 </tr>
                             ))}
                         </tbody>
+
                     </table>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

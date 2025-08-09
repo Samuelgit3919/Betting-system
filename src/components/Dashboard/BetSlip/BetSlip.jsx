@@ -119,12 +119,17 @@ export default function BetSlip() {
                 {/* Page Content */}
                 <main className="flex-1 p-6">
                     {/* Breadcrumb */}
-                    <div className="mb-6">
+                    <div className="mb-6 flex justify-between items-center border[#3040D6]">
                         <nav className="text-sm text-gray-500">
                             <span>Dashboard</span>
                             <span className="mx-2">/</span>
                             <span className="text-gray-900">Bet Slip</span>
                         </nav>
+                        <Button className="bg-[] cursor-pointer border border-[#3040D6]  rounded-[8px] h-5 hover:bg-[#EDEFF7]">
+                            <span className="text-[9px] text-[#3040D6]">
+                                Export
+                            </span>
+                        </Button>
                     </div>
 
                     {/* Page Header */}
@@ -134,14 +139,18 @@ export default function BetSlip() {
                             <span className="border-2 border-gray-200 rounded-full px-2 text-gray-600 py-0.5 text-[11px]">115581</span>
                         </div>
                         <div className="flex items-center justify-center space-x-5">
-                            <Button variant="outline" className="flex font-[Roboto] items-center text-[#3040D6] text-[12px] rounded-[3px] border-[#3040D6]  bg-transparent w-34 h-7.5">
-                                <Plus className="h-2 w-2" />
-                                <span>Create new</span>
-                            </Button>
-                            <Button variant="outline" className="flex border-none shadow-none text-[#3040D6] text-[12px] font-[Roboto] items-center bg-transparent">
-                                <Filter className="h-2 w-2" />
-                                <span>Filter</span>
-                            </Button>
+
+                            <div className="flex items-center justify-center space-x-5">
+
+                                <Button
+                                    variant="outline"
+                                    className="flex border-none shadow-none text-[#3040D6] text-[12px] font-[Roboto] items-center bg-transparent"
+                                // onClick={() => setIsFilterOpen(true)}
+                                >
+                                    <Filter className="h-2 w-2" />
+                                    <span>Filter</span>
+                                </Button>
+                            </div>
                         </div>
                     </div>
 
@@ -212,13 +221,6 @@ export default function BetSlip() {
                         </div>
                     </div>
                 </main>
-
-                {/* Floating Message Button */}
-                <div className="fixed bottom-6 right-6">
-                    <button className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white shadow-lg hover:bg-green-600 transition-colors">
-                        <span className="font-bold text-lg">M</span>
-                    </button>
-                </div>
             </div>
         </div>
     )

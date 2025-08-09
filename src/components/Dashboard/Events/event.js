@@ -4,48 +4,56 @@ export const initialEvents = [
     eventNo: "63567",
     name: "SmartPlayKeno",
     result: "4,15,16,18,21,22,23,24,26,29,34,36,41,42,47,59,61,69,71,79",
-    createdAt: "2025-07-16 00:21",
+        createdAt: "2025-07-16 00:21",
+    updated:"2025-07-16 00:21"
   },
   {
     id: "102091",
     eventNo: "63566",
     name: "SmartPlayKeno",
     result: "6,10,12,22,26,29,33,35,40,48,50,51,54,55,60,64,68,71,72,75",
-    createdAt: "2025-07-16 00:17",
+      createdAt: "2025-07-16 00:17",
+    updated:"2025-07-16 00:17"
   },
   {
     id: "102090",
     eventNo: "63565",
     name: "SmartPlayKeno",
     result: "5,9,18,20,23,24,25,28,44,46,47,48,51,54,56,57,65,67,70,79",
-    createdAt: "2025-07-16 00:13",
+      createdAt: "2025-07-16 00:13",
+    updated:"2025-07-16 00:13"
   },
   {
     id: "102089",
     eventNo: "63564",
     name: "SmartPlayKeno",
     result: "pending",
-    createdAt: "2025-07-16 00:10",
+      createdAt: "2025-07-16 00:10",
+     updated:"2025-07-16 00:10"
   },
   {
     id: "102088",
     eventNo: "63563",
     name: "SmartPlayKeno",
     result: "pending",
-    createdAt: "2025-07-16 00:05",
+      createdAt: "2025-07-16 00:05",
+    updated:"2025-07-16 00:05"
   },
   {
     id: "102087",
     eventNo: "63562",
     name: "SmartPlayKeno",
     result: "2,4,5,9,12,16,19,20,26,27,34,36,42,43,48,52,55,60,63,68",
-    createdAt: "2025-07-16 00:01",
+      createdAt: "2025-07-16 00:01",
+    updated:"2025-07-16 00:01"
   },
   {
     id: "102086",
     eventNo: "63561",
     name: "SmartPlayKeno",
     result: "1,13,14,15,19,23,29,38,39,42,44,47,49,50,54,61,69,70,71,74",
-    createdAt: "2025-07-15 23:57",
+      createdAt: "2025-07-15 23:57",
+    updated:"2025-07-15 23:57"
+
   },
 ];

@@ -13,7 +13,7 @@ const Layout = () => {
 
             <div className="flex flex-col flex-1 w-[100%]  md:w-[85%] ">
                 <Header />
-                <main className="">
+                <main className="bg-[#F8F9F9] h-full">
                     <Outlet />
                 </main>
             </div>

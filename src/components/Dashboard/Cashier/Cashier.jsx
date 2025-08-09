@@ -137,11 +137,19 @@ export default function Cashier() {
                             <span className="border-2 border-gray-200 rounded-full px-2 text-gray-600 py-0.5 text-[11px]">101</span>
                         </div>
                         <div className="flex items-center justify-center space-x-5">
-                            <Button variant="outline" className="flex font-[Roboto] items-center text-[#3040D6] text-[12px] rounded-[3px] border-[#3040D6]  bg-transparent w-34 h-7.5">
+                            <Button
+                                variant="outline"
+                                className="flex font-[Roboto] items-center text-[#3040D6] text-[12px] rounded-[3px] border-[#3040D6] bg-transparent w-34 h-7.5"
+                            // onClick={() => setCurrentView('create')}
+                            >
                                 <Plus className="h-2 w-2" />
                                 <span>Create new</span>
                             </Button>
-                            <Button variant="outline" className="flex border-none shadow-none text-[#3040D6] text-[12px] font-[Roboto] items-center bg-transparent">
+                            <Button
+                                variant="outline"
+                                className="flex border-none shadow-none text-[#3040D6] text-[12px] font-[Roboto] items-center bg-transparent"
+                            // onClick={() => setIsFilterOpen(true)}
+                            >
                                 <Filter className="h-2 w-2" />
                                 <span>Filter</span>
                             </Button>
