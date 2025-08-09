@@ -29,6 +29,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 // Mock data for charts and tables
 const ggrTrendData = [
@@ -266,9 +267,9 @@ export default function DashboardPage() {
                 <Card className="py-6 px-4 h-[295px] shadow-md bg-white rounded-lg border border-gray-100 ">
                     <div className="flex items-center justify-between">
                         <h2 className="text-[12px] font-semibold text-gray-900">Top Performing Shops</h2>
-                        <a href="#" className="text-[12px] text-blue-600 hover:underline">
+                        <Link to="/shop" className="text-[12px] text-blue-600 hover:underline">
                             See all
-                        </a>
+                        </Link>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-left table-auto border" >
@@ -301,9 +302,9 @@ export default function DashboardPage() {
                 <Card className="py-6 px-4 h-[295px] shadow-md bg-white rounded-lg border border-gray-100 ">
                     <div className="flex items-center justify-between">
                         <h2 className="text-[12px] font-semibold text-gray-900">Banned Cashiers</h2>
-                        <a href="#" className="text-[12px] text-blue-600 hover:underline ">
+                        <Link to="/cashier" className="text-[12px] text-blue-600 hover:underline ">
                             See all
-                        </a>
+                        </Link>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-left table-auto border">
