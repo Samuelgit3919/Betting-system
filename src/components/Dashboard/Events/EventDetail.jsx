@@ -39,13 +39,13 @@ export default function EventDetail() {
                             Dashboard
                         </BreadcrumbLink>
                     </BreadcrumbItem>
-                    <BreadcrumbSeparator />
+                    <span className="text-[11px]">/</span>
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/events" className="text-[11px]">
                             Events
                         </BreadcrumbLink>
                     </BreadcrumbItem>
-                    <BreadcrumbSeparator />
+                    <span className="text-[11px]">/</span>
                     <BreadcrumbItem>
                         <BreadcrumbPage className="text-[11px]">{event.name}</BreadcrumbPage>
                     </BreadcrumbItem>

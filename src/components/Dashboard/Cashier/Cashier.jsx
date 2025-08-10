@@ -18,82 +18,13 @@ import {
     MoreHorizontal,
     ChevronDown,
 } from "lucide-react"
+import { cashiersData } from "./Cashierdata"
+import { Link } from "react-router-dom"
 
 export default function Cashier() {
     const [selectedItems, setSelectedItems] = useState([])
 
-    const cashiersData = [
-        {
-            name: "Falco8.cashier5",
-            id: "3324",
-            username: "Falco8.cashier5",
-            active: "Yes",
-            isSupervisor: "No",
-            cashLimit: 18000,
-            cashToday: 0,
-            createdAt: "2025-07-14 08:40",
-        },
-        {
-            name: "Falco8.cashier4",
-            id: "3323",
-            username: "Falco8.cashier4",
-            active: "Yes",
-            isSupervisor: "No",
-            cashLimit: 18000,
-            cashToday: 0,
-            createdAt: "2025-07-14 08:40",
-        },
-        {
-            name: "Falco8.cashier3",
-            id: "3322",
-            username: "Falco8.cashier3",
-            active: "Yes",
-            isSupervisor: "No",
-            cashLimit: 18000,
-            cashToday: 0,
-            createdAt: "2025-07-14 08:40",
-        },
-        {
-            name: "Falco8.cashier2",
-            id: "3321",
-            username: "Falco8.cashier2",
-            active: "Yes",
-            isSupervisor: "No",
-            cashLimit: 18000,
-            cashToday: -448,
-            createdAt: "2025-07-14 08:40",
-        },
-        {
-            name: "Falco8.cashier1",
-            id: "3320",
-            username: "Falco8.cashier1",
-            active: "Yes",
-            isSupervisor: "Yes",
-            cashLimit: 18000,
-            cashToday: 3781,
-            createdAt: "2025-07-14 08:40",
-        },
-        {
-            name: "Falco7.cashier5",
-            id: "3306",
-            username: "Falco7.cashier5",
-            active: "Yes",
-            isSupervisor: "No",
-            cashLimit: 18000,
-            cashToday: 0,
-            createdAt: "2025-07-13 09:21",
-        },
-        {
-            name: "Falco7.cashier4",
-            id: "3305",
-            username: "Falco7.cashier4",
-            active: "Yes",
-            isSupervisor: "No",
-            cashLimit: 18000,
-            cashToday: 0,
-            createdAt: "2025-07-13 09:21",
-        },
-    ]
+
 
     const handleSelectAll = (checked) => {
         if (checked) {
@@ -208,30 +139,56 @@ export default function Cashier() {
                                                     onCheckedChange={(checked) => handleSelectItem(cashier.id, checked)}
                                                 />
                                             </td>
-                                            <td className="px-6 py-4 text-sm text-gray-900">{cashier.name}</td>
-                                            <td className="px-6 py-4 text-sm text-gray-900">{cashier.id}</td>
-                                            <td className="px-6 py-4 text-sm text-gray-900">{cashier.username}</td>
-                                            <td className="px-6 py-4">
-                                                <Badge variant="secondary" className="bg-gray-100 text-gray-700">
-                                                    {cashier.active}
-                                                </Badge>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <Badge variant="secondary" className="bg-gray-100 text-gray-700">
-                                                    {cashier.isSupervisor}
-                                                </Badge>
-                                            </td>
-                                            <td className="px-6 py-4 text-sm text-gray-900">{cashier.cashLimit.toLocaleString()}</td>
                                             <td className="px-6 py-4 text-sm text-gray-900">
-                                                <span
-                                                    className={
-                                                        cashier.cashToday < 0 ? "text-red-600" : cashier.cashToday > 0 ? "text-green-600" : ""
-                                                    }
-                                                >
-                                                    {cashier.cashToday}
-                                                </span>
+                                                <Link to={`/cashier/${cashier.id}`}>
+                                                    {cashier.name}
+                                                </Link>
                                             </td>
-                                            <td className="px-6 py-4 text-sm text-gray-900">{cashier.createdAt}</td>
+                                            <td className="px-6 py-4 text-sm text-gray-900">
+                                                <Link to={`/cashier/${cashier.id}`}>
+                                                    {cashier.id}
+                                                </Link>
+                                            </td>
+                                            <td className="px-6 py-4 text-sm text-gray-900">
+                                                <Link to={`/cashier/${cashier.id}`}>
+                                                    {cashier.username}
+                                                </Link>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <Link to={`/cashier/${cashier.d}`}>
+                                                    <Badge variant="secondary" className="bg-gray-100 text-gray-700">
+                                                        {cashier.active}
+                                                    </Badge>
+                                                </Link>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <Link to={`/cashier/${cashier.id}`}>
+                                                    <Badge variant="secondary" className="bg-gray-100 text-gray-700">
+                                                        {cashier.isSupervisor}
+                                                    </Badge>
+                                                </Link>
+                                            </td>
+                                            <td className="px-6 py-4 text-sm text-gray-900">
+                                                <Link to={`/cashier/${cashier.id}`}>
+                                                    {cashier.cashLimit.toLocaleString()}
+                                                </Link>
+                                            </td>
+                                            <td className="px-6 py-4 text-sm text-gray-900">
+                                                <Link to={`/cashier/${cashier.id}`}>
+                                                    <span
+                                                        className={
+                                                            cashier.cashToday < 0 ? "text-red-600" : cashier.cashToday > 0 ? "text-green-600" : ""
+                                                        }
+                                                    >
+                                                        {cashier.cashToday}
+                                                    </span>
+                                                </Link>
+                                            </td>
+                                            <td className="px-6 py-4 text-sm text-gray-900">
+                                                <Link to={`/cashier/${cashier.id}`}>
+                                                    {cashier.createdAt}
+                                                </Link>
+                                            </td>
                                             <td className="px-6 py-4">
                                                 <button className="text-gray-400 hover:text-gray-600">
                                                     <MoreHorizontal className="h-5 w-5" />

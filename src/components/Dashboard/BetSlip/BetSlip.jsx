@@ -1,6 +1,6 @@
 
 
-import { useState } from "react"
+// import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Badge } from "@/components/ui/badge"
@@ -18,99 +18,28 @@ import {
     MoreHorizontal,
     ChevronDown,
 } from "lucide-react"
+import { betSlipData } from "./Bet"
+import { Link } from "react-router-dom"
 
 export default function BetSlip() {
-    const [selectedItems, setSelectedItems] = useState([])
-
-    const betSlipData = [
-        {
-            id: "121129495686842",
-            totalStake: 30,
-            winAmount: 0,
-            winChecked: "Yes",
-            status: "Placed",
-            createdAt: "2023-07-29 13:18"
-        },
-        {
-            id: "121129495686796",
-            totalStake: 20,
-            winAmount: 0,
-            winChecked: "Yes",
-            status: "Placed",
-            createdAt: "2023-07-29 13:18"
-
-        },
-        {
-            id: "121129495686077",
-            totalStake: 30,
-            winAmount: 582,
-            winChecked: "Yes",
-            status: "Redeemed",
-            createdAt: "2023-07-29 13:18"
+    // const [selectedItems, setSelectedItems] = useState([])
 
 
-        },
-        {
-            id: "121129495685988",
-            totalStake: 10,
-            winAmount: 0,
-            winChecked: "Yes",
-            status: "Placed",
-            createdAt: "2023-07-29 13:18"
+    // const handleSelectAll = (checked) => {
+    //     if (checked) {
+    //         setSelectedItems(betSlipData.map((item) => item.id))
+    //     } else {
+    //         setSelectedItems([])
+    //     }
+    // }
 
-
-        },
-        {
-            id: "121129495685945",
-            totalStake: 50,
-            winAmount: 0,
-            winChecked: "Yes",
-            status: "Placed",
-            createdAt: "2023-07-29 13:18"
-
-
-
-        },
-        {
-            id: "121129495685523",
-            totalStake: 200,
-            winAmount: 0,
-            winChecked: "Yes",
-            status: "Placed",
-            createdAt: "2023-07-29 13:18"
-
-
-
-        },
-        {
-            id: "121129495685498",
-            totalStake: 40,
-            winAmount: 0,
-            winChecked: "Yes",
-            status: "Placed",
-            createdAt: "2023-07-29 13:18"
-
-
-
-
-        },
-    ]
-
-    const handleSelectAll = (checked) => {
-        if (checked) {
-            setSelectedItems(betSlipData.map((item) => item.id))
-        } else {
-            setSelectedItems([])
-        }
-    }
-
-    const handleSelectItem = (id, checked) => {
-        if (checked) {
-            setSelectedItems([...selectedItems, id])
-        } else {
-            setSelectedItems(selectedItems.filter((item) => item !== id))
-        }
-    }
+    // const handleSelectItem = (id, checked) => {
+    //     if (checked) {
+    //         setSelectedItems([...selectedItems, id])
+    //     } else {
+    //         setSelectedItems(selectedItems.filter((item) => item !== id))
+    //     }
+    // }
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
@@ -187,7 +116,11 @@ export default function BetSlip() {
                                 <tbody className="bg-white divide-y divide-gray-200">
                                     {betSlipData.map((betSlip) => (
                                         <tr key={betSlip.id} className="hover:bg-gray-50">
-                                            <td className="pl-6 py-4 text-[12px] text-gray-900">{betSlip.id}</td>
+                                            <td className="pl-6 py-4 text-[12px] text-gray-900">
+                                                <Link to={`/betSlip/${betSlip.id}`}>
+                                                    {betSlip.id}
+                                                </Link>
+                                            </td>
                                             <td className="px-1 py-4 text-[12px] text-gray-900">{betSlip.totalStake}</td>
                                             <td className="px-1 py-4 text-[12px] text-gray-900">{betSlip.winAmount}</td>
                                             <td className="px-1 py-4">
