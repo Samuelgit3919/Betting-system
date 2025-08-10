@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 
-export function FilterCashier({ isOpen, onClose, onApplyFilters, onResetFilters, initialFilters }) {
+export function FilterShop({ isOpen, onClose, onApplyFilters, onResetFilters, initialFilters }) {
     const [filterName, setFilterName] = useState("")
 
     // Sync with initialFilters when opened or changed

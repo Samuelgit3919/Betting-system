@@ -18,28 +18,33 @@ import {
     MoreHorizontal,
     ChevronDown,
 } from "lucide-react"
-import { betSlipData } from "./Bet"
+import { betSlipData as initialShopsData } from "./Bet"
 import { Link } from "react-router-dom"
+import { useState } from "react"
+import { BetFilter } from "./BetFilter"
 
 export default function BetSlip() {
-    // const [selectedItems, setSelectedItems] = useState([])
+    // Filter states
+    const [shopsData, setShopsData] = useState(initialShopsData);
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [filters, setFilters] = useState({ name: "" });
 
 
-    // const handleSelectAll = (checked) => {
-    //     if (checked) {
-    //         setSelectedItems(betSlipData.map((item) => item.id))
-    //     } else {
-    //         setSelectedItems([])
-    //     }
-    // }
+    const handleApplyFilters = (newFilters) => {
+        setFilters(newFilters);
+        const filteredData = shopsData.filter((shop) =>
+            shop.name.toLowerCase().includes(newFilters.name.toLowerCase())
+        );
+        setShopsData(filteredData);
+    };
 
-    // const handleSelectItem = (id, checked) => {
-    //     if (checked) {
-    //         setSelectedItems([...selectedItems, id])
-    //     } else {
-    //         setSelectedItems(selectedItems.filter((item) => item !== id))
-    //     }
-    // }
+    // Reset filters
+    const handleResetFilters = () => {
+        setFilters({ name: "" });
+        setShopsData(initialShopsData);
+    };
+
+
 
     return (
         <div className="min-h-screen bg-gray-50 flex">
@@ -74,7 +79,7 @@ export default function BetSlip() {
                                 <Button
                                     variant="outline"
                                     className="flex border-none shadow-none text-[#3040D6] text-[12px] font-[Roboto] items-center bg-transparent"
-                                // onClick={() => setIsFilterOpen(true)}
+                                    onClick={() => setIsFilterOpen(true)}
                                 >
                                     <Filter className="h-2 w-2" />
                                     <span>Filter</span>
@@ -114,7 +119,7 @@ export default function BetSlip() {
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
-                                    {betSlipData.map((betSlip) => (
+                                    {shopsData.map((betSlip) => (
                                         <tr key={betSlip.id} className="hover:bg-gray-50">
                                             <td className="pl-6 py-4 text-[12px] text-gray-900">
                                                 <Link to={`/betSlip/${betSlip.id}`}>
@@ -153,6 +158,14 @@ export default function BetSlip() {
                             </table>
                         </div>
                     </div>
+                    {/* Filter Sheet */}
+                    <BetFilter
+                        isOpen={isFilterOpen}
+                        onClose={() => setIsFilterOpen(false)}
+                        onApplyFilters={handleApplyFilters}
+                        onResetFilters={handleResetFilters}
+                        initialFilters={filters}
+                    />
                 </main>
             </div>
         </div>
