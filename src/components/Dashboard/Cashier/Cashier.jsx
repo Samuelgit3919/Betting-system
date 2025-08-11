@@ -87,6 +87,12 @@ export default function Cashier() {
                             <span className="text-[12px]">Dashboard</span>
                             <span className="mx-2 text-gray-400">/</span>
                             <span className="text-gray-900 text-[13px]">Cashiers</span>
+                            {currentView === 'create' && (
+                                <>
+                                    <span className="mx-2 text-gray-400">/</span>
+                                    <span className="text-gray-900 text-[13px]">Create new</span>
+                                </>
+                            )}
                         </nav>
                     </div>
 

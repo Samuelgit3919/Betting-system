@@ -35,7 +35,7 @@ export function CreateNewForm({ setCurrentView, onSave }) {
             </div>
             <form onSubmit={handleSubmit} className="grid bg-white p-6 gap-6 max-w-7xl mx-auto">
                 <div className="grid gap-2">
-                    <Label className="text-[9px]" htmlFor="name">* Name</Label>
+                    <Label className="text-[9px]" htmlFor="name">Name</Label>
                     <input className="border border-[#9EAAB5] focus:outline-[#3040D6] focus:outline-1 px-2 py-1 text-[11px]" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
                 </div>
                 <div className="grid gap-2">
