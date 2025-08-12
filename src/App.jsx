@@ -13,6 +13,9 @@ import EventDetail from "./components/Dashboard/Events/EventDetail"
 import ShopDetail from "./components/Dashboard/Shop/ShopDetail"
 import CashierDetail from "./components/Dashboard/Cashier/CashierDetail"
 import BetSlipDetail from "./components/Dashboard/BetSlip/BetSlipDetail"
+import CreateEvent from "./components/Dashboard/Events/CreateEvent"
+import CreateCashier from "./components/Dashboard/Cashier/CreateCashier"
+import CreateNewShop from "./components/Dashboard/Shop/CreateNewShop"
 
 
 const App = () => {
@@ -28,12 +31,15 @@ const App = () => {
           <Route path="dashboard" element={<Dashboard />} />
 
           <Route path="shop" element={<Shop />} />
+          <Route path="shop/createShop" element={<CreateNewShop />} />
           <Route path="shops/:shopId" element={<ShopDetail />} />
 
           <Route path="events" element={<Events />} />
+          <Route path="events/createEvent" element={<CreateEvent />} />
           <Route path="/events/:eventId" element={<EventDetail />} />
 
           <Route path="cashier" element={<Cashier />} />
+          <Route path="cashier/createCashier" element={<CreateCashier />} />
           <Route path="cashier/:cashierId" element={<CashierDetail />} />
 
           <Route path="betSlip" element={<BetSlip />} />

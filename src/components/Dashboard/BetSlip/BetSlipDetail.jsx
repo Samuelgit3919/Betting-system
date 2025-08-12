@@ -16,7 +16,7 @@ function getEventData(id) {
     return betSlipData.find((event) => event.id === id);
 }
 
-console.log(betSlipData)
+// console.log(betSlipData)
 // 
 export default function ShopDetail() {
     const { betSlipId } = useParams();

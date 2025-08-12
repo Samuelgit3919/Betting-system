@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb"
 
 
 export default function CreateCashier({ setCurrentView, onSave }) {
@@ -35,8 +36,29 @@ export default function CreateCashier({ setCurrentView, onSave }) {
     };
 
     return (
-        <div>
-            <h1 className="text-2xl font-normal mb-6">Create new</h1>
+        <div className="px-3">
+            <Breadcrumb className="p-4">
+                <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/dashboard" className="text-[11px]">
+                            Dashboard
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <span className="text-[10px]">/</span>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/events" className="text-[10px]">
+                            Events
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <span className="text-[10px]">/</span>
+                    <BreadcrumbItem>
+                        <BreadcrumbPage className="text-[10px]">Create new</BreadcrumbPage>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
+            <div className="mb-6 px-4">
+                <h1 className="text-2xl font-normal text-gray-900">Create new</h1>
+            </div>
             <form onSubmit={handleSubmit} className="grid bg-white p-6 gap-6 max-w-7xl mx-auto">
                 <div className="grid gap-2">
                     <Label className="text-[9px]">Shop</Label>

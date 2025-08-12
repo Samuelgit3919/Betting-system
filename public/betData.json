@@ -1,0 +1,282 @@
+[
+  {
+    "id": "121129495686842",
+    "totalStake": 30,
+    "winAmount": 0,
+    "winChecked": "Yes",
+    "status": "Placed",
+    "cashier": "Falco5.cashier1",
+    "shop": "Falco5",
+    "createdAt": "2023-07-29 13:18",
+    "updatedAt": "2023-07-29 13:18",
+    "tickets": [
+      {
+        "id": 1580001,
+        "eventName": "SmartPlayKeno",
+        "eventNo": 9001,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier1",
+        "stake": 15,
+        "betType": "Keno Win"
+      },
+      {
+        "id": 1580002,
+        "eventName": "SmartPlayKeno",
+        "eventNo": 9002,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier1",
+        "stake": 15,
+        "betType": "Keno Win"
+      },
+      {
+        "id": 1580006,
+        "eventName": "LuckyNumbers",
+        "eventNo": 8002,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier2",
+        "stake": 10,
+        "betType": "Lucky Win"
+      }
+    ]
+  },
+  {
+    "id": "121129495686796",
+    "totalStake": 20,
+    "winAmount": 0,
+    "winChecked": "Yes",
+    "status": "Placed",
+    "cashier": "Falco5.cashier2",
+    "shop": "Falco5",
+    "createdAt": "2023-07-29 13:18",
+    "updatedAt": "2023-07-29 13:18",
+    "tickets": [
+      {
+        "id": 1580003,
+        "eventName": "LuckyNumbers",
+        "eventNo": 8001,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier2",
+        "stake": 20,
+        "betType": "Lucky Win"
+      },
+      {
+        "id": 1580006,
+        "eventName": "LuckyNumbers",
+        "eventNo": 8002,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier2",
+        "stake": 10,
+        "betType": "Lucky Win"
+      },
+      {
+        "id": 1580006,
+        "eventName": "LuckyNumbers",
+        "eventNo": 8002,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier2",
+        "stake": 10,
+        "betType": "Lucky Win"
+      }
+    ]
+  },
+  {
+    "id": "121129495686077",
+    "totalStake": 30,
+    "winAmount": 582,
+    "winChecked": "Yes",
+    "status": "Redeemed",
+    "cashier": "Falco5.cashier3",
+    "shop": "Falco5",
+    "createdAt": "2023-07-29 13:18",
+    "updatedAt": "2023-07-30 09:45",
+    "tickets": [
+      {
+        "id": 1580004,
+        "eventName": "SmartPlayKeno",
+        "eventNo": 9003,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier3",
+        "stake": 10,
+        "betType": "Keno Win"
+      },
+      {
+        "id": 1580005,
+        "eventName": "SmartPlayKeno",
+        "eventNo": 9004,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier3",
+        "stake": 20,
+        "betType": "Keno Win"
+      },
+      {
+        "id": 1580006,
+        "eventName": "SmartPlayKeno",
+        "eventNo": 9005,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier3",
+        "stake": 30,
+        "betType": "Keno Win"
+      }
+    ]
+  },
+  {
+    "id": "121129495685988",
+    "totalStake": 10,
+    "winAmount": 0,
+    "winChecked": "Yes",
+    "status": "Placed",
+    "cashier": "Falco5.cashier2",
+    "shop": "Falco5",
+    "createdAt": "2023-07-29 13:18",
+    "updatedAt": "2023-07-29 13:18",
+    "tickets": [
+      {
+        "id": 1580007,
+        "eventName": "LuckyNumbers",
+        "eventNo": 8002,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier2",
+        "stake": 10,
+        "betType": "Lucky Win"
+      },
+      {
+        "id": 1580008,
+        "eventName": "LuckyNumbers",
+        "eventNo": 8002,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier2",
+        "stake": 10,
+        "betType": "Lucky Win"
+      },
+      {
+        "id": 1580009,
+        "eventName": "LuckyNumbers",
+        "eventNo": 8002,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier2",
+        "stake": 10,
+        "betType": "Lucky Win"
+      }
+    ]
+  },
+  {
+    "id": "121129495685945",
+    "totalStake": 50,
+    "winAmount": 0,
+    "winChecked": "Yes",
+    "status": "Placed",
+    "cashier": "Falco5.cashier1",
+    "shop": "Falco5",
+    "createdAt": "2023-07-29 13:18",
+    "updatedAt": "2023-07-29 13:18",
+    "tickets": [
+      {
+        "id": 1580007,
+        "eventName": "SmartPlayKeno",
+        "eventNo": 9005,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier1",
+        "stake": 50,
+        "betType": "Keno Win"
+      },
+      {
+        "id": 1580006,
+        "eventName": "LuckyNumbers",
+        "eventNo": 8002,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier2",
+        "stake": 10,
+        "betType": "Lucky Win"
+      },
+      {
+        "id": 1580006,
+        "eventName": "LuckyNumbers",
+        "eventNo": 8002,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier2",
+        "stake": 10,
+        "betType": "Lucky Win"
+      }
+    ]
+  },
+  {
+    "id": "121129495685523",
+    "totalStake": 200,
+    "winAmount": 0,
+    "winChecked": "Yes",
+    "status": "Placed",
+    "cashier": "Falco5.cashier4",
+    "shop": "Falco5",
+    "createdAt": "2023-07-29 13:18",
+    "updatedAt": "2023-07-29 13:18",
+    "tickets": [
+      {
+        "id": 1580008,
+        "eventName": "MegaJackpot",
+        "eventNo": 7001,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier4",
+        "stake": 200,
+        "betType": "Jackpot Win"
+      },
+      {
+        "id": 1580006,
+        "eventName": "LuckyNumbers",
+        "eventNo": 8002,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier2",
+        "stake": 10,
+        "betType": "Lucky Win"
+      },
+      {
+        "id": 1580006,
+        "eventName": "LuckyNumbers",
+        "eventNo": 8002,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier2",
+        "stake": 10,
+        "betType": "Lucky Win"
+      }
+    ]
+  },
+  {
+    "id": "121129495685498",
+    "totalStake": 40,
+    "winAmount": 0,
+    "winChecked": "Yes",
+    "status": "Placed",
+    "cashier": "Falco5.cashier2",
+    "shop": "Falco5",
+    "createdAt": "2023-07-29 13:18",
+    "updatedAt": "2023-07-29 13:18",
+    "tickets": [
+      {
+        "id": 1580009,
+        "eventName": "SmartPlayKeno",
+        "eventNo": 9006,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier2",
+        "stake": 20,
+        "betType": "Keno Win"
+      },
+      {
+        "id": 1580010,
+        "eventName": "SmartPlayKeno",
+        "eventNo": 9006,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier2",
+        "stake": 20,
+        "betType": "Keno Win"
+      },
+      {
+        "id": 1580006,
+        "eventName": "LuckyNumbers",
+        "eventNo": 8002,
+        "shop": "Falco5",
+        "cashier": "Falco5.cashier2",
+        "stake": 10,
+        "betType": "Lucky Win"
+      }
+    ]
+  }
+]

@@ -1,12 +1,12 @@
-"use client"
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Calendar } from 'lucide-react'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb"
 
-export function CreateNewForm({ setCurrentView, onSave }) {
+export default function CreateEvent({ setCurrentView, onSave }) {
     const [name, setName] = useState("")
     const [kenoId, setKenoId] = useState("")
     const [result, setResult] = useState("")
@@ -30,10 +30,29 @@ export function CreateNewForm({ setCurrentView, onSave }) {
 
     return (
         <div className="px-3">
-            <div className="mb-6">
-                <h1 className="text-2xl font-[Sans-serif] text-gray-900">Create new</h1>
+            <Breadcrumb className="p-4">
+                <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/dashboard" className="text-[11px]">
+                            Dashboard
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <span className="text-[10px]">/</span>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/events" className="text-[10px]">
+                            Events
+                        </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <span className="text-[10px]">/</span>
+                    <BreadcrumbItem>
+                        <BreadcrumbPage className="text-[10px]">Create new</BreadcrumbPage>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
+            <div className="mb-6 px-4">
+                <h1 className="text-2xl font-normal text-gray-900">Create new</h1>
             </div>
-            <form onSubmit={handleSubmit} className="grid bg-white p-6 gap-6 max-w-7xl mx-auto">
+            <form onSubmit={handleSubmit} className="grid bg-white px-4 py-6 gap-6 max-w-7xl mx-auto">
                 <div className="grid gap-2">
                     <Label className="text-[9px]" htmlFor="name">Name</Label>
                     <input className="border border-[#9EAAB5] focus:outline-[#3040D6] focus:outline-1 px-2 py-1 text-[11px]" id="name" value={name} onChange={(e) => setName(e.target.value)} required />

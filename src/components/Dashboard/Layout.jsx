@@ -6,8 +6,8 @@ import { Outlet } from 'react-router-dom'
 
 const Layout = () => {
     return (
-        <div className="flex h-screen w-full">
-            <div className='w-[15%] '>
+        <div className="flex h-screen w-full ">
+            <div className='md:w-[13%] '>
                 <Sidebar />
             </div>
 

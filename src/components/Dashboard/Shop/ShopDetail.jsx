@@ -18,7 +18,7 @@ function getEventData(id) {
     return shopsData.find((event) => event.id === id);
 }
 // 
-export default function ShopDetail() {
+export default function ShopDetail({ setCurrentView }) {
     const { shopId } = useParams();
     const navigate = useNavigate();
     const event = getEventData(shopId);
@@ -57,16 +57,18 @@ export default function ShopDetail() {
                 <div className="flex items-center justify-between">
                     <h1 className="text-2xl font-semibold text-gray-900">Show</h1>
                 </div>
-                <Link to={`/createShop`}>
-                    <Button className="text-blue-600 border h-7 rounded-[3px] text-[11px] border-blue-600 font-normal bg-transparent px-6  hover:bg-[#D5D9F3]">
-                        <span>
-                            <Edit className="h-1 w-1" />
-                        </span>
-                        <span >
-                            Edit
-                        </span>
-                    </Button>
-                </Link>
+
+                <Button className="text-blue-600 border h-7 rounded-[3px] text-[11px] border-blue-600 font-normal bg-transparent px-6  hover:bg-[#D5D9F3]"
+                    onClick={() => setCurrentView("create")}
+                >
+                    <span>
+                        <Edit className="h-1 w-1" />
+                    </span>
+                    <span >
+                        Edit
+                    </span>
+                </Button>
+
             </div>
 
             <div className="bg-[#FFFFFF] text-[11px] rounded-[3px] border-none p-6 space-y-3">

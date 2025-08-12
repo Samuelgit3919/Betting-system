@@ -1,0 +1,93 @@
+[
+  {
+    "id": "1192",
+    "username": "Falco8",
+    "name": "Falco8",
+    "profitShare": 20,
+    "active": "Yes",
+    "logo": "no image",
+    "createdAt": "2025-07-14T08:40:00Z",
+    "updatedAt": "2025-07-14T08:40:00Z",
+    "minStake": 10,
+    "maxStake": 10000,
+    "feedSource": "5King"
+  },
+  {
+    "id": "1180",
+    "username": "Falco7",
+    "name": "Falco7",
+    "profitShare": 20,
+    "active": "Yes",
+    "logo": "no image",
+    "createdAt": "2025-07-13T09:21:00Z",
+    "updatedAt": "2025-07-13T09:21:00Z",
+    "minStake": 10,
+    "maxStake": 10000,
+    "feedSource": "5King"
+  },
+  {
+    "id": "1171",
+    "username": "Falco6",
+    "name": "Falco6",
+    "profitShare": 20,
+    "active": "Yes",
+    "logo": "no image",
+    "createdAt": "2025-07-11T21:14:00Z",
+    "updatedAt": "2025-07-11T21:14:00Z",
+    "minStake": 10,
+    "maxStake": 10000,
+    "feedSource": "5King"
+  },
+  {
+    "id": "1164",
+    "username": "Falco5",
+    "name": "Falco5",
+    "profitShare": 20,
+    "active": "No",
+    "logo": "no image",
+    "createdAt": "2025-07-11T13:37:00Z",
+    "updatedAt": "2025-07-11T13:37:00Z",
+    "minStake": 10,
+    "maxStake": 10000,
+    "feedSource": "5King"
+  },
+  {
+    "id": "1163",
+    "username": "Falco4",
+    "name": "Falco4",
+    "profitShare": 20,
+    "active": "Yes",
+    "logo": "no image",
+    "createdAt": "2025-07-11T13:36:00Z",
+    "updatedAt": "2025-07-11T13:36:00Z",
+    "minStake": 10,
+    "maxStake": 10000,
+    "feedSource": "5King"
+  },
+  {
+    "id": "1162",
+    "username": "Falco3",
+    "name": "Falco3",
+    "profitShare": 20,
+    "active": "No",
+    "logo": "no image",
+    "createdAt": "2025-07-11T13:35:00Z",
+    "updatedAt": "2025-07-11T13:35:00Z",
+    "minStake": 10,
+    "maxStake": 10000,
+    "feedSource": "5King"
+  },
+  {
+    "id": "1161",
+    "username": "Falco2",
+    "name": "Falco2",
+    "profitShare": 20,
+    "active": "Yes",
+    "logo": "no image",
+    "createdAt": "2025-07-11T13:34:00Z",
+    "updatedAt": "2025-07-11T13:34:00Z",
+    "minStake": 10,
+    "maxStake": 10000,
+    "feedSource": "5King"
+  }
+]
