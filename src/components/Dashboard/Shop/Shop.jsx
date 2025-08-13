@@ -82,7 +82,7 @@ export default function Shop() {
             setIsFilterOpen(false);
             setLoader(false);
         } catch (err) {
-            setError("Failed to reset filters.");
+            setError("Failed to reset filters.", err);
             setLoader(false);
         }
     };

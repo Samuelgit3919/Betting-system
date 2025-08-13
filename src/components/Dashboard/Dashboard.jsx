@@ -122,7 +122,7 @@ export default function DashboardPage() {
                 // const data = await response.json();
                 setLoader(false);
             } catch (err) {
-                setError('Failed to load dashboard data.');
+                setError('Failed to load dashboard data.', err);
                 setLoader(false);
             }
         };
@@ -172,7 +172,7 @@ export default function DashboardPage() {
                         </Popover>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:grid-cols-3 md:gap-4 mb-6">
                         <Card className="px-2 h-[80px] flex items-center justify-between shadow-md bg-white rounded-lg border border-gray-100">
                             <div className="flex items-center justify-between w-full">
                                 <div className="flex gap-2 items-center justify-center">
@@ -231,8 +231,8 @@ export default function DashboardPage() {
                         </Card>
                     </div>
 
-                    <div className="flex flex-wrap gap-6 mb-6">
-                        <Card className="px-2 w-full md:w-[62%] shadow-md h-[280px] bg-white rounded-lg border border-gray-100">
+                    <div className="grid grid-cols-1  sm:grid-cols-[62%_36%] gap-3 md:gap-6 mb-6">
+                        <Card className="px-2 shadow-md h-[280px] bg-white rounded-lg border border-gray-100">
                             <div className="flex items-center justify-between mb-0">
                                 <h2 className="text-[10px] pl-8 font-semibold text-gray-900">GGR Trend (Weekly)</h2>
                                 <button
@@ -247,7 +247,7 @@ export default function DashboardPage() {
                             <div className="h-46 text-[9px]">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <LineChart data={ggrTrendData} margin={{ top: 4, right: 20, left: 0, bottom: 0 }}>
-                                        <CartesianGrid strokeDasharray="3 3" vertical={true} horizontal={true} stroke="#e0e0e0" />
+                                        <CartesianGrid strokeDasharray="3 3" vertical horizontal stroke="#e0e0e0" />
                                         <XAxis dataKey="name" axisLine={false} tickLine={false} />
                                         <YAxis axisLine={false} tickLine={false} domain={[0, 6000]} ticks={[0, 1500, 3000, 4500, 6000]} />
                                         <Tooltip content={<CustomLineTooltip />} />
@@ -264,7 +264,7 @@ export default function DashboardPage() {
                             </div>
                         </Card>
 
-                        <Card className="px-6 w-full md:w-[36%] shadow-md h-[280px] bg-white rounded-lg border border-gray-100">
+                        <Card className="px-2 md:px-6 shadow-md h-[280px] bg-white rounded-lg border border-gray-100">
                             <h2 className="text-[12px] font-semibold text-gray-900 mb-4">Top Shops</h2>
                             <div className="flex justify-center items-center h-54">
                                 <ResponsiveContainer width="100%" height="100%">
@@ -297,7 +297,8 @@ export default function DashboardPage() {
                         </Card>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                    <div className="grid grid-cols-1 gap-3  sm:grid-cols-2 lg:grid-cols-2 md:gap-6">
                         <Card className="py-6 px-4 h-[295px] shadow-md bg-white rounded-lg border border-gray-100">
                             <div className="flex items-center justify-between">
                                 <h2 className="text-[12px] font-semibold text-gray-900">Top Performing Shops</h2>
