@@ -1,7 +1,8 @@
+// src/pages/Shop.jsx
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { MoreHorizontal, Plus, Filter } from "lucide-react";
+import { MoreHorizontal, Plus, Filter, Monitor, Edit } from "lucide-react";
 import { FilterShop } from "./FilterShop";
 import { Link } from "react-router-dom";
 import ScaleLoader from "react-spinners/ScaleLoader";
@@ -14,7 +15,6 @@ export default function Shop() {
     const [loader, setLoader] = useState(true);
     const [error, setError] = useState(null);
 
-    // Fetch mock data from public folder
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -32,7 +32,6 @@ export default function Shop() {
         fetchData();
     }, []);
 
-    // Select all
     const handleSelectAll = (checked) => {
         if (checked) {
             setSelectedItems(shopsData.map((item) => item.id));
@@ -41,7 +40,6 @@ export default function Shop() {
         }
     };
 
-    // Select individual
     const handleSelectItem = (id, checked) => {
         if (checked) {
             setSelectedItems([...selectedItems, id]);
@@ -50,7 +48,6 @@ export default function Shop() {
         }
     };
 
-    // Apply filters
     const handleApplyFilters = async (newFilters) => {
         try {
             setLoader(true);
@@ -70,7 +67,6 @@ export default function Shop() {
         }
     };
 
-    // Reset filters
     const handleResetFilters = async () => {
         try {
             setLoader(true);
@@ -90,9 +86,7 @@ export default function Shop() {
     return (
         <div className="min-h-screen bg-gray-50 flex">
             <div className="flex-1 flex flex-col">
-
                 <main className="flex-1 px-6 py-2">
-                    {/* Breadcrumb */}
                     <div className="mb-2">
                         <nav className="text-sm text-gray-500">
                             <span className="text-[10px] text-[#898A9A]">Dashboard</span>
@@ -101,7 +95,6 @@ export default function Shop() {
                         </nav>
                     </div>
 
-                    {/* List Header */}
                     <div className="flex justify-between items-center mb-6">
                         <div className="flex items-center space-x-3">
                             <h1 className="text-2xl font-[Sans-serif] text-gray-900">List</h1>
@@ -113,7 +106,7 @@ export default function Shop() {
                             <Link to="createShop">
                                 <Button
                                     variant="outline"
-                                    className="flex font-[Roboto] items-center text-[#3040D6] text-[12px] rounded-[3px] border-[#3040D6] bg-transparent w-34 h-7.5"
+                                    className="flex font-[Roboto] items-center text-[#3040D6] text-[12px] rounded-[3px] border-[#3040D6]  hover:bg-[#EDEFF7] bg-transparent w-34 h-7.5"
                                 >
                                     <Plus className="h-2 w-2" />
                                     <span>Create new</span>
@@ -130,78 +123,104 @@ export default function Shop() {
                         </div>
                     </div>
 
-                    {/* Data Table */}
                     <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        {
-                            loader ? (
-                                <div className="flex items-center justify-center h-50 " aria-live="polite">
-                                    <ScaleLoader color="#3040D6" height={50} width={5} radius={2} />
-                                </div>
-                            ) : error ? (
-                                <div className="flex items-center justify-center h-screen text-red-600 text-sm">{error}</div>
-                            ) : (
-                                <div className="overflow-x-auto">
-                                    <table className="w-full">
-                                        <thead className="bg-gray-50 border-b border-gray-200">
-                                            <tr>
-                                                <th className="w-12 px-6 py-3 text-left">
+                        {loader ? (
+                            <div className="flex items-center justify-center h-50" aria-live="polite">
+                                <ScaleLoader color="#3040D6" height={50} width={5} radius={2} />
+                            </div>
+                        ) : error ? (
+                            <div className="flex items-center justify-center h-screen text-red-600 text-sm">{error}</div>
+                        ) : (
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead className="bg-gray-50 border-b border-gray-200">
+                                        <tr>
+                                            <th className="w-12 px-6 py-3 text-left">
+                                                <Checkbox
+                                                    checked={selectedItems.length === shopsData.length}
+                                                    onCheckedChange={handleSelectAll}
+                                                />
+                                            </th>
+                                            <th className="px-6 py-3 text-left text-[9px] font-[700]">Id</th>
+                                            <th className="px-6 py-3 text-left text-[9px] font-[700]">Username</th>
+                                            <th className="px-6 py-3 text-left text-[9px] font-[700]">Name</th>
+                                            <th className="px-6 py-3 text-left text-[9px] font-[700]">Profit Share</th>
+                                            <th className="px-6 py-3 text-left text-[9px] font-[700]">Logo</th>
+                                            <th className="px-6 py-3 text-left text-[9px] font-[700]">Created At</th>
+                                            <th className="w-12 px-6 py-3"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white divide-y divide-gray-200">
+                                        {shopsData.map((shop) => (
+                                            <tr key={shop.id}>
+                                                <td className="px-6 py-4">
                                                     <Checkbox
-                                                        checked={selectedItems.length === shopsData.length}
-                                                        onCheckedChange={handleSelectAll}
+                                                        checked={selectedItems.includes(shop.id)}
+                                                        onCheckedChange={(checked) =>
+                                                            handleSelectItem(shop.id, checked)
+                                                        }
                                                     />
-                                                </th>
-                                                <th className="px-6 py-3 text-left text-[9px] font-[700]">Id</th>
-                                                <th className="px-6 py-3 text-left text-[9px] font-[700]">Username</th>
-                                                <th className="px-6 py-3 text-left text-[9px] font-[700]">Name</th>
-                                                <th className="px-6 py-3 text-left text-[9px] font-[700]">Profit Share</th>
-                                                <th className="px-6 py-3 text-left text-[9px] font-[700]">Logo</th>
-                                                <th className="px-6 py-3 text-left text-[9px] font-[700]">Created At</th>
-                                                <th className="w-12 px-6 py-3"></th>
+                                                </td>
+                                                <td className="px-6 py-4 text-[12px]">
+                                                    <Link to={`/shops/${shop.id}`}>{shop.id}</Link>
+                                                </td>
+                                                <td className="px-6 py-4 text-[12px]">
+                                                    <Link to={`/shops/${shop.id}`}>{shop.username}</Link>
+                                                </td>
+                                                <td className="px-6 py-4 text-[12px]">
+                                                    <Link to={`/shops/${shop.id}`}>{shop.name}</Link>
+                                                </td>
+                                                <td className="px-6 py-4 text-[12px]">
+                                                    <Link to={`/shops/${shop.id}`}>{shop.profitShare}</Link>
+                                                </td>
+                                                <td className="px-6 py-4 text-[12px]">
+                                                    <Link to={`/shops/${shop.id}`}>{shop.logo}</Link>
+                                                </td>
+                                                <td className="px-6 py-4 text-[12px]">
+                                                    <Link to={`/shops/${shop.id}`}>{shop.createdAt}</Link>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <div className="relative inline-block group">
+                                                        <button
+                                                            className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                            aria-label="Show more options"
+                                                        >
+                                                            <MoreHorizontal className="h-5 w-5" />
+                                                        </button>
+                                                        <div
+                                                            className="absolute hidden group-hover:block bg-white text-black text-center px-2 py-2 rounded-md text-sm bottom-full left-1/2 transform -translate-x-1/2 mt-2 whitespace-nowrap z-10 shadow-md border border-gray-200 flex flex-col items-center justify-center space-y-2 transition-opacity duration-200"
+                                                        >
+                                                            <Link
+                                                                to={`/shops/${shop.id}`}
+                                                                className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                aria-label={`View details for shop ${shop.id}`}
+                                                            >
+                                                                <Monitor className="h-3 w-3 text-gray-700" />
+                                                                <span className="font-normal text-[11px]">Show</span>
+                                                            </Link>
+                                                            <Link
+                                                                to={`/shops/edit/${shop.id}`}
+                                                                state={{ shop: shop }} // Pass shop data via state
+                                                                className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                aria-label={`Edit details for shop ${shop.id}`}
+                                                            >
+                                                                <Edit className="h-3 w-3 text-gray-700" />
+                                                                <span className="font-normal text-[11px]">Edit</span>
+                                                            </Link>
+                                                        </div>
+                                                        <span
+                                                            className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-white bottom-[100%] left-1/2 transform -translate-x-1/2 mt-1 z-10"
+                                                        ></span>
+                                                    </div>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody className="bg-white divide-y divide-gray-200">
-                                            {shopsData.map((shop) => (
-                                                <tr key={shop.id}>
-                                                    <td className="px-6 py-4">
-                                                        <Checkbox
-                                                            checked={selectedItems.includes(shop.id)}
-                                                            onCheckedChange={(checked) =>
-                                                                handleSelectItem(shop.id, checked)
-                                                            }
-                                                        />
-                                                    </td>
-                                                    <td className="px-6 py-4 text-[12px]">
-                                                        <Link to={`/shops/${shop.id}`}>{shop.id}</Link>
-                                                    </td>
-                                                    <td className="px-6 py-4 text-[12px]">
-                                                        <Link to={`/shops/${shop.id}`}>{shop.username}</Link>
-                                                    </td>
-                                                    <td className="px-6 py-4 text-[12px]">
-                                                        <Link to={`/shops/${shop.id}`}>{shop.name}</Link>
-                                                    </td>
-                                                    <td className="px-6 py-4 text-[12px]">
-                                                        <Link to={`/shops/${shop.id}`}>{shop.profitShare}</Link>
-                                                    </td>
-                                                    <td className="px-6 py-4 text-[12px]">
-                                                        <Link to={`/shops/${shop.id}`}>{shop.logo}</Link>
-                                                    </td>
-                                                    <td className="px-6 py-4 text-[12px]">
-                                                        <Link to={`/shops/${shop.id}`}>{shop.createdAt}</Link>
-                                                    </td>
-                                                    <td className="px-6 py-4">
-                                                        <MoreHorizontal className="h-4 w-4 text-gray-400" />
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            )
-                        }
-
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
                     </div>
 
-                    {/* Filter Sheet */}
                     <FilterShop
                         isOpen={isFilterOpen}
                         onClose={() => setIsFilterOpen(false)}
@@ -210,7 +229,6 @@ export default function Shop() {
                         initialFilters={filters}
                     />
                 </main>
-
             </div>
         </div>
     );

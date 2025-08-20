@@ -59,6 +59,7 @@ export default function CreateNewShop({ setCurrentView, onSave }) {
             </Breadcrumb>
             <div className="mb-6 px-4">
                 <h1 className="text-2xl font-normal text-gray-900">Create new</h1>
+                
             </div>
             <form onSubmit={handleSubmit} className="grid bg-white p-6 gap-6 max-w-7xl mx-auto">
                 <div className="grid gap-2">
