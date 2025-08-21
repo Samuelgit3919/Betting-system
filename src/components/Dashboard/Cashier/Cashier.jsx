@@ -123,7 +123,7 @@ export default function Cashier() {
                                     ) : (
                                         <div className="overflow-x-auto sm:overflow-x-hidden mb-8">
                                             <table className="w-full border mb-26">
-                                                <thead className="bg-gray-50 border-b border-gray-200">
+                                                <thead className="bg-gray-50  border-gray-200">
                                                     <tr>
                                                         {/* Checkbox column - visible on all screen sizes */}
                                                         <th className="w-12 px-3 py-3 text-left">
@@ -134,14 +134,15 @@ export default function Cashier() {
                                                             />
                                                         </th>
                                                         {/* Name column - visible on all screen sizes */}
-                                                        <th className="py-1 text-left text-[9px] font-[500] tracking-wider">Name</th>
-                                                        {/* Other columns - hidden on mobile, visible on sm and above */}
                                                         <th className="sm:table-cell hidden py-1 text-left text-[11px] font-medium tracking-wider">
-                                                            <div className="items-center space-x-2">
+                                                            <div className="items-center flex space-x-2">
                                                                 <span>Id</span>
                                                                 <ChevronDown className="h-3 w-3 text-gray-400" />
                                                             </div>
                                                         </th>
+                                                        <th className="py-1 text-left text-[9px] font-[500] tracking-wider">Name</th>
+                                                        {/* Other columns - hidden on mobile, visible on sm and above */}
+
                                                         <th className="sm:table-cell hidden py-2.5 text-left text-[9px] font-[500] tracking-wider">Username</th>
                                                         <th className="sm:table-cell hidden py-2.5 text-left text-[9px] font-[500] tracking-wider">Active</th>
                                                         <th className="sm:table-cell hidden py-2.5 text-left text-[9px] font-[500] tracking-wider">Is Supervisor</th>
@@ -151,7 +152,7 @@ export default function Cashier() {
                                                         <th className=" w-12 px-6 py-3"></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody className="bg-white divide-y divide-gray-200">
+                                                <tbody className="bg-white divide-y  divide-gray-200">
                                                     {cashierData.map((cashier) => (
                                                         <tr key={cashier.id} className="hover:bg-gray-50">
                                                             {/* Checkbox column - visible on all screen sizes */}
@@ -161,14 +162,15 @@ export default function Cashier() {
                                                                     onCheckedChange={(checked) => handleSelectItem(cashier.id, checked)}
                                                                 />
                                                             </td>
-                                                            {/* Name column - visible on all screen sizes */}
-                                                            <td className="py-2.5 text-[11px] text-gray-900">
-                                                                <Link to={`/cashier/${cashier.id}`}>{cashier.name}</Link>
-                                                            </td>
                                                             {/* Other columns - hidden on mobile, visible on sm and above */}
                                                             <td className="sm:table-cell hidden py-2.5 text-[11px] text-gray-900">
                                                                 <Link to={`/cashier/${cashier.id}`}>{cashier.id}</Link>
                                                             </td>
+                                                            {/* Name column - visible on all screen sizes */}
+                                                            <td className="py-2.5 text-[11px] text-gray-900">
+                                                                <Link to={`/cashier/${cashier.id}`}>{cashier.name}</Link>
+                                                            </td>
+
                                                             <td className="sm:table-cell hidden py-2.5 text-[11px] text-gray-900">
                                                                 <Link to={`/cashier/${cashier.id}`}>{cashier.username}</Link>
                                                             </td>

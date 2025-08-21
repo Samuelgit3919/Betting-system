@@ -159,8 +159,8 @@ export default function Events() {
                                 <ScaleLoader color="#3040D6" height={40} sm:height={50} width={4} sm:width={5} radius={2} />
                             </div>
                         ) : (
-                            <div className="overflow-x-auto">
-                                <table className="w-full">
+                            <div className="overflow-x-auto md:overflow-x-hidden">
+                                <table className="w-full border mb-26">
                                     <thead className="bg-gray-50 border-b border-gray-200">
                                         <tr>
                                             {/* Checkbox column - visible on all screen sizes */}

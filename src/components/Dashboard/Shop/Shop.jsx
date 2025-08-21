@@ -137,8 +137,8 @@ export default function Shop() {
                         ) : error ? (
                             <div className="flex items-center justify-center h-screen text-red-600 text-sm">{error}</div>
                         ) : (
-                            <div className="overflow-x-auto">
-                                <table className="w-full">
+                            <div className="overflow-x-auto md:overflow-x-hidden">
+                                <table className="w-full mb-26 border">
                                     <thead className="bg-gray-50 border-b border-gray-200">
                                         <tr>
                                             {/* Checkbox column - visible on all screen sizes */}
