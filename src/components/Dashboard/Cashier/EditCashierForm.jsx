@@ -9,39 +9,39 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-export default function EditShopForm() {
+export default function EditCashierForm() {
     const { id } = useParams(); // 🔑 get shop id from URL
     const navigate = useNavigate();
+    const [Editshop, setEditShop] = useState(null);
 
     const [formData, setFormData] = useState({
         username: "",
         name: "",
         password: "",
-        profitShare: "0%",
-        feedSource: "",
-        logo: null,
         miniStack: "",
-        maxStack: "",
+        isSupervisor: false,
+        cashLimit: "",
+        shop: "",
         status: "active",
     });
 
     // 🔥 Fetch shop data from public JSON and set as default
     useEffect(() => {
-        axios.get("/shopsData.json") // make sure this file exists in public folder
+        axios.get("/cashierData.json")
             .then((response) => {
-                const shops = response.data;
-                const shop = shops.find((s) => String(s.id) === String(id));
-                if (shop) {
+                const cashiers = response.data;
+                const cashier = cashiers.find((s) => String(s.id) === String(id));
+                console.log(cashier)
+
+                if (cashier) {
                     setFormData({
-                        username: shop.username || "",
-                        name: shop.name || "",
-                        password: shop.password || "",
-                        profitShare: shop.profitShare || "0%",
-                        feedSource: shop.feedSource || "",
-                        logo: shop.logo || null,
-                        miniStack: shop.miniStack || "",
-                        maxStack: shop.maxStack || "",
-                        status: shop.status || "active",
+                        username: cashier.username || "",
+                        name: cashier.name || "",
+                        password: cashier.password || "",
+                        isSupervisor: cashier.profitShare || false,
+                        cashLimit: cashier.cashLimit || "",
+                        shop: cashier.shop || "",
+                        status: cashier.status || "active",
                     });
                 }
             })
@@ -65,7 +65,7 @@ export default function EditShopForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Updated shop data:", formData);
-        navigate("/shops");
+        navigate("/cashier");
     };
 
     return (
@@ -80,16 +80,16 @@ export default function EditShopForm() {
                     <span className="text-[10px]">/</span>
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/shops" className="text-[10px]" />
-                        Shops
+                        Cashiers
                     </BreadcrumbItem>
                     <span className="text-[10px]">/</span>
                     <BreadcrumbItem>
-                        <BreadcrumbPage className="text-[10px]">Edit shop</BreadcrumbPage>
+                        <BreadcrumbPage className="text-[10px]">Edit Cashier</BreadcrumbPage>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
             <div className="mb-6 px-4 flex justify-between items-center">
-                <h1 className="text-2xl font-normal text-gray-900">Edit shop</h1>
+                <h1 className="text-2xl font-normal text-gray-900">Edit Cashier</h1>
                 <Link to={`/shops/${id}`}>
                     <Button
                         variant="outline"
@@ -101,18 +101,6 @@ export default function EditShopForm() {
                 </Link>
             </div>
             <form onSubmit={handleSubmit} className="grid bg-white p-6 gap-6 max-w-7xl mx-auto">
-                {/* username */}
-                <div className="grid gap-2">
-                    <Label className="text-[9px]">* Username</Label>
-                    <input
-                        className="border border-[#9EAAB5] focus:outline-[#3040D6] focus:outline-1 px-2 py-1 text-[11px]"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-
                 {/* name */}
                 <div className="grid gap-2">
                     <Label className="text-[9px]">* Name</Label>
@@ -120,6 +108,18 @@ export default function EditShopForm() {
                         className="border border-[#9EAAB5] focus:outline-[#3040D6] focus:outline-1 px-2 py-1 text-[11px]"
                         name="name"
                         value={formData.name}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+
+                {/* username */}
+                <div className="grid gap-2">
+                    <Label className="text-[9px]">* Username</Label>
+                    <input
+                        className="border border-[#9EAAB5] focus:outline-[#3040D6] focus:outline-1 px-2 py-1 text-[11px]"
+                        name="username"
+                        value={formData.username}
                         onChange={handleChange}
                         required
                     />
@@ -138,43 +138,8 @@ export default function EditShopForm() {
                     />
                 </div>
 
-                {/* profit share */}
-                <div className="grid gap-2">
-                    <Label className="text-[9px]">* Profit Share</Label>
-                    <Select
-                        value={formData.profitShare}
-                        onValueChange={(value) => setFormData((prev) => ({ ...prev, profitShare: value }))}
-                    >
-                        <SelectTrigger className="w-[100%] max-h-7 text-[10px] border border-[#9EAAB5] focus:outline-[#3040D6] focus:outline-1 rounded-[3px]">
-                            <SelectValue placeholder="Select a value" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem className="text-[10px]" value="0%">0%</SelectItem>
-                            <SelectItem className="text-[10px]" value="10%">10%</SelectItem>
-                            <SelectItem className="text-[10px]" value="20%">20%</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
 
-                {/* feed source */}
-                <div className="grid gap-2">
-                    <Label className="text-[9px]">* Feed Source</Label>
-                    <Select
-                        value={formData.feedSource}
-                        onValueChange={(value) => setFormData((prev) => ({ ...prev, feedSource: value }))}
-                    >
-                        <SelectTrigger className="w-[100%] text-[10px] max-h-7 border border-[#9EAAB5] focus:outline-[#3040D6] focus:outline-1 rounded-[3px]">
-                            <SelectValue placeholder="Select a value" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem className="text-[10px]" value="SourceA">Source A</SelectItem>
-                            <SelectItem className="text-[10px]" value="SourceB">Source B</SelectItem>
-                            <SelectItem className="text-[10px]" value="SourceC">Source C</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-
-                {/* status checkbox */}
+                {/* status isSuperviced */}
                 <div className="grid gap-2">
                     <div className="flex gap-4 text-[11px]">
                         <label className="flex items-center gap-1">
@@ -188,25 +153,26 @@ export default function EditShopForm() {
                         </label>
                     </div>
                 </div>
-
-                {/* logo */}
                 <div className="grid gap-2">
-                    <Label className="text-[9px]">Logo</Label>
-                    <div className="border-dashed border-2 border-gray-300 p-4 rounded flex items-center justify-center text-gray-500">
-                        <label className="cursor-pointer flex flex-col items-center">
-                            <IoImageSharp className="mb-2 w-12 h-12" />
-                            <span className="text-[9px]">Drop your file here, or click to browse</span>
-                            <input type="file" name="logo" onChange={handleFileChange} className="hidden" />
+                    <div className="flex gap-4 text-[11px]">
+                        <label className="flex items-center gap-1">
+                            <input
+                                type="checkbox"
+                                name="isSupervisor"
+                                checked={formData.isSupervisor}
+                                onChange={handleChange}
+                            />
+                            * is Supervisor
                         </label>
                     </div>
                 </div>
 
                 {/* mini stack */}
                 <div className="grid gap-2">
-                    <Label className="text-[9px]">Mini Stack</Label>
+                    <Label className="text-[9px]">* Cash Limit</Label>
                     <input
                         className="border border-[#9EAAB5] focus:outline-[#3040D6] focus:outline-1 px-2 py-1 text-[11px]"
-                        name="miniStack"
+                        name="cashLimit"
                         value={formData.miniStack}
                         onChange={handleChange}
                     />
@@ -214,11 +180,11 @@ export default function EditShopForm() {
 
                 {/* max stack */}
                 <div className="grid gap-2">
-                    <Label className="text-[9px]">* Max Stack</Label>
+                    <Label className="text-[9px]">* Shop</Label>
                     <input
                         className="border border-[#9EAAB5] focus:outline-[#3040D6] focus:outline-1 px-2 py-1 text-[11px]"
-                        name="maxStack"
-                        value={formData.maxStack}
+                        name="shop"
+                        value={formData.shop}
                         onChange={handleChange}
                         required
                     />

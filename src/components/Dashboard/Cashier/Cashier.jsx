@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Filter, MoreHorizontal, ChevronDown } from "lucide-react";
+import { Plus, Filter, MoreHorizontal, ChevronDown, Monitor, Edit, Ban } from "lucide-react";
 import { Link } from "react-router-dom";
 import { FilterCashier } from "./FilterCashier";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import { WarningProvider } from "@radix-ui/react-dialog";
 
 export default function Cashier() {
     const [selectedItems, setSelectedItems] = useState([]);
@@ -113,16 +114,16 @@ export default function Cashier() {
                                 </div>
                             </div>
 
-                            <div className="bg-white p-4 border-none rounded-lg shadow-sm border border-gray-200">
+                            <div className="bg-white p-4 border-none mb-18 rounded-lg shadow-sm border border-gray-200">
                                 {
                                     loading ? (
                                         <div className="flex items-center justify-center h-50" aria-live="polite">
                                             <ScaleLoader color="#3040D6" height={50} width={5} radius={2} />
                                         </div>
                                     ) : (
-                                        <div className="overflow-x-auto">
-                                            <table className="w-full border">
-                                                <thead className="bg-gray-50 border-b border-gray-200">
+                                        <div className="overflow-x-auto sm:overflow-x-hidden mb-8">
+                                            <table className="w-full border mb-26">
+                                                <thead className="bg-gray-50  border-b border-gray-200">
                                                     <tr>
                                                         <th className="w-12 px-3 py-3 text-left">
                                                             <Checkbox
@@ -131,60 +132,60 @@ export default function Cashier() {
                                                                 className={"border"}
                                                             />
                                                         </th>
-                                                        <th className=" py-3 text-left text-[9px] font-[500] tracking-wider">Name</th>
-                                                        <th className=" py-3 text-left text-[11px] font-medium tracking-wider">
+                                                        <th className=" py-1 text-left text-[9px] font-[500] tracking-wider">Name</th>
+                                                        <th className=" py-1 text-left text-[11px] font-medium tracking-wider">
                                                             <div className="flex items-center space-x-2">
                                                                 <span>Id</span>
                                                                 <ChevronDown className="h-3 w-3 text-gray-400" />
                                                             </div>
                                                         </th>
-                                                        <th className=" py-3 text-left text-[9px] font-[500] tracking-wider">Username</th>
-                                                        <th className=" py-3 text-left text-[9px] font-[500] tracking-wider">Active</th>
-                                                        <th className=" py-3 text-left text-[9px] font-[500] tracking-wider">Is Supervisor</th>
-                                                        <th className=" py-3 text-left text-[9px] font-[500] tracking-wider">Cash Limit</th>
-                                                        <th className=" py-3 text-left text-[9px] font-[500] tracking-wider">Cash Today</th>
-                                                        <th className=" py-3 text-left text-[9px] font-[500] tracking-wider">Created At</th>
+                                                        <th className=" py-1 text-left text-[9px] font-[500] tracking-wider">Username</th>
+                                                        <th className=" py-1 text-left text-[9px] font-[500] tracking-wider">Active</th>
+                                                        <th className=" py-1 text-left text-[9px] font-[500] tracking-wider">Is Supervisor</th>
+                                                        <th className=" py-1 text-left text-[9px] font-[500] tracking-wider">Cash Limit</th>
+                                                        <th className=" py-1 text-left text-[9px] font-[500] tracking-wider">Cash Today</th>
+                                                        <th className=" py-1 text-left text-[9px] font-[500] tracking-wider">Created At</th>
                                                         <th className="w-12 px-6 py-3"></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody className="bg-white divide-y divide-gray-200">
+                                                <tbody className="bg-white divide-y divide-gray-200 ">
                                                     {cashierData.map((cashier) => (
                                                         <tr key={cashier.id} className="hover:bg-gray-50">
-                                                            <td className="px-3 py-4">
+                                                            <td className="px-3 py-2.5">
                                                                 <Checkbox
                                                                     checked={selectedItems.includes(cashier.id)}
                                                                     onCheckedChange={(checked) => handleSelectItem(cashier.id, checked)}
                                                                 />
                                                             </td>
-                                                            <td className=" py-4 text-[11px] text-gray-900">
+                                                            <td className=" py-2.5 text-[11px] text-gray-900">
                                                                 <Link to={`/cashier/${cashier.id}`}>{cashier.name}</Link>
                                                             </td>
-                                                            <td className=" py-4 text-[11px] text-gray-900">
+                                                            <td className=" py-2.5 text-[11px] text-gray-900">
                                                                 <Link to={`/cashier/${cashier.id}`}>{cashier.id}</Link>
                                                             </td>
-                                                            <td className=" py-4 text-[11px] text-gray-900">
+                                                            <td className=" py-2.5 text-[11px] text-gray-900">
                                                                 <Link to={`/cashier/${cashier.id}`}>{cashier.username}</Link>
                                                             </td>
-                                                            <td className=" py-4">
+                                                            <td className=" py-2.5">
                                                                 <Link to={`/cashier/${cashier.id}`}>
                                                                     <Badge variant="secondary" className="bg-gray-100 text-gray-700">
                                                                         {cashier.active}
                                                                     </Badge>
                                                                 </Link>
                                                             </td>
-                                                            <td className=" py-4">
+                                                            <td className=" py-2.5">
                                                                 <Link to={`/cashier/${cashier.id}`}>
                                                                     <Badge variant="secondary" className="bg-gray-100 text-gray-700">
                                                                         {cashier.isSupervisor}
                                                                     </Badge>
                                                                 </Link>
                                                             </td>
-                                                            <td className=" py-4 text-[11px] text-gray-900">
+                                                            <td className="py-2.5 text-[11px] text-gray-900">
                                                                 <Link to={`/cashier/${cashier.id}`}>
                                                                     {cashier.cashLimit?.toLocaleString()}
                                                                 </Link>
                                                             </td>
-                                                            <td className=" py-4 text-[11px] text-gray-900">
+                                                            <td className=" py-2.5 text-[11px] text-gray-900">
                                                                 <Link to={`/cashier/${cashier.id}`}>
                                                                     <span
                                                                         className={
@@ -199,15 +200,60 @@ export default function Cashier() {
                                                                     </span>
                                                                 </Link>
                                                             </td>
-                                                            <td className="px-1 py-4 text-[11px] text-gray-900">
+                                                            <td className="px-1 py-2.5 text-[11px] text-gray-900">
                                                                 <Link to={`/cashier/${cashier.id}`}>
                                                                     {cashier.createdAt}
                                                                 </Link>
                                                             </td>
-                                                            <td className="px-1 py-4">
-                                                                <button className="text-gray-400 hover:text-gray-600">
-                                                                    <MoreHorizontal className="h-5 w-5" />
-                                                                </button>
+                                                            <td className="px-1 py-2.5">
+                                                                <div className="relative inline-block group">
+                                                                    <button
+                                                                        className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                        aria-label="Show more options"
+                                                                    >
+                                                                        <MoreHorizontal className="h-5 w-5" />
+                                                                    </button>
+
+                                                                    {/* Dropdown */}
+                                                                    <div
+                                                                        className="absolute hidden group-hover:flex flex-col bg-white text-black text-center px-2 py-2 rounded-md text-sm top-full -left-8 transform -translate-x-1/2 mt-0.5 whitespace-nowrap z-100 shadow-md border border-gray-200 space-y-2 transition-opacity duration-200"
+                                                                    >
+                                                                        <Link
+                                                                            to={`/cashier/${cashier.id}`}
+                                                                            className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                            aria-label={`View details for cashier ${cashier.id}`}
+                                                                        >
+                                                                            <Monitor className="h-3 w-3 text-gray-700" />
+                                                                            <span className="font-normal text-[11px]">Show</span>
+                                                                        </Link>
+
+                                                                        <Link
+                                                                            to={`/cashiers/edit/${cashier.id}`}
+                                                                            state={{ cashier: cashier }}
+                                                                            className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                            aria-label={`Edit details for cashier ${cashier.id}`}
+                                                                        >
+                                                                            <Edit className="h-3 w-3 text-gray-700" />
+                                                                            <span className="font-normal text-[11px]">Edit</span>
+                                                                        </Link>
+
+                                                                        <Link
+                                                                            to={`/shops/edit/${cashier.id}`}
+                                                                            state={{ shop: cashier }}
+                                                                            className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                            aria-label={`Adjust balance for shop ${cashier.id}`}
+                                                                        >
+                                                                            <Ban className="h-3 w-3 text-gray-700" />
+                                                                            <span className="font-normal text-[11px]">Adjust Balance</span>
+                                                                        </Link>
+                                                                    </div>
+
+                                                                    {/* Arrow pointing up */}
+                                                                    <span
+                                                                        className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-white top-full left-1/2 transform -translate-x-1/2 -mt-1 z-10"
+                                                                    ></span>
+                                                                </div>
+
                                                             </td>
                                                         </tr>
                                                     ))}

@@ -6,6 +6,7 @@ import { MoreHorizontal, Plus, Filter, Monitor, Edit } from "lucide-react";
 import { FilterShop } from "./FilterShop";
 import { Link } from "react-router-dom";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import axios from "axios";
 
 export default function Shop() {
     const [shopsData, setShopsData] = useState([]);
@@ -16,21 +17,26 @@ export default function Shop() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoader(true);
-                const response = await fetch("/shopData.json");
-                if (!response.ok) throw new Error("Failed to fetch shops data.");
-                const data = await response.json();
-                setShopsData(data);
-                setLoader(false);
-            } catch (err) {
-                setError(err.message);
-                setLoader(false);
-            }
-        };
-        fetchData();
+        let timer;
+        axios.get("/shopData.json")
+            .then((response) => {
+                setShopsData(response.data);
+                timer = setTimeout(() => {
+                    setLoader(false);
+                }, 2000);
+            })
+            .catch((error) => {
+                console.error("Error fetching shop data:", error);
+                timer = setTimeout(() => {
+                    setError("Failed to fetch shop data.");
+                    setLoader(false);
+                }, 2000);
+            });
+
+        // cleanup timer if component unmounts
+        return () => clearTimeout(timer);
     }, []);
+
 
     const handleSelectAll = (checked) => {
         if (checked) {

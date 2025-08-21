@@ -1,22 +1,33 @@
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Calendar } from 'lucide-react'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb"
 
-export default function CreateEvent({ setCurrentView, onSave }) {
+export default function CreateEvent() {
     const [name, setName] = useState("")
     const [kenoId, setKenoId] = useState("")
     const [result, setResult] = useState("")
     const [eventId, setEventId] = useState("")
     const [eventNo, setEventNo] = useState("")
     const [startTime, setStartTime] = useState("")
+    const [events, setEvents] = useState([])
+
+    const navigate = useNavigate()
+
+    // Load existing events
+    useEffect(() => {
+        fetch("/eventData.json")
+            .then((res) => res.json())
+            .then((data) => setEvents(data))
+            .catch((err) => console.error("Error loading events:", err))
+    }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
         const newEvent = {
+            id: Date.now(), // unique id
             name,
             kenoId,
             result,
@@ -24,8 +35,11 @@ export default function CreateEvent({ setCurrentView, onSave }) {
             eventNo,
             startTime,
         }
-        onSave(newEvent)
-        setCurrentView('list')
+
+        const updatedEvents = [newEvent, ...events]
+        setEvents(updatedEvents)
+
+        navigate("/events")
     }
 
     return (
@@ -49,6 +63,7 @@ export default function CreateEvent({ setCurrentView, onSave }) {
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
+
             <div className="mb-6 px-4">
                 <h1 className="text-2xl font-normal text-gray-900">Create new</h1>
             </div>
@@ -77,11 +92,15 @@ export default function CreateEvent({ setCurrentView, onSave }) {
                     <Label className="text-[9px]" htmlFor="start-time">* Start Time </Label>
                     <div className="relative">
                         <input id="start-time" type="date" className="border border-[#9EAAB5] focus:outline-[#3040D6] focus:outline-1  px-2 w-full py-1 text-[11px]" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
-                        {/* <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" /> */}
                     </div>
                 </div>
+
+
                 <div className="flex justify-center mt-4">
-                    <Button type="submit" className="bg-[#3040D6] hover:bg-[#2532a8] text-white px-7 cursor-pointer h-[30px] text-[11px] rounded-[3px]">
+                    <Button
+                        type="submit"
+                        className="bg-[#3040D6] hover:bg-[#2532a8] text-white px-7 cursor-pointer h-[30px] text-[11px] rounded-[3px]"
+                    >
                         Save
                     </Button>
                 </div>

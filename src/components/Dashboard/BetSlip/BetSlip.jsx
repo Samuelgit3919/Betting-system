@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Filter, MoreHorizontal, ChevronDown } from "lucide-react";
+import { Filter, MoreHorizontal, ChevronDown, Monitor, Edit, Delete } from "lucide-react";
 import { Link } from "react-router-dom";
 import { BetFilter } from "./BetFilter";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 export default function BetSlip() {
     const [betSlipData, setBetSlipData] = useState([]);
@@ -96,7 +97,7 @@ export default function BetSlip() {
                             ) :
                                 (
                                     <div className="overflow-x-auto">
-                                        <table className="w-full border">
+                                        <table className="w-full border mb-26">
                                             <thead className="bg-gray-50 border-b border-gray-200">
                                                 <tr>
                                                     <th className="px-6 py-3 text-left text-[9px] font-[700] tracking-wider">
@@ -128,23 +129,23 @@ export default function BetSlip() {
 
                                                     <tr key={betSlip.id} className="hover:bg-gray-50">
 
-                                                        <td className="pl-6 py-4 text-[12px] text-gray-900">
+                                                        <td className="pl-6 py-2.5 text-[12px] text-gray-900">
                                                             <Link to={`/betSlip/${betSlip.id}`}>{betSlip.id}</Link>
                                                         </td>
-                                                        <td className=" py-4 text-[12px] text-gray-900">
+                                                        <td className=" py-2.5 text-[12px] text-gray-900">
                                                             <Link to={`/betSlip/${betSlip.id}`}>{betSlip.totalStake}</Link>
                                                         </td>
-                                                        <td className=" py-4 text-[12px] text-gray-900">
+                                                        <td className=" py-2.5 text-[12px] text-gray-900">
                                                             <Link to={`/betSlip/${betSlip.id}`}>{betSlip.winAmount}</Link>
                                                         </td>
-                                                        <td className=" py-4">
+                                                        <td className=" py-2.5">
                                                             <Link to={`/betSlip/${betSlip.id}`}>
                                                                 <Badge className="text-gray-700 bg-transparent border border-gray-200 rounded-full text-[10px] flex items-center justify-center">
                                                                     {betSlip.winChecked}
                                                                 </Badge>
                                                             </Link>
                                                         </td>
-                                                        <td className=" py-4">
+                                                        <td className=" py-2.5">
                                                             <Link to={`/betSlip/${betSlip.id}`}>
                                                                 <Badge
                                                                     variant={
@@ -158,17 +159,59 @@ export default function BetSlip() {
                                                                 </Badge>
                                                             </Link>
                                                         </td>
-                                                        <td className=" py-4 text-[12px] text-gray-900">
+                                                        <td className=" py-2.5 text-[12px] text-gray-900">
                                                             <Link to={`/betSlip/${betSlip.id}`}>
                                                                 <Badge className="text-gray-700 bg-transparent">
                                                                     {betSlip.createdAt}
                                                                 </Badge>
                                                             </Link>
                                                         </td>
-                                                        <td className=" py-4">
-                                                            <button className="text-gray-400 hover:text-gray-600">
-                                                                <MoreHorizontal className="h-5 w-5" />
-                                                            </button>
+                                                        <td className=" py-2.5">
+                                                            <div className="relative inline-block group">
+                                                                <button
+                                                                    className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                    aria-label="Show more options"
+                                                                >
+                                                                    <MoreHorizontal className="h-5 w-5" />
+                                                                </button>
+
+                                                                {/* Dropdown */}
+                                                                <div
+                                                                    className="absolute hidden group-hover:flex flex-col bg-white text-black text-center px-2 py-2 rounded-md text-sm top-full -left-3 transform -translate-x-1/2 mt-0.5 whitespace-nowrap z-10 shadow-md border border-gray-200 space-y-2 transition-opacity duration-200"
+                                                                >
+                                                                    <Link
+                                                                        to={`/betSlip/${betSlip.id}`}
+                                                                        className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                        aria-label={`View details for betSlip ${betSlip.id}`}
+                                                                    >
+                                                                        <Monitor className="h-3 w-3 text-gray-700" />
+                                                                        <span className="font-normal text-[11px]">Show</span>
+                                                                    </Link>
+
+                                                                    <span
+                                                                        state={{ betSlip: betSlip }}
+                                                                        className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                        aria-label={`Edit details for betSlip ${betSlip.id}`}
+                                                                    >
+                                                                        <Edit className="h-3 w-3 text-gray-700" />
+                                                                        <span className="font-normal text-[11px]">Edit</span>
+                                                                    </span>
+
+                                                                    <span
+                                                                        state={{ shop: betSlip }}
+                                                                        className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                        aria-label={`Adjust balance for shop ${betSlip.id}`}
+                                                                    >
+                                                                        <RiDeleteBin6Line className="h-3 w-3 text-red-700" />
+                                                                        <span className="font-normal text-red-700 text-[11px]">Delete</span>
+                                                                    </span>
+                                                                </div>
+
+                                                                {/* Arrow pointing up */}
+                                                                <span
+                                                                    className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-white top-full left-1/2 transform -translate-x-1/2 -mt-1 z-10"
+                                                                ></span>
+                                                            </div>
                                                         </td>
                                                     </tr>
 

@@ -9,6 +9,7 @@ import { Plus, Filter, MoreHorizontal, ChevronDown, Monitor } from "lucide-react
 import { Link } from "react-router-dom"
 import { FilterPanel } from "./FilterPanel"
 import ScaleLoader from "react-spinners/ScaleLoader"
+import axios from "axios"
 
 export default function Events() {
     const [eventsData, setEventsData] = useState([])
@@ -27,25 +28,27 @@ export default function Events() {
         updatedTo: "",
     })
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
 
     // Fetch events data
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true)
-                const response = await fetch("/eventData.json")
-                if (!response.ok) throw new Error("Failed to fetch events data.")
-                const data = await response.json()
-                setEventsData(data)
-                setInitialEventsData(data)
-                setLoading(false)
-            } catch (err) {
-                setError(err.message)
-                setLoading(false)
-            }
-        }
-        fetchData()
+        let timer;
+
+        axios.get("/eventData.json")
+            .then((response) => {
+                setEventsData(response.data)
+                // setInitialEventsData(response.data)
+                timer = setTimeout(() => {
+                    setLoading(false);
+                }, 2000);
+            })
+            .catch((error) => {
+                console.error("Error fetching event data:", error);
+                timer = setTimeout(() => {
+                    setLoading(false);
+                }, 2000);
+            })
+        // Cleanup timer if component unmounts
+        return () => clearTimeout(timer)
     }, [])
 
     // Select all checkbox
@@ -108,25 +111,7 @@ export default function Events() {
         setEventsData(initialEventsData)
     }
 
-    const handleViewEvent = (eventId) => {
-        console.log("View event:", eventId)
-        // Navigate to event details or open modal
-    }
 
-    const handleEditEvent = (eventId) => {
-        console.log("Edit event:", eventId)
-        // Navigate to edit page or open edit modal
-    }
-
-    const handleDuplicateEvent = (eventId) => {
-        console.log("Duplicate event:", eventId)
-        // Create a copy of the event
-    }
-
-    const handleDeleteEvent = (eventId) => {
-        console.log("Delete event:", eventId)
-        // Show confirmation dialog and delete
-    }
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
