@@ -26,6 +26,8 @@ export default function Events() {
         updatedTo: "",
     })
     const [loading, setLoading] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const itemsPerPage = 10
 
     // Fetch events data
     useEffect(() => {
@@ -34,7 +36,6 @@ export default function Events() {
         axios.get("/eventData.json")
             .then((response) => {
                 setEventsData(response.data)
-                // setInitialEventsData(response.data)
                 timer = setTimeout(() => {
                     setLoading(false);
                 }, 2000);
@@ -92,6 +93,7 @@ export default function Events() {
         }
 
         setEventsData(filtered)
+        setCurrentPage(1) // Reset to first page when filters are applied
     }
 
     // Reset filters
@@ -107,9 +109,21 @@ export default function Events() {
             updatedTo: "",
         })
         setEventsData(eventsData)
+        setCurrentPage(1) // Reset to first page when filters are reset
     }
 
 
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = eventsData.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(eventsData.length / itemsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+            setCurrentPage(pageNumber);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -136,7 +150,7 @@ export default function Events() {
                             <Link to="createShop">
                                 <Button
                                     variant="outline"
-                                    className="flex font-[Roboto] items-center text-[#3040D6] text-[12px] rounded-[3px] border-[#3040D6]  hover:bg-[#EDEFF7] bg-transparent w-34 h-7.5"
+                                    className="flex font-[Roboto] items-center text-[#3040D6] text-[12px] rounded-[3px] border-[#3040D6] hover:bg-[#EDEFF7] bg-transparent w-34 h-7.5"
                                 >
                                     <Plus className="h-2 w-2" />
                                     <span>Create new</span>
@@ -160,11 +174,11 @@ export default function Events() {
                             </div>
                         ) : (
                             <div className="overflow-x-auto md:overflow-x-hidden">
-                                <table className="w-full border mb-26">
+                                <table className="w-full border mb-6">
                                     <thead className="bg-gray-50 border-b border-gray-200">
                                         <tr>
                                             {/* Checkbox column - visible on all screen sizes */}
-                                            <th className="w-12 px-4 py-3 text-left">
+                                            <th className="w-12 px-4 py-2 text-left">
                                                 <Checkbox
                                                     checked={selectedItems.length === eventsData.length && eventsData.length > 0}
                                                     onCheckedChange={handleSelectAll}
@@ -178,36 +192,36 @@ export default function Events() {
                                                 </div>
                                             </th>
                                             {/* Other columns - hidden on mobile, visible on sm and above */}
-                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-medium tracking-wider">Event No</th>
-                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-medium tracking-wider">Name</th>
-                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-medium tracking-wider">Result</th>
-                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-medium tracking-wider">Created At</th>
-                                            <th className=" w-12 px-6 py-3"></th>
+                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-medium tracking-wider">Event No</th>
+                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-medium tracking-wider">Name</th>
+                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-medium tracking-wider">Result</th>
+                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-medium tracking-wider">Created At</th>
+                                            <th className="sm:table-cell hidden w-12 px-6 py-2"></th>
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
-                                        {eventsData.map((event) => (
+                                        {currentItems.map((event) => (
                                             <tr key={event.id} className="hover:bg-gray-50">
                                                 {/* Checkbox column - visible on all screen sizes */}
-                                                <td className="px-4 py-4">
+                                                <td className="px-4 py-2">
                                                     <Checkbox
                                                         checked={selectedItems.includes(event.id)}
                                                         onCheckedChange={(checked) => handleSelectItem(event.id, checked)}
                                                     />
                                                 </td>
                                                 {/* Id column - visible on all screen sizes */}
-                                                <td className="px-6 py-4 text-[11px] text-gray-900">
+                                                <td className="px-6 py-2 text-[11px] text-gray-900">
                                                     <Link to={`/events/${event.id}`}>{event.id}</Link>
                                                 </td>
                                                 {/* Other columns - hidden on mobile, visible on sm and above */}
-                                                <td className="sm:table-cell hidden px-6 py-4 text-[11px] text-gray-900">{event.eventNo}</td>
-                                                <td className="sm:table-cell hidden px-6 py-4 text-[11px] text-gray-900">{event.name}</td>
-                                                <td className="sm:table-cell hidden px-6 py-4">
+                                                <td className="sm:table-cell hidden px-6 py-2 text-[11px] text-gray-900">{event.eventNo}</td>
+                                                <td className="sm:table-cell hidden px-6 py-2 text-[11px] text-gray-900">{event.name}</td>
+                                                <td className="sm:table-cell hidden px-6 py-2">
                                                     <Badge
                                                         variant="secondary"
                                                         className={
                                                             event.result === "pending"
-                                                                ? "bg-blue-100 text-blue-700"
+                                                                ? ""
                                                                 : event.result === "success"
                                                                     ? "bg-green-100 text-green-700"
                                                                     : "bg-gray-100 text-gray-700"
@@ -216,8 +230,8 @@ export default function Events() {
                                                         {event.result}
                                                     </Badge>
                                                 </td>
-                                                <td className="sm:table-cell hidden px-6 py-4 text-[11px] text-gray-900">{event.createdAt}</td>
-                                                <td className=" px-6 py-4">
+                                                <td className="sm:table-cell hidden px-6 py-2 text-[11px] text-gray-900">{event.createdAt}</td>
+                                                <td className="sm:table-cell hidden px-6 py-2">
                                                     <div className="relative inline-block group">
                                                         <button
                                                             className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -225,7 +239,7 @@ export default function Events() {
                                                         >
                                                             <MoreHorizontal className="h-5 w-5" />
                                                         </button>
-                                                        <div className="absolute cursor-pointer hidden group-hover:block bg-white text-black text-center px-4 py-2 rounded-md text-sm bottom-full left-1/2 transform -translate-x-1/2 mt-2 whitespace-nowrap z-10 shadow-md border border-gray-200 flex items-center justify-center space-x-2 transition-opacity duration-200 hover:bg-[#F8F9F9]">
+                                                        <div className="absolute hidden group-hover:flex flex-col bg-white text-black text-center px-2 py-2 rounded-md text-sm top-full -left-3 transform -translate-x-1/2 mt-0 whitespace-nowrap z-100 shadow-md border border-gray-200 space-y-2 transition-opacity duration-200">
                                                             <Link
                                                                 to={`/events/${event.id}`}
                                                                 className="flex items-center space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -235,17 +249,139 @@ export default function Events() {
                                                                 <span className="font-normal text-[11px]">Show</span>
                                                             </Link>
                                                         </div>
-                                                        <span className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-white bottom-[100%] left-1/2 transform -translate-x-1/2 mt-1 z-10"></span>
+                                                        <span className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-white top-full left-1/2 transform -translate-x-1/2 -mt-1 z-10"></span>
                                                     </div>
                                                 </td>
                                             </tr>
                                         ))}
                                     </tbody>
-                                </table>
+                                    </table>
+                                    
+                                    
+                                {/* Pagination */}
+                                {eventsData.length > itemsPerPage && (
+                                    <div className="flex justify-center items-center space-x-1 mt-4 p-2 bg-white shadow-sm">
+                                        {/* First Page */}
+                                        <Link
+                                            variant="outline"
+                                            onClick={() => handlePageChange(1)}
+                                            disabled={currentPage === 1}
+                                            className="h-8 w-8 p-0 text-blue-600 "
+                                        >
+                                            ⏮
+                                        </Link>
+
+                                        {/* Previous */}
+                                        <Link
+                                            variant="outline"
+                                            onClick={() => handlePageChange(currentPage - 1)}
+                                            disabled={currentPage === 1}
+                                            className="h-8 w-8 p-0 text-blue-600 "
+                                        >
+                                            ‹
+                                        </Link>
+
+                                        {/* Dynamic Page Numbers with Ellipsis */}
+                                        {(() => {
+                                            const pageButtons = [];
+                                            const maxVisiblePages = 5; // Show current page + 2 before and 2 after
+                                            let startPage = Math.max(1, currentPage - 2);
+                                            let endPage = Math.min(totalPages, currentPage + 2);
+
+                                            if (endPage - startPage < maxVisiblePages - 1) {
+                                                if (startPage === 1) {
+                                                    endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+                                                } else if (endPage === totalPages) {
+                                                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                                                }
+                                            }
+
+                                            // Add ellipsis if not starting from page 1
+                                            if (startPage > 1) {
+                                                pageButtons.push(
+                                                    <Link
+                                                        // key="start-ellipsis"
+                                                        variant="outline"
+                                                        className="h-8 w-8 p-0 text-blue-600 "
+                                                        onClick={() => handlePageChange(1)}
+                                                    >
+                                                        1
+                                                    </Link>
+                                                );
+                                                if (startPage > 2) {
+                                                    pageButtons.push(
+                                                        <span key="start-ellipsis-dot" className="text-[12px] px-2 py-1 text-gray-500">
+                                                            ...
+                                                        </span>
+                                                    );
+                                                }
+                                            }
+
+                                            // Add page numbers
+                                            for (let i = startPage; i <= endPage; i++) {
+                                                pageButtons.push(
+                                                    <Link
+                                                        key={i}
+                                                        variant={currentPage === i ? "default" : "outline"}
+                                                        onClick={() => handlePageChange(i)}
+                                                        className={`h-8 w-8 p-0 text-sm ${currentPage === i
+                                                            ? " text-blue-600"
+                                                            : "text-blue-600 "}`}
+                                                    >
+                                                        {i}
+                                                    </Link>
+                                                );
+                                            }
+
+                                            // Add ellipsis if not ending at totalPages
+                                            if (endPage < totalPages) {
+                                                if (endPage < totalPages - 1) {
+                                                    pageButtons.push(
+                                                        <span key="end-ellipsis-dot" className="text-[12px] px-2 py-1 text-gray-500">
+                                                            ...
+                                                        </span>
+                                                    );
+                                                }
+                                                pageButtons.push(
+                                                    <Link
+                                                        key="end-page"
+                                                        variant="outline"
+                                                        className="h-8 w-8 p-0 text-blue-600"
+                                                        onClick={() => handlePageChange(totalPages)}
+                                                    >
+                                                        {totalPages}
+                                                    </Link>
+                                                );
+                                            }
+
+                                            return pageButtons;
+                                        })()}
+
+                                        {/* Next */}
+                                        <Link
+                                            variant="outline"
+                                            onClick={() => handlePageChange(currentPage + 1)}
+                                            disabled={currentPage === totalPages}
+                                            className="h-8 w-8 p-0 text-blue-600 "
+                                        >
+                                            ›
+                                        </Link>
+
+                                        {/* Last Page */}
+                                        <Link
+                                            variant="outline"
+                                            onClick={() => handlePageChange(totalPages)}
+                                            disabled={currentPage === totalPages}
+                                            className="h-8 w-8 p-0 text-blue-600 "
+                                        >
+                                            ⏭
+                                        </Link>
+                                    </div>
+                                )}
+
                             </div>
                         )}
                     </div>
-
 
                     {/* Filter Panel */}
                     <FilterPanel
@@ -257,6 +393,6 @@ export default function Events() {
                     />
                 </main>
             </div>
-        </div >
+        </div>
     )
 }

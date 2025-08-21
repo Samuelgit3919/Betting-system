@@ -15,6 +15,9 @@ export default function Shop() {
     const [filters, setFilters] = useState({ name: "" });
     const [loader, setLoader] = useState(true);
     const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1)
+    const itemsPerPage = 10
+
 
     useEffect(() => {
         let timer;
@@ -89,6 +92,18 @@ export default function Shop() {
         }
     };
 
+
+    // Pagination logic
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = shopsData.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(shopsData.length / itemsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+            setCurrentPage(pageNumber);
+        }
+    };
     return (
         <div className="min-h-screen bg-gray-50 flex">
             <div className="flex-1 flex flex-col">
@@ -138,58 +153,58 @@ export default function Shop() {
                             <div className="flex items-center justify-center h-screen text-red-600 text-sm">{error}</div>
                         ) : (
                             <div className="overflow-x-auto md:overflow-x-hidden">
-                                <table className="w-full mb-26 border">
+                                <table className="w-full mb-10 border">
                                     <thead className="bg-gray-50 border-b border-gray-200">
                                         <tr>
                                             {/* Checkbox column - visible on all screen sizes */}
-                                            <th className="w-12 px-6 py-3 text-left">
+                                            <th className="w-12 px-6 py-2 text-left">
                                                 <Checkbox
                                                     checked={selectedItems.length === shopsData.length}
                                                     onCheckedChange={handleSelectAll}
                                                 />
                                             </th>
                                             {/* Name column - visible on all screen sizes */}
-                                            <th className="px-6 py-3 text-left text-[9px] font-[700]">Name</th>
+                                            <th className="px-6 py-2 text-left text-[9px] font-[700]">Name</th>
                                             {/* Other columns - hidden on mobile, visible on sm and above */}
-                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700]">Id</th>
-                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700]">Username</th>
-                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700]">Profit Share</th>
-                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700]">Logo</th>
-                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700]">Created At</th>
-                                            <th className=" w-12 px-6 py-3"></th>
+                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">Id</th>
+                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">Username</th>
+                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">Profit Share</th>
+                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">Logo</th>
+                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">Created At</th>
+                                            <th className=" w-12 px-6 py-2"></th>
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
-                                        {shopsData.map((shop) => (
+                                        {currentItems.map((shop) => (
                                             <tr key={shop.id}>
                                                 {/* Checkbox column - visible on all screen sizes */}
-                                                <td className="px-6 py-4">
+                                                <td className="px-6 py-2">
                                                     <Checkbox
                                                         checked={selectedItems.includes(shop.id)}
                                                         onCheckedChange={(checked) => handleSelectItem(shop.id, checked)}
                                                     />
                                                 </td>
                                                 {/* Name column - visible on all screen sizes */}
-                                                <td className="px-6 py-4 text-[12px]">
+                                                <td className="px-6 py-2 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.name}</Link>
                                                 </td>
                                                 {/* Other columns - hidden on mobile, visible on sm and above */}
-                                                <td className="sm:table-cell hidden px-6 py-4 text-[12px]">
+                                                <td className="sm:table-cell hidden px-6 py-2 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.id}</Link>
                                                 </td>
-                                                <td className="sm:table-cell hidden px-6 py-4 text-[12px]">
+                                                <td className="sm:table-cell hidden px-6 py-2 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.username}</Link>
                                                 </td>
-                                                <td className="sm:table-cell hidden px-6 py-4 text-[12px]">
+                                                <td className="sm:table-cell hidden px-6 py-2 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.profitShare}</Link>
                                                 </td>
-                                                <td className="sm:table-cell hidden px-6 py-4 text-[12px]">
+                                                <td className="sm:table-cell hidden px-6 py-2 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.logo}</Link>
                                                 </td>
-                                                <td className="sm:table-cell hidden px-6 py-4 text-[12px]">
+                                                <td className="sm:table-cell hidden px-6 py-2 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.createdAt}</Link>
                                                 </td>
-                                                <td className="  px-6 py-4">
+                                                <td className="  px-6 py-2">
                                                     <div className="relative inline-block group">
                                                         <button
                                                             className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -197,7 +212,7 @@ export default function Shop() {
                                                         >
                                                             <MoreHorizontal className="h-5 w-5" />
                                                         </button>
-                                                        <div className="absolute hidden group-hover:block bg-white text-black text-center px-2 py-2 rounded-md text-sm bottom-full left-1/2 transform -translate-x-1/2 mt-2 whitespace-nowrap z-10 shadow-md border border-gray-200 flex flex-col items-center justify-center space-y-2 transition-opacity duration-200">
+                                                        <div className="absolute hidden group-hover:flex flex-col bg-white text-black text-center px-2 py-2 rounded-md text-sm top-full -left-6 transform -translate-x-1/2 mt-0 whitespace-nowrap z-100 shadow-md border border-gray-200 space-y-2 transition-opacity duration-200">
                                                             <Link
                                                                 to={`/shops/${shop.id}`}
                                                                 className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -216,13 +231,141 @@ export default function Shop() {
                                                                 <span className="font-normal text-[11px]">Edit</span>
                                                             </Link>
                                                         </div>
-                                                        <span className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-white bottom-[100%] left-1/2 transform -translate-x-1/2 mt-1 z-10"></span>
+                                                        <span className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-white top-full left-1/2 transform -translate-x-1/2 -mt-1 z-10"></span>
                                                     </div>
                                                 </td>
                                             </tr>
                                         ))}
                                     </tbody>
                                 </table>
+
+                                {/* pagination */}
+                                {shopsData.length > itemsPerPage && (
+                                    <div className="flex justify-center items-center space-x-1 mt-2 p-2 ">
+                                        {/* First Page */}
+                                        <Link
+                                            variant="outline"
+                                            onClick={() => handlePageChange(1)}
+                                            disabled={currentPage === 1}
+                                            className="h-8 w-8 p-0 text-blue-600 "
+                                        >
+                                            ⏮
+                                        </Link>
+
+                                        {/* Previous */}
+                                        <Link
+                                            variant="outline"
+                                            onClick={() => handlePageChange(currentPage - 1)}
+                                            disabled={currentPage === 1}
+                                            className="h-8 w-8 p-0 text-blue-600 "
+                                        >
+                                            ‹
+                                        </Link>
+
+                                        {/* Dynamic Page Numbers with Ellipsis */}
+                                        {(() => {
+                                            const pageButtons = [];
+                                            const maxVisiblePages = 5; // Show current page + 2 before and 2 after
+                                            let startPage = Math.max(1, currentPage - 2);
+                                            let endPage = Math.min(totalPages, currentPage + 2);
+
+                                            if (endPage - startPage < maxVisiblePages - 1) {
+                                                if (startPage === 1) {
+                                                    endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+                                                } else if (endPage === totalPages) {
+                                                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                                                }
+                                            }
+
+                                            // Add ellipsis if not starting from page 1
+                                            if (startPage > 1) {
+                                                pageButtons.push(
+                                                    <Link
+                                                        key="start-ellipsis"
+                                                        variant="outline"
+                                                        className="h-8 w-8 p-0 text-blue-600 "
+                                                        onClick={() => handlePageChange(1)}
+                                                    >
+                                                        1
+                                                    </Link>
+                                                );
+                                                if (startPage > 2) {
+                                                    pageButtons.push(
+                                                        <span
+                                                            key="start-ellipsis-dot"
+                                                            className="text-[12px] px-2 py-1 text-gray-500"
+                                                        >
+                                                            ...
+                                                        </span>
+                                                    );
+                                                }
+                                            }
+
+                                            // Add page numbers
+                                            for (let i = startPage; i <= endPage; i++) {
+                                                pageButtons.push(
+                                                    <Link
+                                                        key={i}
+                                                        variant={currentPage === i ? "default" : "outline"}
+                                                        onClick={() => handlePageChange(i)}
+                                                        className={`h-8 w-8 p-0 text-sm ${currentPage === i
+                                                            ? " text-blue-600"
+                                                            : "text-blue-600 "
+                                                            } rounded-md`}
+                                                    >
+                                                        {i}
+                                                    </Link>
+                                                );
+                                            }
+
+                                            // Add ellipsis if not ending at totalPages
+                                            if (endPage < totalPages) {
+                                                if (endPage < totalPages - 1) {
+                                                    pageButtons.push(
+                                                        <span
+                                                            key="end-ellipsis-dot"
+                                                            className="text-[12px] px-2 py-1 text-gray-500"
+                                                        >
+                                                            ...
+                                                        </span>
+                                                    );
+                                                }
+                                                pageButtons.push(
+                                                    <Link
+                                                        key="end-page"
+                                                        variant="outline"
+                                                        className="h-8 w-8 p-0 text-blue-600 "
+                                                        onClick={() => handlePageChange(totalPages)}
+                                                    >
+                                                        {totalPages}
+                                                    </Link>
+                                                );
+                                            }
+
+                                            return pageButtons;
+                                        })()}
+
+                                        {/* Next */}
+                                        <Link
+                                            variant="outline"
+                                            onClick={() => handlePageChange(currentPage + 1)}
+                                            disabled={currentPage === totalPages}
+                                            className="h-8 w-8 p-0 text-blue-600 "
+                                        >
+                                            ›
+                                        </Link>
+
+                                        {/* Last Page */}
+                                        <Link
+                                            variant="outline"
+                                            onClick={() => handlePageChange(totalPages)}
+                                            disabled={currentPage === totalPages}
+                                            className="h-8 w-8 p-0 text-blue-600 "
+                                        >
+                                            ⏭
+                                        </Link>
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>

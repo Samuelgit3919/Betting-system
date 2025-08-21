@@ -89,5 +89,57 @@
     "minStake": 10,
     "maxStake": 10000,
     "feedSource": "5King"
+  },
+  {
+    "id": "1161",
+    "username": "Falco2",
+    "name": "Falco2",
+    "profitShare": 20,
+    "active": "Yes",
+    "logo": "no image",
+    "createdAt": "2025-07-11T13:34:00Z",
+    "updatedAt": "2025-07-11T13:34:00Z",
+    "minStake": 10,
+    "maxStake": 10000,
+    "feedSource": "5King"
+  },
+  {
+    "id": "1161",
+    "username": "Falco2",
+    "name": "Falco2",
+    "profitShare": 20,
+    "active": "Yes",
+    "logo": "no image",
+    "createdAt": "2025-07-11T13:34:00Z",
+    "updatedAt": "2025-07-11T13:34:00Z",
+    "minStake": 10,
+    "maxStake": 10000,
+    "feedSource": "5King"
+  },
+  {
+    "id": "1161",
+    "username": "Falco2",
+    "name": "Falco2",
+    "profitShare": 20,
+    "active": "Yes",
+    "logo": "no image",
+    "createdAt": "2025-07-11T13:34:00Z",
+    "updatedAt": "2025-07-11T13:34:00Z",
+    "minStake": 10,
+    "maxStake": 10000,
+    "feedSource": "5King"
+  },
+  {
+    "id": "1161",
+    "username": "Falco2",
+    "name": "Falco2",
+    "profitShare": 20,
+    "active": "Yes",
+    "logo": "no image",
+    "createdAt": "2025-07-11T13:34:00Z",
+    "updatedAt": "2025-07-11T13:34:00Z",
+    "minStake": 10,
+    "maxStake": 10000,
+    "feedSource": "5King"
   }
 ]
