@@ -147,7 +147,7 @@ export default function Events() {
                             </span>
                         </div>
                         <div className="flex items-center justify-center space-x-5">
-                            <Link to="createShop">
+                            <Link to="createEvent">
                                 <Button
                                     variant="outline"
                                     className="flex font-[Roboto] items-center text-[#3040D6] text-[12px] rounded-[3px] border-[#3040D6] hover:bg-[#EDEFF7] bg-transparent w-34 h-7.5"
@@ -255,9 +255,9 @@ export default function Events() {
                                             </tr>
                                         ))}
                                     </tbody>
-                                    </table>
-                                    
-                                    
+                                </table>
+
+
                                 {/* Pagination */}
                                 {eventsData.length > itemsPerPage && (
                                     <div className="flex justify-center items-center space-x-1 mt-4 p-2 bg-white shadow-sm">
