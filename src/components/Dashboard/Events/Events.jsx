@@ -196,7 +196,7 @@ export default function Events() {
                                             <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-medium tracking-wider">Name</th>
                                             <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-medium tracking-wider">Result</th>
                                             <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-medium tracking-wider">Created At</th>
-                                            <th className="sm:table-cell hidden w-12 px-6 py-2"></th>
+                                            <th className=" w-12 px-6 py-2"></th>
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
@@ -231,7 +231,7 @@ export default function Events() {
                                                     </Badge>
                                                 </td>
                                                 <td className="sm:table-cell hidden px-6 py-2 text-[11px] text-gray-900">{event.createdAt}</td>
-                                                <td className="sm:table-cell hidden px-6 py-2">
+                                                <td className=" px-6 py-2">
                                                     <div className="relative inline-block group">
                                                         <button
                                                             className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
