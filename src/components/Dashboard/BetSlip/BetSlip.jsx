@@ -100,73 +100,63 @@ export default function BetSlip() {
                                         <table className="w-full border mb-26">
                                             <thead className="bg-gray-50 border-b border-gray-200">
                                                 <tr>
-                                                    <th className="px-6 py-3   text-left text-[9px] font-[700] tracking-wider">
+                                                    {/* Checkbox column - visible on all screen sizes */}
+
+                                                    {/* betSlip Id column - visible on all screen sizes */}
+                                                    <th className="px-6 py-3 text-left text-[9px] font-[700] tracking-wider">
                                                         <div className="flex items-center space-x-2">
                                                             <span>betSlip Id</span>
                                                             <ChevronDown className="h-3 w-3" />
                                                         </div>
                                                     </th>
-                                                    <th className="py-3  text-left text-[9px] font-[700] tracking-wider">
-                                                        Total Stake
-                                                    </th>
-                                                    <th className="py-3  text-left text-[9px] font-[700] tracking-wider">
-                                                        Win Amount
-                                                    </th>
-                                                    <th className="py-3  text-left text-[9px] font-[700] tracking-wider">
-                                                        Win Checked
-                                                    </th>
-                                                    <th className="py-3  text-left text-[9px] font-[700] tracking-wider">
-                                                        Status
-                                                    </th>
-                                                    <th className="py-3  text-left text-[9px] font-[700] tracking-wider">
-                                                        Created At
-                                                    </th>
-                                                    <th className="w-12 py-3 "></th>
+                                                    {/* Other columns - hidden on mobile, visible on sm and above */}
+                                                    <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700] tracking-wider">Total Stake</th>
+                                                    <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700] tracking-wider">Win Amount</th>
+                                                    <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700] tracking-wider">Win Checked</th>
+                                                    <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700] tracking-wider">Status</th>
+                                                    <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700] tracking-wider">Created At</th>
+                                                    <th className=" w-12 px-6 py-3"></th>
                                                 </tr>
                                             </thead>
                                             <tbody className="bg-white divide-y divide-gray-200">
                                                 {betSlipData.map((betSlip) => (
-
                                                     <tr key={betSlip.id} className="hover:bg-gray-50">
+                                                        {/* Checkbox column - visible on all screen sizes */}
 
+                                                        {/* betSlip Id column - visible on all screen sizes */}
                                                         <td className="pl-6 py-2.5 text-[12px] text-gray-900">
                                                             <Link to={`/betSlip/${betSlip.id}`}>{betSlip.id}</Link>
                                                         </td>
-                                                        <td className=" py-2.5  text-[12px] text-gray-900">
+                                                        {/* Other columns - hidden on mobile, visible on sm and above */}
+                                                        <td className="sm:table-cell hidden py-2.5 text-[12px] text-gray-900">
                                                             <Link to={`/betSlip/${betSlip.id}`}>{betSlip.totalStake}</Link>
                                                         </td>
-                                                        <td className=" py-2.5  text-[12px] text-gray-900">
+                                                        <td className="sm:table-cell hidden py-2.5 text-[12px] text-gray-900">
                                                             <Link to={`/betSlip/${betSlip.id}`}>{betSlip.winAmount}</Link>
                                                         </td>
-                                                        <td className=" py-2.5 ">
+                                                        <td className="sm:table-cell hidden py-2.5">
                                                             <Link to={`/betSlip/${betSlip.id}`}>
                                                                 <Badge className="text-gray-700 bg-transparent border border-gray-200 rounded-full text-[10px] flex items-center justify-center">
                                                                     {betSlip.winChecked}
                                                                 </Badge>
                                                             </Link>
                                                         </td>
-                                                        <td className=" py-2.5 ">
+                                                        <td className="sm:table-cell hidden py-2.5">
                                                             <Link to={`/betSlip/${betSlip.id}`}>
                                                                 <Badge
-                                                                    variant={
-                                                                        betSlip.status === "Redeemed"
-                                                                            ? "default"
-                                                                            : "secondary"
-                                                                    }
+                                                                    variant={betSlip.status === "Redeemed" ? "default" : "secondary"}
                                                                     className="bg-[#BBC3CB] text-white text-[10px] rounded-md flex items-center justify-center"
                                                                 >
                                                                     {betSlip.status}
                                                                 </Badge>
                                                             </Link>
                                                         </td>
-                                                        <td className=" py-2.5  text-[12px] text-gray-900">
+                                                        <td className="sm:table-cell hidden py-2.5 text-[12px] text-gray-900">
                                                             <Link to={`/betSlip/${betSlip.id}`}>
-                                                                <Badge className="text-gray-700 bg-transparent">
-                                                                    {betSlip.createdAt}
-                                                                </Badge>
+                                                                <Badge className="text-gray-700 bg-transparent">{betSlip.createdAt}</Badge>
                                                             </Link>
                                                         </td>
-                                                        <td className=" py-2.5 ">
+                                                        <td className=" py-2.5">
                                                             <div className="relative inline-block group">
                                                                 <button
                                                                     className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -174,11 +164,7 @@ export default function BetSlip() {
                                                                 >
                                                                     <MoreHorizontal className="h-5 w-5" />
                                                                 </button>
-
-                                                                {/* Dropdown */}
-                                                                <div
-                                                                    className="absolute hidden group-hover:flex flex-col bg-white text-black text-center px-2 py-2 rounded-md text-sm top-full -left-3 transform -translate-x-1/2 mt-0.5 whitespace-nowrap z-10 shadow-md border border-gray-200 space-y-2 transition-opacity duration-200"
-                                                                >
+                                                                <div className="absolute hidden group-hover:flex flex-col bg-white text-black text-center px-2 py-2 rounded-md text-sm top-full -left-3 transform -translate-x-1/2 mt-0.5 whitespace-nowrap z-10 shadow-md border border-gray-200 space-y-2 transition-opacity duration-200">
                                                                     <Link
                                                                         to={`/betSlip/${betSlip.id}`}
                                                                         className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -187,7 +173,6 @@ export default function BetSlip() {
                                                                         <Monitor className="h-3 w-3 text-gray-700" />
                                                                         <span className="font-normal text-[11px]">Show</span>
                                                                     </Link>
-
                                                                     <span
                                                                         state={{ betSlip: betSlip }}
                                                                         className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -196,7 +181,6 @@ export default function BetSlip() {
                                                                         <Edit className="h-3 w-3 text-gray-700" />
                                                                         <span className="font-normal text-[11px]">Edit</span>
                                                                     </span>
-
                                                                     <span
                                                                         state={{ shop: betSlip }}
                                                                         className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -206,16 +190,10 @@ export default function BetSlip() {
                                                                         <span className="font-normal text-red-700 text-[11px]">Delete</span>
                                                                     </span>
                                                                 </div>
-
-                                                                {/* Arrow pointing up */}
-                                                                <span
-                                                                    className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-white top-full left-1/2 transform -translate-x-1/2 -mt-1 z-10"
-                                                                ></span>
+                                                                <span className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-white top-full left-1/2 transform -translate-x-1/2 -mt-1 z-10"></span>
                                                             </div>
                                                         </td>
                                                     </tr>
-
-
                                                 ))}
                                             </tbody>
                                         </table>

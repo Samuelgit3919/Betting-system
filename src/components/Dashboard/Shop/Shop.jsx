@@ -141,52 +141,55 @@ export default function Shop() {
                                 <table className="w-full">
                                     <thead className="bg-gray-50 border-b border-gray-200">
                                         <tr>
+                                            {/* Checkbox column - visible on all screen sizes */}
                                             <th className="w-12 px-6 py-3 text-left">
                                                 <Checkbox
                                                     checked={selectedItems.length === shopsData.length}
                                                     onCheckedChange={handleSelectAll}
                                                 />
                                             </th>
-                                            <th className="px-6 py-3 text-left text-[9px]   font-[700]">Id</th>
-                                            <th className="px-6 py-3 text-left text-[9px]   font-[700]">Username</th>
-                                            <th className="px-6 py-3 text-left text-[9px]  font-[700]">Name</th>
-                                            <th className="px-6 py-3 text-left text-[9px]   font-[700]">Profit Share</th>
-                                            <th className="px-6 py-3 text-left text-[9px]   font-[700]">Logo</th>
-                                            <th className="px-6 py-3 text-left text-[9px]   font-[700]">Created At</th>
-                                            <th className="w-12 px-6 py-3"></th>
+                                            {/* Name column - visible on all screen sizes */}
+                                            <th className="px-6 py-3 text-left text-[9px] font-[700]">Name</th>
+                                            {/* Other columns - hidden on mobile, visible on sm and above */}
+                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700]">Id</th>
+                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700]">Username</th>
+                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700]">Profit Share</th>
+                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700]">Logo</th>
+                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-[700]">Created At</th>
+                                            <th className=" w-12 px-6 py-3"></th>
                                         </tr>
                                     </thead>
-
                                     <tbody className="bg-white divide-y divide-gray-200">
                                         {shopsData.map((shop) => (
                                             <tr key={shop.id}>
+                                                {/* Checkbox column - visible on all screen sizes */}
                                                 <td className="px-6 py-4">
                                                     <Checkbox
                                                         checked={selectedItems.includes(shop.id)}
-                                                        onCheckedChange={(checked) =>
-                                                            handleSelectItem(shop.id, checked)
-                                                        }
+                                                        onCheckedChange={(checked) => handleSelectItem(shop.id, checked)}
                                                     />
                                                 </td>
-                                                <td className="px-6   py-4 text-[12px]">
-                                                    <Link to={`/shops/${shop.id}`}>{shop.id}</Link>
-                                                </td>
-                                                <td className="px-6  py-4 text-[12px]">
-                                                    <Link to={`/shops/${shop.id}`}>{shop.username}</Link>
-                                                </td>
-                                                <td className="px-6  py-4 text-[12px]">
+                                                {/* Name column - visible on all screen sizes */}
+                                                <td className="px-6 py-4 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.name}</Link>
                                                 </td>
-                                                <td className="px-6  py-4 text-[12px]">
+                                                {/* Other columns - hidden on mobile, visible on sm and above */}
+                                                <td className="sm:table-cell hidden px-6 py-4 text-[12px]">
+                                                    <Link to={`/shops/${shop.id}`}>{shop.id}</Link>
+                                                </td>
+                                                <td className="sm:table-cell hidden px-6 py-4 text-[12px]">
+                                                    <Link to={`/shops/${shop.id}`}>{shop.username}</Link>
+                                                </td>
+                                                <td className="sm:table-cell hidden px-6 py-4 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.profitShare}</Link>
                                                 </td>
-                                                <td className="px-6  py-4 text-[12px]">
+                                                <td className="sm:table-cell hidden px-6 py-4 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.logo}</Link>
                                                 </td>
-                                                <td className="px-6  py-4 text-[12px]">
+                                                <td className="sm:table-cell hidden px-6 py-4 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.createdAt}</Link>
                                                 </td>
-                                                <td className="px-6 py-4">
+                                                <td className="  px-6 py-4">
                                                     <div className="relative inline-block group">
                                                         <button
                                                             className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -194,9 +197,7 @@ export default function Shop() {
                                                         >
                                                             <MoreHorizontal className="h-5 w-5" />
                                                         </button>
-                                                        <div
-                                                            className="absolute hidden group-hover:block bg-white text-black text-center px-2 py-2 rounded-md text-sm bottom-full left-1/2 transform -translate-x-1/2 mt-2 whitespace-nowrap z-10 shadow-md border border-gray-200 flex flex-col items-center justify-center space-y-2 transition-opacity duration-200"
-                                                        >
+                                                        <div className="absolute hidden group-hover:block bg-white text-black text-center px-2 py-2 rounded-md text-sm bottom-full left-1/2 transform -translate-x-1/2 mt-2 whitespace-nowrap z-10 shadow-md border border-gray-200 flex flex-col items-center justify-center space-y-2 transition-opacity duration-200">
                                                             <Link
                                                                 to={`/shops/${shop.id}`}
                                                                 className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -207,7 +208,7 @@ export default function Shop() {
                                                             </Link>
                                                             <Link
                                                                 to={`/shops/edit/${shop.id}`}
-                                                                state={{ shop: shop }} // Pass shop data via state
+                                                                state={{ shop: shop }}
                                                                 className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                                 aria-label={`Edit details for shop ${shop.id}`}
                                                             >
@@ -215,9 +216,7 @@ export default function Shop() {
                                                                 <span className="font-normal text-[11px]">Edit</span>
                                                             </Link>
                                                         </div>
-                                                        <span
-                                                            className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-white bottom-[100%] left-1/2 transform -translate-x-1/2 mt-1 z-10"
-                                                        ></span>
+                                                        <span className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-white bottom-[100%] left-1/2 transform -translate-x-1/2 mt-1 z-10"></span>
                                                     </div>
                                                 </td>
                                             </tr>

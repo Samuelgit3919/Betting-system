@@ -125,7 +125,7 @@ export default function Events() {
                     </div>
 
                     {/* Page Header */}
-                    <div className="flex justify-between items-center mb-6">
+                    <div className="flex flex-col md:flex-row justify-start items-start gap-6 md:gap-0 md:justify-between md:items-center mb-6">
                         <div className="flex items-center space-x-3">
                             <h1 className="text-2xl font-[Sans-serif] text-gray-900">List</h1>
                             <span className="border-2 border-gray-200 rounded-full px-2 text-gray-600 py-0.5 text-[11px]">
@@ -160,46 +160,49 @@ export default function Events() {
                             </div>
                         ) : (
                             <div className="overflow-x-auto">
-                                {/* Desktop Table */}
-
                                 <table className="w-full">
                                     <thead className="bg-gray-50 border-b border-gray-200">
                                         <tr>
+                                            {/* Checkbox column - visible on all screen sizes */}
                                             <th className="w-12 px-4 py-3 text-left">
                                                 <Checkbox
                                                     checked={selectedItems.length === eventsData.length && eventsData.length > 0}
                                                     onCheckedChange={handleSelectAll}
                                                 />
                                             </th>
+                                            {/* Id column - visible on all screen sizes */}
                                             <th className="px-6 py-3 text-left text-[9px] font-medium tracking-wider">
                                                 <div className="flex items-center space-x-2">
                                                     <span>Id</span>
                                                     <ChevronDown className="h-3 w-3 text-gray-400" />
                                                 </div>
                                             </th>
-                                            <th className="px-6 py-3 text-left text-[9px] font-medium tracking-wider ">Event No</th>
-                                            <th className="px-6 py-3 text-left text-[9px] font-medium tracking-wider">Name</th>
-                                            <th className="px-6 py-3 text-left text-[9px] font-medium tracking-wider ">Result</th>
-                                            <th className="px-6 py-3 text-left text-[9px] font-medium tracking-wider">Created At</th>
-                                            <th className="w-12 px-6 py-3"></th>
+                                            {/* Other columns - hidden on mobile, visible on sm and above */}
+                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-medium tracking-wider">Event No</th>
+                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-medium tracking-wider">Name</th>
+                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-medium tracking-wider">Result</th>
+                                            <th className="sm:table-cell hidden px-6 py-3 text-left text-[9px] font-medium tracking-wider">Created At</th>
+                                            <th className=" w-12 px-6 py-3"></th>
                                         </tr>
                                     </thead>
-
                                     <tbody className="bg-white divide-y divide-gray-200">
                                         {eventsData.map((event) => (
                                             <tr key={event.id} className="hover:bg-gray-50">
+                                                {/* Checkbox column - visible on all screen sizes */}
                                                 <td className="px-4 py-4">
                                                     <Checkbox
                                                         checked={selectedItems.includes(event.id)}
                                                         onCheckedChange={(checked) => handleSelectItem(event.id, checked)}
                                                     />
                                                 </td>
+                                                {/* Id column - visible on all screen sizes */}
                                                 <td className="px-6 py-4 text-[11px] text-gray-900">
                                                     <Link to={`/events/${event.id}`}>{event.id}</Link>
                                                 </td>
-                                                <td className="px-6 py-4 text-[11px] text-gray-900">{event.eventNo}</td>
-                                                <td className="px-6 py-4 text-[11px] text-gray-900">{event.name}</td>
-                                                <td className="px-6 py-4">
+                                                {/* Other columns - hidden on mobile, visible on sm and above */}
+                                                <td className="sm:table-cell hidden px-6 py-4 text-[11px] text-gray-900">{event.eventNo}</td>
+                                                <td className="sm:table-cell hidden px-6 py-4 text-[11px] text-gray-900">{event.name}</td>
+                                                <td className="sm:table-cell hidden px-6 py-4">
                                                     <Badge
                                                         variant="secondary"
                                                         className={
@@ -213,39 +216,32 @@ export default function Events() {
                                                         {event.result}
                                                     </Badge>
                                                 </td>
-                                                <td className="px-6 py-4 text-[11px] text-gray-900">{event.createdAt}</td>
-                                                <td className="px-6 py-4 ">
-                                                    <div class="relative inline-block group">
+                                                <td className="sm:table-cell hidden px-6 py-4 text-[11px] text-gray-900">{event.createdAt}</td>
+                                                <td className=" px-6 py-4">
+                                                    <div className="relative inline-block group">
                                                         <button
-                                                            class="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                            className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                             aria-label="Show more options"
                                                         >
-                                                            <MoreHorizontal class="h-5 w-5" />
+                                                            <MoreHorizontal className="h-5 w-5" />
                                                         </button>
-                                                        <div
-                                                            class="absolute cursor-pointer hidden group-hover:block bg-white text-black text-center px-4 py-2 rounded-md text-sm bottom-full left-1/2 transform -translate-x-1/2 mt-2 whitespace-nowrap z-10 shadow-md border border-gray-200 flex items-center justify-center space-x-2 transition-opacity duration-200 hover:bg-[#F8F9F9] "
-                                                        >
+                                                        <div className="absolute cursor-pointer hidden group-hover:block bg-white text-black text-center px-4 py-2 rounded-md text-sm bottom-full left-1/2 transform -translate-x-1/2 mt-2 whitespace-nowrap z-10 shadow-md border border-gray-200 flex items-center justify-center space-x-2 transition-opacity duration-200 hover:bg-[#F8F9F9]">
                                                             <Link
                                                                 to={`/events/${event.id}`}
-                                                                class="flex items-center space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                className="flex items-center space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                                 aria-label={`View details for event ${event.id}`}
                                                             >
-                                                                <Monitor class="h-3 w-3 text-gray-700" />
-                                                                <span class="font-normal text-[11px]">Show</span>
+                                                                <Monitor className="h-3 w-3 text-gray-700" />
+                                                                <span className="font-normal text-[11px]">Show</span>
                                                             </Link>
                                                         </div>
-                                                        <span
-                                                            class="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-white bottom-[100%] left-1/2 transform -translate-x-1/2 mt-1 z-10"
-                                                        ></span>
+                                                        <span className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-white bottom-[100%] left-1/2 transform -translate-x-1/2 mt-1 z-10"></span>
                                                     </div>
                                                 </td>
                                             </tr>
                                         ))}
                                     </tbody>
                                 </table>
-
-
-
                             </div>
                         )}
                     </div>
