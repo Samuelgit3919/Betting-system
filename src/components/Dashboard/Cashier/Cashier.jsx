@@ -88,7 +88,7 @@ export default function Cashier() {
                     {/* Page Header */}
                     {currentView === 'list' && (
                         <>
-                            <div className="flex justify-between items-center mb-6">
+                            <div className="flex flex-col md:flex-row justify-start items-start gap-6 md:gap-0 md:justify-between md:items-center mb-6">
                                 <div className="flex items-center space-x-3">
                                     <h1 className="text-2xl font-[Sans-serif] text-gray-900">List</h1>
                                     <span className="border-2 border-gray-200 rounded-full px-2 text-gray-600 py-0.5 text-[11px]">{cashierData.length}</span>
@@ -134,18 +134,18 @@ export default function Cashier() {
                                                         </th>
                                                         <th className=" py-1 text-left text-[9px] font-[500] tracking-wider">Name</th>
                                                         <th className=" py-1 text-left text-[11px] font-medium tracking-wider">
-                                                            <div className="flex items-center space-x-2">
+                                                            <div className="items-center  space-x-2">
                                                                 <span>Id</span>
                                                                 <ChevronDown className="h-3 w-3 text-gray-400" />
                                                             </div>
                                                         </th>
-                                                        <th className=" py-1 text-left text-[9px] font-[500] tracking-wider">Username</th>
-                                                        <th className=" py-1 text-left text-[9px] font-[500] tracking-wider">Active</th>
-                                                        <th className=" py-1 text-left text-[9px] font-[500] tracking-wider">Is Supervisor</th>
-                                                        <th className=" py-1 text-left text-[9px] font-[500] tracking-wider">Cash Limit</th>
-                                                        <th className=" py-1 text-left text-[9px] font-[500] tracking-wider">Cash Today</th>
-                                                        <th className=" py-1 text-left text-[9px] font-[500] tracking-wider">Created At</th>
-                                                        <th className="w-12 px-6 py-3"></th>
+                                                        <th className=" py-2.5 text-left text-[9px] font-[500]  tracking-wider">Username</th>
+                                                        <th className=" py-2.5 text-left text-[9px] font-[500]  tracking-wider">Active</th>
+                                                        <th className=" py-2.5 text-left text-[9px] font-[500]  tracking-wider">Is Supervisor</th>
+                                                        <th className=" py-2.5 text-left text-[9px] font-[500]  tracking-wider">Cash Limit</th>
+                                                        <th className=" py-2.5 text-left text-[9px] font-[500]  tracking-wider">Cash Today</th>
+                                                        <th className=" py-2.5 text-left text-[9px] font-[500]  tracking-wider">Created At</th>
+                                                        <th className="w-12 px-6 py-3 "></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody className="bg-white divide-y divide-gray-200 ">
@@ -157,35 +157,35 @@ export default function Cashier() {
                                                                     onCheckedChange={(checked) => handleSelectItem(cashier.id, checked)}
                                                                 />
                                                             </td>
-                                                            <td className=" py-2.5 text-[11px] text-gray-900">
+                                                            <td className=" py-5.5 md:py-2.5 text-[11px]  text-gray-900">
                                                                 <Link to={`/cashier/${cashier.id}`}>{cashier.name}</Link>
                                                             </td>
-                                                            <td className=" py-2.5 text-[11px] text-gray-900">
+                                                            <td className=" py-2.5 text-[11px]  text-gray-900">
                                                                 <Link to={`/cashier/${cashier.id}`}>{cashier.id}</Link>
                                                             </td>
-                                                            <td className=" py-2.5 text-[11px] text-gray-900">
+                                                            <td className=" py-2.5 text-[11px]  text-gray-900">
                                                                 <Link to={`/cashier/${cashier.id}`}>{cashier.username}</Link>
                                                             </td>
-                                                            <td className=" py-2.5">
+                                                            <td className=" py-2.5 ">
                                                                 <Link to={`/cashier/${cashier.id}`}>
                                                                     <Badge variant="secondary" className="bg-gray-100 text-gray-700">
                                                                         {cashier.active}
                                                                     </Badge>
                                                                 </Link>
                                                             </td>
-                                                            <td className=" py-2.5">
+                                                            <td className=" py-2.5 ">
                                                                 <Link to={`/cashier/${cashier.id}`}>
                                                                     <Badge variant="secondary" className="bg-gray-100 text-gray-700">
                                                                         {cashier.isSupervisor}
                                                                     </Badge>
                                                                 </Link>
                                                             </td>
-                                                            <td className="py-2.5 text-[11px] text-gray-900">
+                                                            <td className="py-2.5 text-[11px]  text-gray-900">
                                                                 <Link to={`/cashier/${cashier.id}`}>
                                                                     {cashier.cashLimit?.toLocaleString()}
                                                                 </Link>
                                                             </td>
-                                                            <td className=" py-2.5 text-[11px] text-gray-900">
+                                                            <td className=" py-2.5 text-[11px]  text-gray-900">
                                                                 <Link to={`/cashier/${cashier.id}`}>
                                                                     <span
                                                                         className={
@@ -200,7 +200,7 @@ export default function Cashier() {
                                                                     </span>
                                                                 </Link>
                                                             </td>
-                                                            <td className="px-1 py-2.5 text-[11px] text-gray-900">
+                                                            <td className="px-1 py-2.5 text-[11px]  text-gray-900">
                                                                 <Link to={`/cashier/${cashier.id}`}>
                                                                     {cashier.createdAt}
                                                                 </Link>

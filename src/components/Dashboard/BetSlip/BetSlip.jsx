@@ -52,23 +52,23 @@ export default function BetSlip() {
     return (
         <div className="min-h-screen bg-gray-50 flex">
             <div className="flex-1 flex flex-col">
-                <main className="flex-1 px-6 py-2">
+                <main className="flex-1 px-6 py-2 mt-5">
                     {/* Breadcrumb */}
                     <div className="mb-2 flex justify-between items-center">
                         <nav className="text-sm text-gray-500">
-                            <span className="text-[10px] text-[#898A9A]">Dashboard</span>
+                            <span className="text-[14px] md:text-[10px] text-[#898A9A]">Dashboard</span>
                             <span className="mx-2 text-gray-400 text-[9px]">/</span>
-                            <span className="text-gray-900 text-[10px]">Bet Slip</span>
+                            <span className="text-gray-900 text-[14px] md:text-[9px]">Bet Slip</span>
                         </nav>
                         <Button className="bg-[] cursor-pointer border border-[#3040D6]  rounded-[8px] h-5 hover:bg-[#EDEFF7]">
-                            <span className="text-[9px] text-[#3040D6]">
+                            <span className="text-[12px] py-1 md:text-[9px]  text-[#3040D6]">
                                 Export
                             </span>
                         </Button>
                     </div>
 
                     {/* Page Header */}
-                    <div className="flex justify-between items-center mb-6">
+                    <div className="flex flex-col md:flex-row justify-start items-start gap-6 md:gap-0 md:justify-between md:items-center mb-6">
                         <div className="flex items-center space-x-3">
                             <h1 className="text-2xl font-[Sans-serif] text-gray-900">List</h1>
                             <span className="border-2 border-gray-200 rounded-full px-2 text-gray-600 py-0.5 text-[11px]">
@@ -100,28 +100,28 @@ export default function BetSlip() {
                                         <table className="w-full border mb-26">
                                             <thead className="bg-gray-50 border-b border-gray-200">
                                                 <tr>
-                                                    <th className="px-6 py-3 text-left text-[9px] font-[700] tracking-wider">
+                                                    <th className="px-6 py-3   text-left text-[9px] font-[700] tracking-wider">
                                                         <div className="flex items-center space-x-2">
                                                             <span>betSlip Id</span>
                                                             <ChevronDown className="h-3 w-3" />
                                                         </div>
                                                     </th>
-                                                    <th className="py-3 text-left text-[9px] font-[700] tracking-wider">
+                                                    <th className="py-3  text-left text-[9px] font-[700] tracking-wider">
                                                         Total Stake
                                                     </th>
-                                                    <th className="py-3 text-left text-[9px] font-[700] tracking-wider">
+                                                    <th className="py-3  text-left text-[9px] font-[700] tracking-wider">
                                                         Win Amount
                                                     </th>
-                                                    <th className="py-3 text-left text-[9px] font-[700] tracking-wider">
+                                                    <th className="py-3  text-left text-[9px] font-[700] tracking-wider">
                                                         Win Checked
                                                     </th>
-                                                    <th className="py-3 text-left text-[9px] font-[700] tracking-wider">
+                                                    <th className="py-3  text-left text-[9px] font-[700] tracking-wider">
                                                         Status
                                                     </th>
-                                                    <th className="py-3 text-left text-[9px] font-[700] tracking-wider">
+                                                    <th className="py-3  text-left text-[9px] font-[700] tracking-wider">
                                                         Created At
                                                     </th>
-                                                    <th className="w-12 py-3"></th>
+                                                    <th className="w-12 py-3 "></th>
                                                 </tr>
                                             </thead>
                                             <tbody className="bg-white divide-y divide-gray-200">
@@ -132,20 +132,20 @@ export default function BetSlip() {
                                                         <td className="pl-6 py-2.5 text-[12px] text-gray-900">
                                                             <Link to={`/betSlip/${betSlip.id}`}>{betSlip.id}</Link>
                                                         </td>
-                                                        <td className=" py-2.5 text-[12px] text-gray-900">
+                                                        <td className=" py-2.5  text-[12px] text-gray-900">
                                                             <Link to={`/betSlip/${betSlip.id}`}>{betSlip.totalStake}</Link>
                                                         </td>
-                                                        <td className=" py-2.5 text-[12px] text-gray-900">
+                                                        <td className=" py-2.5  text-[12px] text-gray-900">
                                                             <Link to={`/betSlip/${betSlip.id}`}>{betSlip.winAmount}</Link>
                                                         </td>
-                                                        <td className=" py-2.5">
+                                                        <td className=" py-2.5 ">
                                                             <Link to={`/betSlip/${betSlip.id}`}>
                                                                 <Badge className="text-gray-700 bg-transparent border border-gray-200 rounded-full text-[10px] flex items-center justify-center">
                                                                     {betSlip.winChecked}
                                                                 </Badge>
                                                             </Link>
                                                         </td>
-                                                        <td className=" py-2.5">
+                                                        <td className=" py-2.5 ">
                                                             <Link to={`/betSlip/${betSlip.id}`}>
                                                                 <Badge
                                                                     variant={
@@ -159,14 +159,14 @@ export default function BetSlip() {
                                                                 </Badge>
                                                             </Link>
                                                         </td>
-                                                        <td className=" py-2.5 text-[12px] text-gray-900">
+                                                        <td className=" py-2.5  text-[12px] text-gray-900">
                                                             <Link to={`/betSlip/${betSlip.id}`}>
                                                                 <Badge className="text-gray-700 bg-transparent">
                                                                     {betSlip.createdAt}
                                                                 </Badge>
                                                             </Link>
                                                         </td>
-                                                        <td className=" py-2.5">
+                                                        <td className=" py-2.5 ">
                                                             <div className="relative inline-block group">
                                                                 <button
                                                                     className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"

@@ -101,7 +101,7 @@ export default function Shop() {
                         </nav>
                     </div>
 
-                    <div className="flex justify-between items-center mb-6">
+                    <div className="flex flex-col md:flex-row justify-start items-start gap-6 md:gap-0 md:justify-between md:items-center mb-6">
                         <div className="flex items-center space-x-3">
                             <h1 className="text-2xl font-[Sans-serif] text-gray-900">List</h1>
                             <span className="border-2 border-gray-200 rounded-full px-2 text-gray-600 py-0.5 text-[11px]">
@@ -147,15 +147,16 @@ export default function Shop() {
                                                     onCheckedChange={handleSelectAll}
                                                 />
                                             </th>
-                                            <th className="px-6 py-3 text-left text-[9px] font-[700]">Id</th>
-                                            <th className="px-6 py-3 text-left text-[9px] font-[700]">Username</th>
-                                            <th className="px-6 py-3 text-left text-[9px] font-[700]">Name</th>
-                                            <th className="px-6 py-3 text-left text-[9px] font-[700]">Profit Share</th>
-                                            <th className="px-6 py-3 text-left text-[9px] font-[700]">Logo</th>
-                                            <th className="px-6 py-3 text-left text-[9px] font-[700]">Created At</th>
+                                            <th className="px-6 py-3 text-left text-[9px]   font-[700]">Id</th>
+                                            <th className="px-6 py-3 text-left text-[9px]   font-[700]">Username</th>
+                                            <th className="px-6 py-3 text-left text-[9px]  font-[700]">Name</th>
+                                            <th className="px-6 py-3 text-left text-[9px]   font-[700]">Profit Share</th>
+                                            <th className="px-6 py-3 text-left text-[9px]   font-[700]">Logo</th>
+                                            <th className="px-6 py-3 text-left text-[9px]   font-[700]">Created At</th>
                                             <th className="w-12 px-6 py-3"></th>
                                         </tr>
                                     </thead>
+
                                     <tbody className="bg-white divide-y divide-gray-200">
                                         {shopsData.map((shop) => (
                                             <tr key={shop.id}>
@@ -167,22 +168,22 @@ export default function Shop() {
                                                         }
                                                     />
                                                 </td>
-                                                <td className="px-6 py-4 text-[12px]">
+                                                <td className="px-6   py-4 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.id}</Link>
                                                 </td>
-                                                <td className="px-6 py-4 text-[12px]">
+                                                <td className="px-6  py-4 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.username}</Link>
                                                 </td>
-                                                <td className="px-6 py-4 text-[12px]">
+                                                <td className="px-6  py-4 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.name}</Link>
                                                 </td>
-                                                <td className="px-6 py-4 text-[12px]">
+                                                <td className="px-6  py-4 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.profitShare}</Link>
                                                 </td>
-                                                <td className="px-6 py-4 text-[12px]">
+                                                <td className="px-6  py-4 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.logo}</Link>
                                                 </td>
-                                                <td className="px-6 py-4 text-[12px]">
+                                                <td className="px-6  py-4 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.createdAt}</Link>
                                                 </td>
                                                 <td className="px-6 py-4">
