@@ -60,7 +60,7 @@ export default function ShopDetail() {
                     <h1 className="text-2xl font-semibold text-gray-900">Show</h1>
                 </div>
                 <div className="flex items-center gap-2 justify-between">
-                    <Link to={`/createShop`}>
+                    <Link to={`/cashiers/edit/${cashiersData.id}`}>
                         <Button className="text-blue-600 border h-6 rounded-[3px] text-[11px] border-blue-600 bg-transparent px-6 font-normal  hover:bg-[#e6e7f0]">
                             <span>
                                 <Edit className="h-1 w-1" />

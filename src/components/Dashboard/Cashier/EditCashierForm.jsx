@@ -9,10 +9,12 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
+
 export default function EditCashierForm() {
     const { id } = useParams(); // 🔑 get shop id from URL
     const navigate = useNavigate();
-    const [Editshop, setEditShop] = useState(null);
+    // const [cashierData, setCashierData] = useState(null)
+    // console.log(cashierData)
 
     const [formData, setFormData] = useState({
         username: "",
@@ -30,8 +32,8 @@ export default function EditCashierForm() {
         axios.get("/cashierData.json")
             .then((response) => {
                 const cashiers = response.data;
-                const cashier = cashiers.find((s) => String(s.id) === String(id));
-                console.log(cashier)
+                console.log(cashiers)
+                const cashier = cashiers.find((s) => String(s, id) === String(id));
 
                 if (cashier) {
                     setFormData({
@@ -58,9 +60,6 @@ export default function EditCashierForm() {
         }));
     };
 
-    const handleFileChange = (e) => {
-        setFormData((prev) => ({ ...prev, logo: e.target.files[0] }));
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -90,7 +89,7 @@ export default function EditCashierForm() {
             </Breadcrumb>
             <div className="mb-6 px-4 flex justify-between items-center">
                 <h1 className="text-2xl font-normal text-gray-900">Edit Cashier</h1>
-                <Link to={`/shops/${id}`}>
+                <Link to={`/cashier/${id}`}>
                     <Button
                         variant="outline"
                         className="flex font-[Roboto] items-center text-[#3040D6] text-[12px] rounded-[3px] border-[#3040D6]  hover:bg-[#EDEFF7]  bg-transparent w-22 h-[25px]"

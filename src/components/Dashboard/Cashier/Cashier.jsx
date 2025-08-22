@@ -304,7 +304,7 @@ export default function Cashier() {
                                                                 <span className="font-normal text-[11px]">Edit</span>
                                                             </Link>
                                                             <Link
-                                                                to={`/shops/edit/${cashier.id}`}
+                                                                to='#'
                                                                 state={{ shop: cashier }}
                                                                 className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                                 aria-label={`Adjust balance for shop ${cashier.id}`}

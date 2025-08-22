@@ -202,23 +202,38 @@ export default function Events() {
                                                 <td className="px-6 py-2 text-[11px] text-gray-900">
                                                     <Link to={`/events/${event.id}`}>{event.id}</Link>
                                                 </td>
-                                                <td className="sm:table-cell hidden px-6 py-2 text-[11px] text-gray-900">{event.eventNo}</td>
-                                                <td className="sm:table-cell hidden px-6 py-2 text-[11px] text-gray-900">{event.name}</td>
-                                                <td className="sm:table-cell hidden px-6 py-2">
-                                                    <Badge
-                                                        variant="secondary"
-                                                        className={
-                                                            event.result === "pending"
-                                                                ? ""
-                                                                : event.result === "success"
-                                                                    ? "bg-green-100 text-green-700"
-                                                                    : "bg-gray-100 text-gray-700"
-                                                        }
-                                                    >
-                                                        {event.result}
-                                                    </Badge>
+                                                <td className="sm:table-cell hidden px-6 py-2 text-[11px] text-gray-900">
+                                                    <Link to={`/events/${event.id}`}>
+                                                        {event.eventNo}
+                                                    </Link>
                                                 </td>
-                                                <td className="sm:table-cell hidden px-6 py-2 text-[11px] text-gray-900">{event.createdAt}</td>
+                                                <td className="sm:table-cell hidden px-6 py-2 text-[11px] text-gray-900">
+                                                    <Link to={`/events/${event.id}`}>
+                                                        {event.name}
+                                                    </Link>
+                                                </td>
+                                                <td className="sm:table-cell hidden px-6 py-2">
+                                                    <Link to={`/events/${event.id}`}>
+                                                        <Badge
+                                                            variant="secondary"
+                                                            className={
+                                                                event.result === "pending"
+                                                                    ? ""
+                                                                    : event.result === "success"
+                                                                        ? "bg-green-100 text-green-700"
+                                                                        : "bg-gray-100 text-gray-700"
+                                                            }
+                                                        >
+                                                            {event.result}
+                                                        </Badge>
+                                                    </Link>
+
+                                                </td>
+                                                <td className="sm:table-cell hidden px-6 py-2 text-[11px] text-gray-900">
+                                                    <Link to={`/events/${event.id}`}>
+                                                        {event.createdAt}
+                                                    </Link>
+                                                </td>
                                                 <td className="px-6 py-2">
                                                     <div className="relative inline-block group">
                                                         <button
