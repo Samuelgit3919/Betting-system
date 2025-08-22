@@ -63,7 +63,7 @@ const Header = () => {
             />
 
             {/* Header */}
-            <header className="bg-white shadow-sm border-b border-gray-200 px-6 py-1.5 flex justify-between items-center w-full">
+            <header className="bg-white shadow-sm border-b border-gray-200 px-2 md:px-6  py-1.5 flex justify-between items-center w-full">
                 {/* Left Section - Menu Button (Mobile) */}
                 <div className="flex items-center">
                     <button

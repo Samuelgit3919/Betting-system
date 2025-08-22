@@ -11,11 +11,13 @@ import axios from "axios";
 export default function Cashier() {
     const [selectedItems, setSelectedItems] = useState([]);
     const [cashierData, setCashierData] = useState([]);
+    const [originalCashierData, setOriginalCashierData] = useState([]);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [filters, setFilters] = useState({ name: "" });
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [openMenuId, setOpenMenuId] = useState(null);
     const itemsPerPage = 10;
 
     // Fetch data from public folder
@@ -25,6 +27,7 @@ export default function Cashier() {
         axios.get("/cashierData.json")
             .then((response) => {
                 setCashierData(response.data);
+                setOriginalCashierData(response.data);
                 timer = setTimeout(() => {
                     setLoading(false);
                 }, 2000);
@@ -40,7 +43,7 @@ export default function Cashier() {
         return () => clearTimeout(timer);
     }, []);
 
-    
+
 
     const handleSelectAll = (checked) => {
         if (checked) {
@@ -60,7 +63,7 @@ export default function Cashier() {
 
     const handleApplyFilters = (newFilters) => {
         setFilters(newFilters);
-        const filteredData = cashierData.filter((shop) =>
+        const filteredData = originalCashierData.filter((shop) =>
             shop.name.toLowerCase().includes(newFilters.name.toLowerCase())
         );
         setCashierData(filteredData);
@@ -69,7 +72,7 @@ export default function Cashier() {
 
     const handleResetFilters = () => {
         setFilters({ name: "" });
-        setCashierData(cashierData); // Reset to original data
+        setCashierData(originalCashierData); // Reset to original data
         setCurrentPage(1); // Reset to first page when filters are reset
     };
 
@@ -88,15 +91,13 @@ export default function Cashier() {
     return (
         <div className="min-h-screen bg-gray-50 flex">
             <div className="flex-1 flex flex-col">
-                <main className="flex-1 px-6 py-2">
+                <main className="flex-1 px-2 md:px-6 py-2 mt-5">
                     {/* Breadcrumb */}
                     <div className="mb-2">
                         <nav>
                             <span className="text-[10px] text-[#898A9A]">Dashboard</span>
                             <span className="mx-2 text-gray-400 text-[9px]">/</span>
                             <span className="text-gray-900 text-[10px]">Cashiers</span>
-                            <span className="mx-2 text-gray-400">/</span>
-                            <span className="text-gray-900 text-[13px]">Create new</span>
                         </nav>
                     </div>
 
@@ -129,7 +130,7 @@ export default function Cashier() {
                         </div>
                     </div>
 
-                    <div className="bg-white p-4 border-none mb-18 rounded-lg shadow-sm border border-gray-200">
+                    <div className="bg-white px-2 py-4 sm:p-4 border-none mb-18 rounded-lg shadow-sm border border-gray-200">
                         {loading ? (
                             <div className="flex items-center justify-center h-50" aria-live="polite">
                                 <ScaleLoader color="#3040D6" height={50} width={5} radius={2} />
@@ -247,9 +248,43 @@ export default function Cashier() {
                                                         <button
                                                             className="text-gray-400 hover:text-gray-600 focus:outline-none "
                                                             aria-label="Show more options"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation()
+                                                                setOpenMenuId(openMenuId === cashier.id ? null : cashier.id)
+                                                            }}
                                                         >
                                                             <MoreHorizontal className="h-5 w-5" />
                                                         </button>
+                                                        {(openMenuId === cashier.id) && (
+                                                            <div className="absolute flex flex-col bg-white text-black text-center px-2 py-2 rounded-md text-sm top-full -left-8 transform -translate-x-1/2 mt-0.5 whitespace-nowrap z-100 shadow-md border border-gray-200 space-y-2 transition-opacity duration-200">
+                                                                <Link
+                                                                    to={`/cashier/${cashier.id}`}
+                                                                    className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                    aria-label={`View details for cashier ${cashier.id}`}
+                                                                >
+                                                                    <Monitor className="h-3 w-3 text-gray-700" />
+                                                                    <span className="font-normal text-[11px]">Show</span>
+                                                                </Link>
+                                                                <Link
+                                                                    to={`/cashiers/edit/${cashier.id}`}
+                                                                    state={{ cashier: cashier }}
+                                                                    className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                    aria-label={`Edit details for cashier ${cashier.id}`}
+                                                                >
+                                                                    <Edit className="h-3 w-3 text-gray-700" />
+                                                                    <span className="font-normal text-[11px]">Edit</span>
+                                                                </Link>
+                                                                <Link
+                                                                    to={`/shops/edit/${cashier.id}`}
+                                                                    state={{ shop: cashier }}
+                                                                    className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                    aria-label={`Adjust balance for shop ${cashier.id}`}
+                                                                >
+                                                                    <Ban className="h-3 w-3 text-gray-700" />
+                                                                    <span className="font-normal text-[11px]">Adjust Balance</span>
+                                                                </Link>
+                                                            </div>
+                                                        )}
                                                         <div className="absolute hidden group-hover:flex flex-col bg-white text-black text-center px-2 py-2 rounded-md text-sm top-full -left-8 transform -translate-x-1/2 mt-0.5 whitespace-nowrap z-100 shadow-md border border-gray-200 space-y-2 transition-opacity duration-200">
                                                             <Link
                                                                 to={`/cashier/${cashier.id}`}
@@ -285,9 +320,9 @@ export default function Cashier() {
                                         ))}
                                     </tbody>
                                 </table>
-                                {/* Pagination */}
+                                {/* pagination */}
                                 {cashierData.length > itemsPerPage && (
-                                    <div className="flex justify-center items-center space-x-1 mt-2 p-2">
+                                    <div className="flex justify-center items-center space-x-1 mt-2 p-2 ">
                                         {/* First Page */}
                                         <Link
                                             variant="outline"
@@ -355,9 +390,9 @@ export default function Cashier() {
                                                         variant={currentPage === i ? "default" : "outline"}
                                                         onClick={() => handlePageChange(i)}
                                                         className={`h-8 w-8 p-0 text-sm ${currentPage === i
-                                                            ? "text-blue-600"
-                                                            : "text-blue-600"
-                                                            } `}
+                                                            ? " text-blue-600"
+                                                            : "text-blue-600 "
+                                                            } rounded-md`}
                                                     >
                                                         {i}
                                                     </Link>

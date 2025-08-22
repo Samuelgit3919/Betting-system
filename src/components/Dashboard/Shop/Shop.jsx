@@ -15,13 +15,14 @@ export default function Shop() {
     const [filters, setFilters] = useState({ name: "" });
     const [loader, setLoader] = useState(true);
     const [error, setError] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1)
-    const itemsPerPage = 10
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const [openMenuId, setOpenMenuId] = useState(null); // ✅ new state for menus
+    const itemsPerPage = 10;
 
     useEffect(() => {
         let timer;
-        axios.get("/shopData.json")
+        axios
+            .get("/shopData.json")
             .then((response) => {
                 setShopsData(response.data);
                 timer = setTimeout(() => {
@@ -36,10 +37,8 @@ export default function Shop() {
                 }, 2000);
             });
 
-        // cleanup timer if component unmounts
         return () => clearTimeout(timer);
     }, []);
-
 
     const handleSelectAll = (checked) => {
         if (checked) {
@@ -92,8 +91,7 @@ export default function Shop() {
         }
     };
 
-
-    // Pagination logic
+    // Pagination
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = shopsData.slice(indexOfFirstItem, indexOfLastItem);
@@ -104,10 +102,19 @@ export default function Shop() {
             setCurrentPage(pageNumber);
         }
     };
+
+    // Close menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = () => setOpenMenuId(null);
+        window.addEventListener("click", handleClickOutside);
+        return () => window.removeEventListener("click", handleClickOutside);
+    }, []);
+
     return (
         <div className="min-h-screen bg-gray-50 flex">
             <div className="flex-1 flex flex-col">
-                <main className="flex-1 px-6 py-2">
+                <main className="flex-1 px-2 md:px-6 py-2 mt-5">
+                    {/* breadcrumb */}
                     <div className="mb-2">
                         <nav className="text-sm text-gray-500">
                             <span className="text-[10px] text-[#898A9A]">Dashboard</span>
@@ -116,6 +123,7 @@ export default function Shop() {
                         </nav>
                     </div>
 
+                    {/* header */}
                     <div className="flex flex-col md:flex-row justify-start items-start gap-6 md:gap-0 md:justify-between md:items-center mb-6">
                         <div className="flex items-center space-x-3">
                             <h1 className="text-2xl font-[Sans-serif] text-gray-900">List</h1>
@@ -127,7 +135,7 @@ export default function Shop() {
                             <Link to="createShop">
                                 <Button
                                     variant="outline"
-                                    className="flex font-[Roboto] items-center text-[#3040D6] text-[12px] rounded-[3px] border-[#3040D6]  hover:bg-[#EDEFF7] bg-transparent w-34 h-7.5"
+                                    className="flex font-[Roboto] items-center text-[#3040D6] text-[12px] rounded-[3px] border-[#3040D6] hover:bg-[#EDEFF7] bg-transparent w-34 h-7.5"
                                 >
                                     <Plus className="h-2 w-2" />
                                     <span>Create new</span>
@@ -144,51 +152,65 @@ export default function Shop() {
                         </div>
                     </div>
 
-                    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                    {/* table */}
+                    <div className="bg-white px-2 py-4 sm:p-4 rounded-lg shadow-sm border border-gray-200">
                         {loader ? (
-                            <div className="flex items-center justify-center h-50" aria-live="polite">
+                            <div
+                                className="flex items-center justify-center h-50"
+                                aria-live="polite"
+                            >
                                 <ScaleLoader color="#3040D6" height={50} width={5} radius={2} />
                             </div>
                         ) : error ? (
-                            <div className="flex items-center justify-center h-screen text-red-600 text-sm">{error}</div>
+                            <div className="flex items-center justify-center h-screen text-red-600 text-sm">
+                                {error}
+                            </div>
                         ) : (
                             <div className="overflow-x-auto md:overflow-x-hidden">
                                 <table className="w-full mb-10 border">
                                     <thead className="bg-gray-50 border-b border-gray-200">
                                         <tr>
-                                            {/* Checkbox column - visible on all screen sizes */}
                                             <th className="w-12 px-6 py-2 text-left">
                                                 <Checkbox
                                                     checked={selectedItems.length === shopsData.length}
                                                     onCheckedChange={handleSelectAll}
                                                 />
                                             </th>
-                                            {/* Name column - visible on all screen sizes */}
-                                            <th className="px-6 py-2 text-left text-[9px] font-[700]">Name</th>
-                                            {/* Other columns - hidden on mobile, visible on sm and above */}
-                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">Id</th>
-                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">Username</th>
-                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">Profit Share</th>
-                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">Logo</th>
-                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">Created At</th>
-                                            <th className=" w-12 px-6 py-2"></th>
+                                            <th className="px-6 py-2 text-left text-[9px] font-[700]">
+                                                Name
+                                            </th>
+                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">
+                                                Id
+                                            </th>
+                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">
+                                                Username
+                                            </th>
+                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">
+                                                Profit Share
+                                            </th>
+                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">
+                                                Logo
+                                            </th>
+                                            <th className="sm:table-cell hidden px-6 py-2 text-left text-[9px] font-[700]">
+                                                Created At
+                                            </th>
+                                            <th className="w-12 px-6 py-2"></th>
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
                                         {currentItems.map((shop) => (
                                             <tr key={shop.id}>
-                                                {/* Checkbox column - visible on all screen sizes */}
                                                 <td className="px-6 py-2">
                                                     <Checkbox
                                                         checked={selectedItems.includes(shop.id)}
-                                                        onCheckedChange={(checked) => handleSelectItem(shop.id, checked)}
+                                                        onCheckedChange={(checked) =>
+                                                            handleSelectItem(shop.id, checked)
+                                                        }
                                                     />
                                                 </td>
-                                                {/* Name column - visible on all screen sizes */}
                                                 <td className="px-6 py-2 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.name}</Link>
                                                 </td>
-                                                {/* Other columns - hidden on mobile, visible on sm and above */}
                                                 <td className="sm:table-cell hidden px-6 py-2 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.id}</Link>
                                                 </td>
@@ -196,7 +218,9 @@ export default function Shop() {
                                                     <Link to={`/shops/${shop.id}`}>{shop.username}</Link>
                                                 </td>
                                                 <td className="sm:table-cell hidden px-6 py-2 text-[12px]">
-                                                    <Link to={`/shops/${shop.id}`}>{shop.profitShare}</Link>
+                                                    <Link to={`/shops/${shop.id}`}>
+                                                        {shop.profitShare}
+                                                    </Link>
                                                 </td>
                                                 <td className="sm:table-cell hidden px-6 py-2 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.logo}</Link>
@@ -204,22 +228,39 @@ export default function Shop() {
                                                 <td className="sm:table-cell hidden px-6 py-2 text-[12px]">
                                                     <Link to={`/shops/${shop.id}`}>{shop.createdAt}</Link>
                                                 </td>
-                                                <td className="  px-6 py-2">
-                                                    <div className="relative inline-block group">
+                                                <td className="px-6 py-2">
+                                                    <div
+                                                        className="relative inline-block group"
+                                                        onClick={(e) => e.stopPropagation()} // prevent outside click closing immediately
+                                                    >
                                                         <button
                                                             className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                             aria-label="Show more options"
+                                                            onClick={() =>
+                                                                setOpenMenuId(
+                                                                    openMenuId === shop.id ? null : shop.id
+                                                                )
+                                                            }
                                                         >
                                                             <MoreHorizontal className="h-5 w-5" />
                                                         </button>
-                                                        <div className="absolute hidden group-hover:flex flex-col bg-white text-black text-center px-2 py-2 rounded-md text-sm top-full -left-6 transform -translate-x-1/2 mt-0 whitespace-nowrap z-100 shadow-md border border-gray-200 space-y-2 transition-opacity duration-200">
+
+                                                        {/* dropdown */}
+                                                        <div
+                                                            className={`absolute ${openMenuId === shop.id
+                                                                ? "flex"
+                                                                : "hidden group-hover:flex"
+                                                                } flex-col bg-white text-black text-center px-2 py-2 rounded-md text-sm top-full -left-6 transform -translate-x-1/2 mt-0 whitespace-nowrap z-100 shadow-md border border-gray-200 space-y-2 transition-opacity duration-200`}
+                                                        >
                                                             <Link
                                                                 to={`/shops/${shop.id}`}
                                                                 className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                                 aria-label={`View details for shop ${shop.id}`}
                                                             >
                                                                 <Monitor className="h-3 w-3 text-gray-700" />
-                                                                <span className="font-normal text-[11px]">Show</span>
+                                                                <span className="font-normal text-[11px]">
+                                                                    Show
+                                                                </span>
                                                             </Link>
                                                             <Link
                                                                 to={`/shops/edit/${shop.id}`}
@@ -228,10 +269,16 @@ export default function Shop() {
                                                                 aria-label={`Edit details for shop ${shop.id}`}
                                                             >
                                                                 <Edit className="h-3 w-3 text-gray-700" />
-                                                                <span className="font-normal text-[11px]">Edit</span>
+                                                                <span className="font-normal text-[11px]">
+                                                                    Edit
+                                                                </span>
                                                             </Link>
                                                         </div>
-                                                        <span className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-white top-full left-1/2 transform -translate-x-1/2 -mt-1 z-10"></span>
+
+                                                        {/* arrow */}
+                                                        {(openMenuId === shop.id || true) && (
+                                                            <span className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-white top-full left-1/2 transform -translate-x-1/2 -mt-1 z-10"></span>
+                                                        )}
                                                     </div>
                                                 </td>
                                             </tr>

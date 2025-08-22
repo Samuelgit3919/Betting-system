@@ -58,8 +58,8 @@ export default function Report() {
                                 <div className="w-full mt-1 flex items-center border border-gray-300 rounded-[3px] bg-white">
                                     <input
                                         type="datetime-local"
-                                        value={fromDate}
-                                        onChange={(e) => setFromDate(e.target.value)}
+                                        value={toDate}
+                                        onChange={(e) => setToDate(e.target.value)}
                                         className="w-full pl-2 pr-2 text-[12px] font-[400] bg-transparent border-none focus:outline-none h-[28px]"
                                         step="60" // Step of 60 seconds (1 minute) to exclude seconds
                                     />
@@ -102,7 +102,7 @@ export default function Report() {
                             </div>
                             <div>
                                 <label className="block text-[12px] font-[600] font-sans text-gray-700">Select Cashiers:</label>
-                                <Select value={selectedShops} onValueChange={setSelectedShops}>
+                                <Select value={selectedCashiers} onValueChange={setSelectedCashiers}>
                                     <SelectTrigger className="w-full mt-1 pl-3 pr-3 rounded-[3px] text-[12px] font-[400] border border-gray-300 bg-white flex items-center max-h-[30px]">
                                         <SelectValue placeholder="Select..." className="text-gray-500" />
                                         <span className="ml-auto text-gray-400">|</span>
@@ -128,7 +128,9 @@ export default function Report() {
                             </Button>
                         </div>
                     </form>
-                    <div className="mt-6 shadow-md border border-gray-100 p-2 bg-white rounded-lg">
+
+
+                    <div className="mt-6 shadow-md border border-gray-100 p-2 bg-white rounded-lg overflow-x-auto">
                         <table className="w-full text-sm text-gray-500 border border-gray-200 rounded-lg overflow-hidden">
                             <thead className="text-xs text-gray-700  bg-gray-50">
                                 <tr>

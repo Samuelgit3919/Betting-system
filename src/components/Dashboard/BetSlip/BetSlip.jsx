@@ -9,22 +9,24 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 
 export default function BetSlip() {
     const [betSlipData, setBetSlipData] = useState([]);
+    const [originalBetSlipData, setOriginalBetSlipData] = useState([]);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [filters, setFilters] = useState({ name: "" });
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [openMenuId, setOpenMenuId] = useState(null);
     const itemsPerPage = 10;
 
     // ✅ Fetch from public folder
     useEffect(() => {
         const fetchData = async () => {
             try {
-                setLoading(true);
                 const response = await fetch("/betData.json");
                 if (!response.ok) throw new Error("Failed to fetch shops data.");
                 const data = await response.json();
                 setBetSlipData(data);
+                setOriginalBetSlipData(data);
                 setLoading(false);
             } catch (err) {
                 setError(err.message);
@@ -36,8 +38,8 @@ export default function BetSlip() {
 
     const handleApplyFilters = (newFilters) => {
         setFilters(newFilters);
-        const filteredData = betSlipData.filter((shop) =>
-            shop.id.toLowerCase().includes(newFilters.name.toLowerCase())
+        const filteredData = originalBetSlipData.filter((betSlip) =>
+            betSlip.id.toLowerCase().includes(newFilters.name.toLowerCase())
         );
         setBetSlipData(filteredData);
         setCurrentPage(1); // Reset to first page when filters are applied
@@ -45,11 +47,8 @@ export default function BetSlip() {
 
     const handleResetFilters = () => {
         setFilters({ name: "" });
-        // Refetch or reload original data
-        fetch("/betData.json")
-            .then((res) => res.json())
-            .then((data) => setBetSlipData(data))
-            .then(() => setCurrentPage(1)); // Reset to first page when filters are reset
+        setBetSlipData(originalBetSlipData);
+        setCurrentPage(1); // Reset to first page when filters are reset
     };
 
     // Pagination logic
@@ -67,7 +66,7 @@ export default function BetSlip() {
     return (
         <div className="min-h-screen bg-gray-50 flex">
             <div className="flex-1 flex flex-col">
-                <main className="flex-1 px-6 py-2 mt-5">
+                <main className="flex-1 px-2 md:px-6 py-2 mt-5">
                     {/* Breadcrumb */}
                     <div className="mb-2 flex justify-between items-center">
                         <nav className="text-sm text-gray-500">
@@ -103,7 +102,7 @@ export default function BetSlip() {
                     </div>
 
                     {/* Data Table */}
-                    <div className="bg-white p-4 border-none rounded-lg shadow-sm border border-gray-200">
+                    <div className="bg-white px-2 py-4 sm:p-4 border-none rounded-lg shadow-sm border border-gray-200">
                         {loading ? (
                             <div className="flex items-center justify-center h-50" aria-live="polite">
                                 <ScaleLoader color="#3040D6" height={50} width={5} radius={2} />
@@ -184,9 +183,43 @@ export default function BetSlip() {
                                                         <button
                                                             className="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                             aria-label="Show more options"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation()
+                                                                setOpenMenuId(openMenuId === betSlip.id ? null : betSlip.id)
+                                                            }}
                                                         >
                                                             <MoreHorizontal className="h-5 w-5" />
                                                         </button>
+                                                        {(openMenuId === betSlip.id) && (
+                                                            <div className="absolute flex flex-col bg-white text-black text-center px-2 py-2 rounded-md text-sm top-full -left-3 transform -translate-x-1/2 mt-0.5 whitespace-nowrap z-10 shadow-md border border-gray-200 space-y-2 transition-opacity duration-200">
+                                                                <Link
+                                                                    to={`/betSlip/${betSlip.id}`}
+                                                                    className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                    aria-label={`View details for betSlip ${betSlip.id}`}
+                                                                >
+                                                                    <Monitor className="h-3 w-3 text-gray-700" />
+                                                                    <span className="font-normal text-[11px]">Show</span>
+                                                                </Link>
+                                                                <Link
+                                                                    to={`/betSlip/edit/${betSlip.id}`}
+                                                                    state={{ betSlip: betSlip }}
+                                                                    className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                    aria-label={`Edit details for betSlip ${betSlip.id}`}
+                                                                >
+                                                                    <Edit className="h-3 w-3 text-gray-700" />
+                                                                    <span className="font-normal text-[11px]">Edit</span>
+                                                                </Link>
+                                                                <Link
+                                                                    to={`/betSlip/delete/${betSlip.id}`}
+                                                                    state={{ betSlip: betSlip }}
+                                                                    className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                    aria-label={`Delete betSlip ${betSlip.id}`}
+                                                                >
+                                                                    <RiDeleteBin6Line className="h-3 w-3 text-red-700" />
+                                                                    <span className="font-normal text-red-700 text-[11px]">Delete</span>
+                                                                </Link>
+                                                            </div>
+                                                        )}
                                                         <div className="absolute hidden group-hover:flex flex-col bg-white text-black text-center px-2 py-2 rounded-md text-sm top-full -left-3 transform -translate-x-1/2 mt-0.5 whitespace-nowrap z-10 shadow-md border border-gray-200 space-y-2 transition-opacity duration-200">
                                                             <Link
                                                                 to={`/betSlip/${betSlip.id}`}
@@ -196,22 +229,24 @@ export default function BetSlip() {
                                                                 <Monitor className="h-3 w-3 text-gray-700" />
                                                                 <span className="font-normal text-[11px]">Show</span>
                                                             </Link>
-                                                            <span
+                                                            <Link
+                                                                to={`/betSlip/edit/${betSlip.id}`}
                                                                 state={{ betSlip: betSlip }}
                                                                 className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                                 aria-label={`Edit details for betSlip ${betSlip.id}`}
                                                             >
                                                                 <Edit className="h-3 w-3 text-gray-700" />
                                                                 <span className="font-normal text-[11px]">Edit</span>
-                                                            </span>
-                                                            <span
-                                                                state={{ shop: betSlip }}
+                                                            </Link>
+                                                            <Link
+                                                                to={`/betSlip/delete/${betSlip.id}`}
+                                                                state={{ betSlip: betSlip }}
                                                                 className="flex items-center py-1 px-2 hover:bg-[#F8F9F9] space-x-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                                aria-label={`Adjust balance for shop ${betSlip.id}`}
+                                                                aria-label={`Delete betSlip ${betSlip.id}`}
                                                             >
                                                                 <RiDeleteBin6Line className="h-3 w-3 text-red-700" />
                                                                 <span className="font-normal text-red-700 text-[11px]">Delete</span>
-                                                            </span>
+                                                            </Link>
                                                         </div>
                                                         <span className="absolute hidden group-hover:block w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-b-white top-full left-1/2 transform -translate-x-1/2 -mt-1 z-10"></span>
                                                     </div>
@@ -221,7 +256,7 @@ export default function BetSlip() {
                                     </tbody>
                                 </table>
 
-                                {/* Pagination */}
+                                {/* pagination */}
                                 {betSlipData.length > itemsPerPage && (
                                     <div className="flex justify-center items-center space-x-1 mt-2 p-2 ">
                                         {/* First Page */}
