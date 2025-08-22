@@ -111,16 +111,24 @@ export default function Login() {
                                 <Label htmlFor="username" className="text-sm text-gray-700">
                                     <span className="text-[#5183E8] text-xs relative -top-1">*</span><span className="text-[11px] font-[400] text-black -ml-1 mb-1.5">Username</span>
                                 </Label>
-                                <Input
+                                <input
                                     id="username"
                                     type="text"
                                     placeholder="Username"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
                                     required
-                                    className="placeholder:text-xs inline-block font-roboto text-[14px] font-normal  text-[#0c1e29] 
-                                        h-[30px] w-[294px] p-[4px_8px] 
-                                        border-[#9eaab5] rounded-[2px] focus:outline-none focus:ring-0 focus:bg-transparent bg-white"
+                                    className="placeholder:text-xs inline-block font-roboto text-[14px] font-normal leading-6 text-[#0c1e29] 
+                                    bg-transparent h-[30px] w-[294px] p-[4px_8px] m-0 
+                                    border border-[#9eaab5] rounded-[2px] 
+                                    max-w-none max-h-none min-w-0 min-h-0 
+                                    static top-auto bottom-auto left-auto right-auto 
+                                    float-none clear-none z-auto 
+                                    list-disc list-outside 
+                                    border-separate border-spacing-0 caption-top 
+                                    overflow-clip cursor-text visible 
+                                    transform-none transition-all box-border resize-none 
+                                    text-clip break-normal shadow-none "
                                 />
                             </div>
 
@@ -128,7 +136,7 @@ export default function Login() {
                                 <Label htmlFor="password" className="text-sm">
                                     <span className="text-[#5183E8] text-xs relative -top-1">*</span><span className="text-[11px] font-[400] -ml-1 text-black mb-1.5">Password</span>
                                 </Label>
-                                <Input
+                                <input
                                     id="password"
                                     type="password"
                                     placeholder="Password"
