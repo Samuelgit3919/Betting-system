@@ -25,12 +25,15 @@ export default function EditShopForm() {
         status: "active",
     });
 
+    // console.log(formData)
+
     // 🔥 Fetch shop data from public JSON and set as default
     useEffect(() => {
-        axios.get("/shopsData.json") // make sure this file exists in public folder
+        axios.get("/shopData.json") // make sure this file exists in public folder
             .then((response) => {
                 const shops = response.data;
                 const shop = shops.find((s) => String(s.id) === String(id));
+                // console.log(shop)
                 if (shop) {
                     setFormData({
                         username: shop.username || "",

@@ -33,7 +33,8 @@ export default function EditCashierForm() {
             .then((response) => {
                 const cashiers = response.data;
                 console.log(cashiers)
-                const cashier = cashiers.find((s) => String(s, id) === String(id));
+                const cashier = cashiers.find((cashier) => String(cashier.id) === String(id)); // 🔑 ensure type match
+                console.log(cashier)
 
                 if (cashier) {
                     setFormData({
@@ -44,6 +45,7 @@ export default function EditCashierForm() {
                         cashLimit: cashier.cashLimit || "",
                         shop: cashier.shop || "",
                         status: cashier.status || "active",
+                        id: cashier.id || "", // 🔑 ensure id is included
                     });
                 }
             })

@@ -19,6 +19,8 @@ export default function Shop() {
     const [openMenuId, setOpenMenuId] = useState(null); // ✅ new state for menus
     const itemsPerPage = 10;
 
+    console.log(shopsData)
+
     useEffect(() => {
         let timer;
         axios
