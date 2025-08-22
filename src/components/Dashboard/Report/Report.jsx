@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import axios from "axios";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 export default function Report() {
     const [span, setSpan] = useState("Today");
@@ -9,21 +13,45 @@ export default function Report() {
     const [toDate, setToDate] = useState("08/07/2025 11:59 PM");
     const [selectedShops, setSelectedShops] = useState("");
     const [selectedCashiers, setSelectedCashiers] = useState("");
+    const [reportData, setReportData] = useState([]);
+
+    useEffect(() => {
+        axios.get("/report.json")
+            .then(response => {
+                setReportData(response.data)
+            })
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission logic here
         console.log({ span, fromDate, toDate, selectedShops, selectedCashiers });
+    };
+
+    // ✅ Export to Excel
+    const handleExport = () => {
+        if (!reportData || reportData.length === 0) {
+            alert("No data to export!");
+            return;
+        }
+
+        // Convert JSON to worksheet
+        const worksheet = XLSX.utils.json_to_sheet(reportData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
+
+        // Generate Excel file and trigger download
+        const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+        const data = new Blob([excelBuffer], { type: "application/octet-stream" });
+        saveAs(data, `Report_${new Date().toISOString().slice(0, 10)}.xlsx`);
     };
 
     return (
         <div className="container mx-auto p-4 sm:p-6">
-            <Card className="w-full max-w-5xl mx-auto border-none bg-[#FFFFFF]  rounded-md">
+            <Card className="w-full max-w-4xl mx-auto border-none bg-[#FFFFFF]  rounded-md">
                 <CardHeader>
                     <CardTitle className="text-2xl font-[Sans-serif] font-[400]">Reports</CardTitle>
                 </CardHeader>
                 <CardContent>
-
                     <form onSubmit={handleSubmit} className="space-y-4 p-3 bg-[#F8F9FA]">
                         <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
                             <div>
@@ -120,7 +148,12 @@ export default function Report() {
                             </div>
                         </div>
                         <div className="flex justify-end space-x-2">
-                            <Button type="button" variant="outline" className="bg-green-600 text-[12px] font-[500] px-10 rounded-[3px] max-h-[30px] text-white hover:bg-green-700 hover:text-white">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={handleExport}
+                                className="bg-green-600 text-[12px] font-[500] px-10 rounded-[3px] max-h-[30px] text-white hover:bg-green-700 hover:text-white"
+                            >
                                 Export
                             </Button>
                             <Button type="submit" className="bg-blue-600 px-6 text-[12px] rounded-[3px] font-[500] max-h-[30px] text-white hover:bg-blue-700">
@@ -128,7 +161,6 @@ export default function Report() {
                             </Button>
                         </div>
                     </form>
-
 
                     <div className="mt-6 shadow-md border border-gray-100 p-2 bg-white rounded-lg overflow-x-auto">
                         <table className="w-full text-sm text-gray-500 border border-gray-200 rounded-lg overflow-hidden">
